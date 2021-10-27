@@ -69,8 +69,6 @@ If you prefer you can use Flow with your own JavaScript
 	</f-element>
 	<f-element>
 		<f-label>Node</f-label>
-		<f-io class="input"></f-io>
-		<f-io class="output"></f-io>
 		<f-inputs>
 			<input type="text" spellcheck="false" autocomplete="off" value="Hello World!"/>
 		</f-inputs>
