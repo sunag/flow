@@ -20,7 +20,7 @@
 
 - [x] [Inputs](https://raw.githack.com/sunag/flow/master/examples/index.html)
 - [x] [Events](https://raw.githack.com/sunag/flow/master/examples/events.html)
-- [x] [Pure HTML5 ( No JavaScript )](https://raw.githack.com/sunag/flow/master/examples/events.html)
+- [x] [Pure HTML5 ( No JavaScript )](https://raw.githack.com/sunag/flow/master/examples/pure.html)
 - [ ] Node-Graph Editor
 
 ### :keyboard: JavaScript
