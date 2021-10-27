@@ -33,8 +33,8 @@ f-node.top-left {
 	left: 0;
 }
 
-f-element, 
-f-element input, 
+f-element,
+f-element input,
 f-element select,
 f-element button,
 f-element textarea {
@@ -294,8 +294,8 @@ f-element f-label:first-child {
 
 f-element.title {
 	height: 30px;
-	background: #014fc5;
-    /*background: linear-gradient( rgb(1 119 251), rgba(0, 80, 200, 0.73) );*/
+	background-color: #014fc5;
+    /*background-color: linear-gradient( rgb(1 119 251), rgba(0, 80, 200, 0.73) );*/
 	cursor: all-scroll;
 	border-top-left-radius: 6px;
     border-top-right-radius: 6px;
@@ -383,4 +383,20 @@ f-node.rounded f-element input[type='checkbox'].toggle:after {
 f-node.rounded f-element input {
 	padding-left: 7px;
 	padding-right: 7px;
+}
+
+f-node.glass f-element {
+	background-color: rgb(48 48 48 / 75%);
+	backdrop-filter: blur(3px);
+}
+
+f-node.glass f-element input,
+f-node.glass f-element select,
+f-node.glass f-element button,
+f-node.glass f-element textarea {
+	background-color: rgb(20 20 20 / 85%);
+}
+
+f-node.glass f-element.title {
+	background-color: #065ad9de;
 }

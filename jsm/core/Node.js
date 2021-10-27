@@ -6,11 +6,28 @@ export class Node {
 
 		this.dom = document.createElement( 'f-node' );
 
+		this.style = 'rounded';
+		this.align = '';
+
+		this._updateClass();
+
+	}
+
+	setStyle( style ) {
+
+		this.style = style;
+
+		this._updateClass();
+
+		return this;
+
 	}
 
 	setAlign( align ) {
 
-		this.dom.className = align;
+		this.align = align;
+
+		this._updateClass();
 
 		return this;
 
@@ -35,6 +52,12 @@ export class Node {
 		this.dom.appendChild( element.dom );
 
 		return this;
+
+	}
+
+	_updateClass() {
+
+		this.dom.className = `${ this.style } ${ this.align }`;
 
 	}
 
