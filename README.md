@@ -70,7 +70,7 @@ If you prefer you can use Flow with your own JavaScript
 	<f-element>
 		<f-label>Node</f-label>
 		<f-inputs>
-			<input type="text" spellcheck="false" autocomplete="off" value="Hello World!"/>
+			<input type="text" value="Hello World!"/>
 		</f-inputs>
 	</f-element>
 	...
