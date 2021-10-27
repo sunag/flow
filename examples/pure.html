@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>flow - javascript ui</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="../favicon.ico"/>
+	<!-- <link rel="stylesheet" href="../fonts/open-sans/open-sans.css" type="text/css"/> -->
+	<link rel="stylesheet" href="../css/flow.css" type="text/css"/>
+	<link rel="stylesheet" href="css/page.css" type="text/css"/>
+</head>
+<body>
+	<f-node class="center rounded">
+		<f-element class="title left">
+			<span>Made With Love ❤</span>
+			<f-toolbar>
+				<span class="button">✖</span>
+			</f-toolbar>
+		</f-element>
+		<f-element>
+			<f-label>Node</f-label>
+			<f-io class="input"></f-io>
+			<f-io class="output"></f-io>
+			<f-inputs>
+				<input type="text" spellcheck="false" autocomplete="off" value="Hello World!"/>
+			</f-inputs>
+		</f-element>
+		<f-element>
+			<f-label>Color</f-label>
+			<f-inputs>
+				<input type="color" value="#FF9900"/>
+			</f-inputs>
+		</f-element>
+		<f-element>
+			<f-label>Vector</f-label>
+			<f-inputs>
+				<input class="number" type="text" spellcheck="false" autocomplete="off" value="0.0"/>
+				<input class="number" type="text" spellcheck="false" autocomplete="off" value="0.0"/>
+				<input class="number" type="text" spellcheck="false" autocomplete="off" value="0.0"/>
+			</f-inputs>
+		</f-element>
+		<f-element>
+			<f-label>Number</f-label>
+			<f-inputs>
+				<input class="number" type="text" spellcheck="false" autocomplete="off" value="0.0"/>
+			</f-inputs>
+		</f-element>
+		<f-element>
+			<f-label>Range</f-label>
+			<f-inputs>
+				<input type="range" min="0" max="100" step="1" value="50">
+				<input type="text" class="range-value" spellcheck="false" autocomplete="off" value="0.0"/>
+			</f-inputs>
+		</f-element>
+		<f-element class="small">
+			<f-label>C. Range</f-label>
+			<f-inputs>
+				<input type="range" min="0" max="100" step="1" value="50">
+			</f-inputs>
+		</f-element>
+		<f-element>
+			<f-label>Options</f-label>
+			<f-inputs>
+				<select>
+					<option value="0">Value 1</option>
+					<option value="1">Value 2</option>
+				</select>
+			</f-inputs>
+		</f-element>
+		<f-element>
+			<f-label>Boolean</f-label>
+			<f-inputs>
+				<input class="toggle" type="checkbox">
+			</f-inputs>
+		</f-element>
+		<f-element>
+			<f-label>Button</f-label>
+			<f-inputs>
+				<button type="button">ok</button>
+			</f-inputs>
+		</f-element>
+		<f-element class="auto-height">
+			<textarea>Dynamic Text Area</textarea>
+		</f-element>
+		<f-element style="height: 120px">
+			<f-label>Text</f-label>
+			<f-inputs>
+				<textarea>Static Text Area.</textarea>
+			</f-inputs>
+		</f-element>
+		<f-element class="large">
+			<button type="button">OK</button>
+		</f-element>
+	</f-node>
+</body>
+</html>

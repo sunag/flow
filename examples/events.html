@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>flow - javascript ui</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="../favicon.ico" />
+	<link rel="stylesheet" href="css/page.css" type="text/css"/>
+	<!-- <link rel="stylesheet" href="../fonts/open-sans/open-sans.css" type="text/css"/> -->
+</head>
+<body>
+	<script type="module">
+
+		import * as Flow from '../build/flow.module.js';
+
+		const node = new Flow.Node();
+		node.setWidth( 400 );
+		node.setAlign( 'center' );
+
+		const numberElement = new Flow.LabelElement( 'onChange' );
+		numberElement.add( new Flow.NumberInput( 1 ).onChange( ( input ) => {
+
+			console.log( 'Value:', input.value );
+
+		} ) );
+
+		const buttonElement = new Flow.LabelElement( 'onClick' );
+		buttonElement.add( new Flow.ButtonInput( 'OK' ).onClick( () => {
+
+			console.log( 'Clicked!' );
+
+		} ) );
+
+		node.add( new Flow.TitleElement( 'Callback ( Open Console )' ) );
+		node.add( numberElement );
+		node.add( buttonElement );
+
+		document.body.appendChild( node.dom );
+
+	</script>
+</body>
+</html>
