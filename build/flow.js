@@ -38,7 +38,7 @@ __flow__addCSS( `f-node { position: absolute; margin: 0; padding: 0; box-sizing:
 	};
 	const toHex = val => {
 	  if (isNaN(val) === false) {
-	    val = `#${val.toString(16).padEnd(6, '0')}`;
+	    val = `#${val.toString(16).padStart(6, '0')}`;
 	  }
 
 	  return val;
@@ -52,7 +52,7 @@ __flow__addCSS( `f-node { position: absolute; margin: 0; padding: 0; box-sizing:
 	});
 
 	class Element {
-	  constructor(label = '') {
+	  constructor() {
 	    this.dom = document.createElement('f-element');
 	  }
 
@@ -80,10 +80,10 @@ __flow__addCSS( `f-node { position: absolute; margin: 0; padding: 0; box-sizing:
 	      'change': [],
 	      'click': []
 	    };
-	    this.addEventListener('change', e => {
+	    this.addEventListener('change', () => {
 	      dispatchEventList(this.events.change, this);
 	    });
-	    this.addEventListener('click', e => {
+	    this.addEventListener('click', () => {
 	      dispatchEventList(this.events.click, this);
 	    });
 	  }
@@ -317,7 +317,7 @@ __flow__addCSS( `f-node { position: absolute; margin: 0; padding: 0; box-sizing:
 	      this.field.value = value;
 	    };
 
-	    const onGlobalMouseMove = e => {
+	    const onGlobalMouseMove = () => {
 	      updateRangeValue();
 	      dispatchEvent('change');
 	    };
