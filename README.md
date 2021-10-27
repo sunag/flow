@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img alt="flow" height="300px" src="https://raw.githack.com/sunag/flow/main/media/flow-box.svg"/>
+  <img alt="flow" height="300px" src="https://raw.githack.com/sunag/flow/master/media/flow-box.svg"/>
 </h1>
 
 <h3 align="center">
@@ -18,9 +18,9 @@
 :rocket: Examples
 ===
 
-- [x] [Inputs](https://raw.githack.com/sunag/flow/main/examples/index.html)
-- [x] [Events](https://raw.githack.com/sunag/flow/main/examples/events.html)
-- [x] [Pure HTML5 ( No JavaScript )](https://raw.githack.com/sunag/flow/main/examples/events.html)
+- [x] [Inputs](https://raw.githack.com/sunag/flow/master/examples/index.html)
+- [x] [Events](https://raw.githack.com/sunag/flow/master/examples/events.html)
+- [x] [Pure HTML5 ( No JavaScript )](https://raw.githack.com/sunag/flow/master/examples/events.html)
 - [ ] Node-Graph Editor
 
 ### :keyboard: JavaScript
