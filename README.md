@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img alt="flow" height="300px" src="https://raw.githack.com/sunag/flow/master/media/flow-box-shadow.png"/>
+  <img alt="flow" height="350px" src="https://raw.githack.com/sunag/flow/master/media/flow-box-shadow.png"/>
 </h1>
 
 <h3 align="center">
