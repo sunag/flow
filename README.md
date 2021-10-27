@@ -7,7 +7,7 @@
 </h3>
 
 <p align="center">
-  Flow is basead on native components of <b>HTML5</b> and the code on <b>ES2015</b>. It is modular, three-shaking and class-based.
+  Flow is basead on native components of <b>HTML5</b> and the code on <b>ES6</b>. It is modular, three-shaking and class-based.
 </p>
 
 <p align="center">
