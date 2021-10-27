@@ -79,7 +79,7 @@ If you prefer you can use Flow with your own JavaScript
 </f-node>
 ```
 
-## Inspiration and special thanks
+## Inspirations and special thanks
 
 - [Three.js and Mr.doob](https://github.com/mrdoob/three.js/)
 - [UIL and Lo-th](https://github.com/lo-th/uil)
