@@ -25,8 +25,6 @@
 
 ### :keyboard: JavaScript
 
-[Live](https://raw.githack.com/sunag/flow/master/examples/index.html)
-
 ```javascript
 import * as Flow from '../build/flow.module.js';
 
@@ -49,9 +47,9 @@ node.addButton( 'My Button' );
 document.body.appendChild( node.dom );
 ```
 
-### :package: HTML5
+[Open example](https://raw.githack.com/sunag/flow/master/examples/index.html)
 
-[Live](https://raw.githack.com/sunag/flow/master/examples/pure.html)
+### :package: HTML5
 
 Use your own JavaScript with Flow layout and style.
 
@@ -72,6 +70,8 @@ Use your own JavaScript with Flow layout and style.
 	...
 </f-node>
 ```
+
+[Open example](https://raw.githack.com/sunag/flow/master/examples/pure.html)
 
 <img alt="Pure HTML5" width="350px" src="https://user-images.githubusercontent.com/502810/139017347-6a63b516-180c-4db8-ab3f-9eca21a1ce9b.png"/>
 
