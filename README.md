@@ -49,7 +49,7 @@ document.body.appendChild( node.dom );
 
 [Open example](https://raw.githack.com/sunag/flow/master/examples/index.html)
 
-### :package: HTML5
+### :art: HTML5
 
 Use your own JavaScript with Flow layout and style.
 
