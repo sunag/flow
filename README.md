@@ -73,8 +73,6 @@ Use your own JavaScript with Flow layout and style.
 
 [Open example](https://raw.githack.com/sunag/flow/master/examples/pure.html)
 
-<img alt="Pure HTML5" width="350px" src="https://user-images.githubusercontent.com/502810/139017347-6a63b516-180c-4db8-ab3f-9eca21a1ce9b.png"/>
-
 ## :footprints: Inspiration and special thanks
 
 - [Three.js and Mr.doob](https://github.com/mrdoob/three.js/)
