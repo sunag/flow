@@ -48,6 +48,7 @@ f-element textarea {
 	padding: 0;
 	border: 0;
 	user-select: none;
+	-webkit-tap-highlight-color: transparent;
 }
 
 f-element {
