@@ -1,4 +1,4 @@
-export const dragabbleDOM = ( dom, callback = null ) => {
+export const draggableDOM = ( dom, callback = null ) => {
 
 	let dragData = null;
 

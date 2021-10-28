@@ -1,5 +1,5 @@
 import { Input } from '../core/Input.js';
-import { dragabbleDOM } from '../core/Utils.js';
+import { draggableDOM } from '../core/Utils.js';
 
 const ENTER_KEY = 13;
 
@@ -56,7 +56,7 @@ export class NumberInput extends Input {
 
 		};
 
-		dragabbleDOM( dom, ( data ) => {
+		draggableDOM( dom, ( data ) => {
 
 			const { delta } = data;
 

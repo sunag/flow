@@ -5,7 +5,7 @@ export { Input } from './core/Input.js';
 export { Node } from './core/Node.js';
 export * as Utils from './core/Utils.js';
 
-export { DragabbleElement } from './elements/DragabbleElement.js';
+export { DraggableElement } from './elements/DraggableElement.js';
 export { LabelElement } from './elements/LabelElement.js';
 export { TitleElement } from './elements/TitleElement.js';
 export { fromProperty } from './elements/ElementUtils.js';

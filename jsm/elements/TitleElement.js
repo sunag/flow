@@ -1,6 +1,6 @@
-import { DragabbleElement } from './DragabbleElement.js';
+import { DraggableElement } from './DraggableElement.js';
 
-export class TitleElement extends DragabbleElement {
+export class TitleElement extends DraggableElement {
 
 	constructor( title, dragabble = true ) {
 

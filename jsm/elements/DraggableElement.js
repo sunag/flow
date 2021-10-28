@@ -1,7 +1,7 @@
 import { Element } from '../core/Element.js';
-import { dragabbleDOM } from '../core/Utils.js';
+import { draggableDOM } from '../core/Utils.js';
 
-export class DragabbleElement extends Element {
+export class DraggableElement extends Element {
 
 	constructor( dragabble = true ) {
 
@@ -13,7 +13,7 @@ export class DragabbleElement extends Element {
 
 			if ( dragabble === true ) {
 
-				dragabbleDOM( this.node.dom );
+				draggableDOM( this.node.dom );
 
 			}
 
