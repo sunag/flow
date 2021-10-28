@@ -57,7 +57,7 @@ document.body.appendChild( node.dom );
 
 If you prefer you can use Flow with your own JavaScript
 
-[<img width="350px" src="https://user-images.githubusercontent.com/502810/139017347-6a63b516-180c-4db8-ab3f-9eca21a1ce9b.png"/>](http://sunag.github.io/flow/)
+<img alt="Pure HTML5" width="350px" src="https://user-images.githubusercontent.com/502810/139017347-6a63b516-180c-4db8-ab3f-9eca21a1ce9b.png"/>
 
 ```html
 <f-node class="center rounded">
