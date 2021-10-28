@@ -168,7 +168,6 @@ f-element input[type='checkbox'].toggle:after {
 }
 
 f-element input[type='checkbox'].toggle:checked {
-	outline: solid 1px rgba( 0, 80, 200, 0.98 );
 	background: linear-gradient( 0deg, #0177fb 0%, #0177fb 100% );
 }
 
