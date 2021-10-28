@@ -5,11 +5,24 @@ export class Node {
 	constructor() {
 
 		this.dom = document.createElement( 'f-node' );
+		this.dom.className = 'rounded';
 
-		this.style = 'rounded';
-		this.align = '';
+		this.style = '';
 
-		this._updateClass();
+		this.canvas = null;
+
+		this.elements = [];
+
+	}
+
+	setStyle( style ) {
+
+		if ( this.style ) this.dom.classList.remove( this.style );
+		this.dom.classList.add( style );
+
+		this.style = style;
+
+		return this;
 
 	}
 
@@ -21,23 +34,11 @@ export class Node {
 
 	}
 
-	setStyle( style ) {
+	getPosition() {
 
-		this.style = style;
+		const dom = this.dom;
 
-		this._updateClass();
-
-		return this;
-
-	}
-
-	setAlign( align ) {
-
-		this.align = align;
-
-		this._updateClass();
-
-		return this;
+		return { x: dom.offsetLeft, y: dom.offsetTop };
 
 	}
 
@@ -57,17 +58,13 @@ export class Node {
 
 	add( element ) {
 
+		this.elements.push( element );
+
 		element.node = this;
 
 		this.dom.appendChild( element.dom );
 
 		return this;
-
-	}
-
-	_updateClass() {
-
-		this.dom.className = `${ this.style } ${ this.align }`;
 
 	}
 

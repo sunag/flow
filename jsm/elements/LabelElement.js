@@ -2,7 +2,7 @@ import { Element } from '../core/Element.js';
 
 export class LabelElement extends Element {
 
-	constructor( label = '' ) {
+	constructor( label = '', align = '' ) {
 
 		super();
 
@@ -13,14 +13,13 @@ export class LabelElement extends Element {
 		this.dom.appendChild( this.inputsDOM );
 
 		this.setLabel( label );
+		this.setAlign( align );
 
 	}
 
-	add( input ) {
+	setAlign( align ) {
 
-		this.inputsDOM.appendChild( input.dom );
-
-		return this;
+		this.labelDOM.className = align;
 
 	}
 

@@ -14,23 +14,24 @@
 
 		import * as Flow from '../jsm/Flow.js';
 
-		const object = {
-			'string': 'Hello World!',
-			'color': 0x339933,
-			'number': 100,
-			'slider': .5,
-			'text': 'Text Area'
-		};
+		const node = new Flow.Node();
+		node.setWidth( 350 );
+		node.setPosition( 100, 100 );
+		//node.setAlign( 'center' );
 
-		const node = new Flow.PanelNode( 'Panel', 'center' );
-		node.addString( object, 'string' );
-		node.addColor( object, 'color' );
-		node.addNumber( object, 'number' );
-		node.addSlider( object, 'slider', 0, 1 );
-		node.addText( object, 'text' );
-		node.addButton( 'My Button' );
+		node.add( new Flow.TitleElement( 'Inputs' ) );
 
-		document.body.appendChild( node.dom );
+		node.add(
+			new Flow.LabelElement( 'Numbers' )
+				.add( new Flow.NumberInput( 1 ) )
+				.add( new Flow.NumberInput( 2 ) )
+				.add( new Flow.NumberInput( 3 ) )
+		);
+
+		const canvas = new Flow.Canvas();
+		canvas.add( node );
+
+		document.body.appendChild( canvas.dom );
 
 	</script>
 </body>

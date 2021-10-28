@@ -5,12 +5,21 @@ export class Element {
 	constructor() {
 
 		this.dom = document.createElement( 'f-element' );
+		this.inputsDOM = this.dom;
+
+		this.node = null;
+
+		this.inputs = [];
 
 	}
 
 	add( input ) {
 
-		this.dom.appendChild( input.dom );
+		this.inputs.push( input );
+
+		input.element = this;
+
+		this.inputsDOM.appendChild( input.dom );
 
 		return this;
 
@@ -31,3 +40,5 @@ export class Element {
 	}
 
 }
+
+Element.prototype.isElement = true;

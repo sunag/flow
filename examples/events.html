@@ -13,29 +13,24 @@
 
 		import * as Flow from '../build/flow.module.js';
 
-		const node = new Flow.Node();
-		node.setWidth( 400 );
-		node.setAlign( 'center' );
+		const panel = new Flow.PanelNode( 'Callback ( Open Console )', 'center' );
+		panel.setWidth( 400 );
 
-		const numberElement = new Flow.LabelElement( 'onChange' );
-		numberElement.add( new Flow.NumberInput( 1 ).onChange( ( input ) => {
+		const numberElement = panel.addSlider( { number: .5 }, 'number', 0, 1 );
+		numberElement.onChange( ( input ) => {
 
 			console.log( 'Value:', input.value );
 
-		} ) );
+		} );
 
-		const buttonElement = new Flow.LabelElement( 'onClick' );
-		buttonElement.add( new Flow.ButtonInput( 'OK' ).onClick( () => {
+		const buttonElement = panel.addButton( 'Button' );
+		buttonElement.onClick( () => {
 
 			console.log( 'Clicked!' );
 
-		} ) );
+		} );
 
-		node.add( new Flow.TitleElement( 'Callback ( Open Console )' ) );
-		node.add( numberElement );
-		node.add( buttonElement );
-
-		document.body.appendChild( node.dom );
+		document.body.appendChild( panel.dom );
 
 	</script>
 </body>

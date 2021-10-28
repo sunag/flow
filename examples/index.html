@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" href="../favicon.ico" />
 	<link rel="stylesheet" href="css/page.css" type="text/css"/>
+	<link rel="stylesheet" href="../css/flow.css" type="text/css"/>
 	<!-- <link rel="stylesheet" href="../fonts/open-sans/open-sans.css" type="text/css"/> -->
 </head>
 <body>
@@ -13,53 +14,21 @@
 
 		import * as Flow from '../build/flow.module.js';
 
-		const node = new Flow.Node();
-		node.setWidth( 350 );
-		node.setAlign( 'center' );
+		const object = {
+			'string': 'Hello World!',
+			'color': 0x339933,
+			'number': 100,
+			'slider': .5,
+			'text': 'Text Area'
+		};
 
-		node.add( new Flow.TitleElement( 'Inputs' ) );
-
-		node.add(
-			new Flow.LabelElement( 'Numbers' )
-				.add( new Flow.NumberInput( 1 ) )
-				.add( new Flow.NumberInput( 2 ) )
-				.add( new Flow.NumberInput( 3 ) )
-		);
-
-		node.add(
-			new Flow.LabelElement( 'Color' )
-				.add( new Flow.ColorInput( 0xFF9900 ) )
-		);
-
-		node.add(
-			new Flow.LabelElement( 'String' )
-				.add( new Flow.StringInput( 'Hello World!' ) )
-		);
-
-		node.add(
-			new Flow.LabelElement( 'Options' )
-				.add( new Flow.SelectInput( [ 'Value 1', 'Value 2' ] ) )
-		);
-
-		node.add(
-			new Flow.LabelElement( 'Slider' )
-				.add( new Flow.SliderInput( 50 ) )
-		);
-
-		node.add(
-			new Flow.LabelElement( 'Toggle' )
-				.add( new Flow.ToggleInput( false ) )
-		);
-
-		node.add(
-			new Flow.LabelElement().setHeight( 100 )
-				.add( new Flow.TextInput( 'Text Area' ) )
-		);
-
-		node.add(
-			new Flow.Element().setHeight( 35 )
-				.add( new Flow.ButtonInput( 'OK' ) )
-		);
+		const node = new Flow.PanelNode( 'Panel', 'center' );
+		node.addString( object, 'string' );
+		node.addColor( object, 'color' );
+		node.addNumber( object, 'number' );
+		node.addSlider( object, 'slider', 0, 1 );
+		node.addText( object, 'text' );
+		node.addButton( 'My Button' );
 
 		document.body.appendChild( node.dom );
 

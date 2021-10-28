@@ -23,21 +23,13 @@ export class ButtonInput extends Input {
 
 	}
 
-	onChange( callback ) {
-
-		this.changeEvents.push( callback );
-
-		return this;
-
-	}
-
-	set innterText( val ) {
+	set value( val ) {
 
 		this.dom.innerText = val;
 
 	}
 
-	get innterText() {
+	get value() {
 
 		return this.dom.innerText;
 

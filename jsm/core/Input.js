@@ -8,6 +8,8 @@ export class Input extends EventTarget {
 
 		this.dom = dom;
 
+		this.element = null;
+
 		this.events = {
 			'change': [],
 			'click': []
