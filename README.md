@@ -25,6 +25,8 @@
 
 ### :keyboard: JavaScript
 
+[Live](https://raw.githack.com/sunag/flow/master/examples/index.html)
+
 ```javascript
 import * as Flow from '../build/flow.module.js';
 
@@ -49,9 +51,9 @@ document.body.appendChild( node.dom );
 
 ### :package: HTML5
 
-If you prefer you can use Flow with your own JavaScript
+[Live](https://raw.githack.com/sunag/flow/master/examples/pure.html)
 
-<img alt="Pure HTML5" width="350px" src="https://user-images.githubusercontent.com/502810/139017347-6a63b516-180c-4db8-ab3f-9eca21a1ce9b.png"/>
+Use your own JavaScript with Flow layout and style.
 
 ```html
 <f-node class="center rounded">
@@ -71,7 +73,9 @@ If you prefer you can use Flow with your own JavaScript
 </f-node>
 ```
 
-## Inspiration and special thanks
+<img alt="Pure HTML5" width="350px" src="https://user-images.githubusercontent.com/502810/139017347-6a63b516-180c-4db8-ab3f-9eca21a1ce9b.png"/>
+
+## :footprints: Inspiration and special thanks
 
 - [Three.js and Mr.doob](https://github.com/mrdoob/three.js/)
 - [UIL and Lo-th](https://github.com/lo-th/uil)
