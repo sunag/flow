@@ -9,15 +9,20 @@ export class DraggableElement extends Element {
 
 		this.draggable = draggable;
 
-		this.dom.onmousedown = () => {
+		const onDrag = () => {
 
-			if ( draggable === true ) {
+			if ( this.draggable === true ) {
 
 				draggableDOM( this.node.dom );
 
 			}
 
 		};
+
+		const { dom } = this;
+
+		dom.addEventListener( 'mousedown', onDrag );
+		dom.addEventListener( 'touchstart', onDrag );
 
 	}
 

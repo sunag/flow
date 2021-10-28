@@ -4,15 +4,20 @@ export const draggableDOM = ( dom, callback = null ) => {
 
 	const onMouseDown = ( e ) => {
 
+		const target = e.touches ? e.touches[ 0 ] : e;
+
 		dragData = {
-			client: { x: e.clientX, y: e.clientY },
+			client: { x: target.clientX, y: target.clientY },
 			delta: { x: 0, y: 0 },
 			start: { x: dom.offsetLeft, y: dom.offsetTop },
 			dragging: false
 		};
 
-		window.addEventListener( "mousemove", onGlobalMouseMove );
-		window.addEventListener( "mouseup", onGlobalMouseUp );
+		window.addEventListener( 'mousemove', onGlobalMouseMove );
+		window.addEventListener( 'mouseup', onGlobalMouseUp );
+
+		window.addEventListener( 'touchmove', onGlobalMouseMove, { passive: false } );
+		window.addEventListener( 'touchend', onGlobalMouseUp );
 
 	};
 
@@ -20,15 +25,21 @@ export const draggableDOM = ( dom, callback = null ) => {
 
 		const { start, delta, client } = dragData;
 
-		delta.x = e.clientX - client.x;
-		delta.y = e.clientY - client.y;
+		const target = e.touches ? e.touches[ 0 ] : e;
+
+		delta.x = target.clientX - client.x;
+		delta.y = target.clientY - client.y;
 
 		dragData.x = start.x + delta.x;
 		dragData.y = start.y + delta.y;
 
 		if ( dragData.dragging === true ) {
 
-			e.preventDefault();
+			if ( e.cancelable === true ) {
+
+				e.preventDefault();
+
+			}
 
 			if ( callback !== null ) {
 
@@ -54,8 +65,11 @@ export const draggableDOM = ( dom, callback = null ) => {
 
 	const onGlobalMouseUp = () => {
 
-		window.removeEventListener( "mousemove", onGlobalMouseMove );
-		window.removeEventListener( "mouseup", onGlobalMouseUp );
+		window.removeEventListener( 'mousemove', onGlobalMouseMove );
+		window.removeEventListener( 'mouseup', onGlobalMouseUp );
+
+		window.removeEventListener( 'touchmove', onGlobalMouseMove );
+		window.removeEventListener( 'touchend', onGlobalMouseUp );
 
 		if ( dragData.dragging === true ) {
 
@@ -68,6 +82,7 @@ export const draggableDOM = ( dom, callback = null ) => {
 			} else {
 
 				dom.removeEventListener( 'mousedown', onMouseDown );
+				dom.removeEventListener( 'touchstart', onMouseDown );
 
 			}
 
@@ -76,6 +91,7 @@ export const draggableDOM = ( dom, callback = null ) => {
 	};
 
 	dom.addEventListener( 'mousedown', onMouseDown );
+	dom.addEventListener( 'touchstart', onMouseDown );
 
 };
 
