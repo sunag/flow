@@ -445,19 +445,3 @@ f-node.rounded f-element input {
 	padding-left: 7px;
 	padding-right: 7px;
 }
-
-f-node.glass f-element {
-	background-color: rgb(48 48 48 / 75%);
-	backdrop-filter: blur(3px);
-}
-
-f-node.glass f-element input,
-f-node.glass f-element select,
-f-node.glass f-element button,
-f-node.glass f-element textarea {
-	background-color: rgb(20 20 20 / 85%);
-}
-
-f-node.glass f-element.title {
-	background-color: #065ad9de;
-}
