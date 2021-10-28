@@ -16,7 +16,7 @@ export const draggableDOM = ( dom, callback = null ) => {
 		window.addEventListener( 'mousemove', onGlobalMouseMove );
 		window.addEventListener( 'mouseup', onGlobalMouseUp );
 
-		window.addEventListener( 'touchmove', onGlobalMouseMove, { passive: false } );
+		window.addEventListener( 'touchmove', onGlobalMouseMove );
 		window.addEventListener( 'touchend', onGlobalMouseUp );
 
 	};
@@ -34,12 +34,6 @@ export const draggableDOM = ( dom, callback = null ) => {
 		dragData.y = start.y + delta.y;
 
 		if ( dragData.dragging === true ) {
-
-			if ( e.cancelable === true ) {
-
-				e.preventDefault();
-
-			}
 
 			if ( callback !== null ) {
 

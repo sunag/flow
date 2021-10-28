@@ -1,5 +1,6 @@
 import { Input } from '../core/Input.js';
 import { NumberInput } from './NumberInput.js';
+import { draggableDOM } from '../core/Utils.js';
 
 export class SliderInput extends Input {
 
@@ -60,31 +61,13 @@ export class SliderInput extends Input {
 
 		};
 
-		const onGlobalMouseMove = ( ) => {
+		draggableDOM( rangeDOM, ( data ) => {
 
 			updateRangeValue();
 
 			dispatchEvent( 'change' );
 
-		};
-
-		const onGlobalMouseUp = () => {
-
-			updateRangeValue();
-
-			window.removeEventListener( "mousemove", onGlobalMouseMove );
-			window.removeEventListener( "mouseup", onGlobalMouseUp );
-
-		};
-
-		rangeDOM.onmousedown = () => {
-
-			updateRangeValue();
-
-			window.addEventListener( "mousemove", onGlobalMouseMove );
-			window.addEventListener( "mouseup", onGlobalMouseUp );
-
-		};
+		} );
 
 	}
 
