@@ -227,12 +227,12 @@ __flow__addCSS( `f-node { position: absolute; margin: 0; padding: 0; box-sizing:
 	}
 
 	class DraggableElement extends Element {
-	  constructor(dragabble = true) {
+	  constructor(draggable = true) {
 	    super();
-	    this.dragabble = dragabble;
+	    this.draggable = draggable;
 
 	    this.dom.onmousedown = () => {
-	      if (dragabble === true) {
+	      if (draggable === true) {
 	        draggableDOM(this.node.dom);
 	      }
 	    };
@@ -266,8 +266,8 @@ __flow__addCSS( `f-node { position: absolute; margin: 0; padding: 0; box-sizing:
 	}
 
 	class TitleElement extends DraggableElement {
-	  constructor(title, dragabble = true) {
-	    super(dragabble);
+	  constructor(title, draggable = true) {
+	    super(draggable);
 	    this.dom.className = 'title';
 	    const span = document.createElement('span');
 	    span.innerText = title;

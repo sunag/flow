@@ -305,15 +305,15 @@ class Node {
 
 class DraggableElement extends Element {
 
-	constructor( dragabble = true ) {
+	constructor( draggable = true ) {
 
 		super();
 
-		this.dragabble = dragabble;
+		this.draggable = draggable;
 
 		this.dom.onmousedown = () => {
 
-			if ( dragabble === true ) {
+			if ( draggable === true ) {
 
 				draggableDOM( this.node.dom );
 
@@ -365,9 +365,9 @@ class LabelElement extends Element {
 
 class TitleElement extends DraggableElement {
 
-	constructor( title, dragabble = true ) {
+	constructor( title, draggable = true ) {
 
-		super( dragabble );
+		super( draggable );
 
 		this.dom.className = 'title';
 
