@@ -12,7 +12,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/build-passing-green">
-  <img src="https://img.shields.io/badge/flow.min.js-14kB-0099FF">
+  <img src="https://img.shields.io/badge/flow.min.js-17kB-0099FF">
 </p>
 
 :rocket: Examples
