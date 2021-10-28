@@ -1,10 +1,10 @@
-import { Element } from '../core/Element.js';
+import { DragabbleElement } from './DragabbleElement.js';
 
-export class TitleElement extends Element {
+export class TitleElement extends DragabbleElement {
 
-	constructor( title ) {
+	constructor( title, dragabble = true ) {
 
-		super();
+		super( dragabble );
 
 		this.dom.className = 'title';
 

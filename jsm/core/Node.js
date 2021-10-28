@@ -13,6 +13,14 @@ export class Node {
 
 	}
 
+	setPosition( x, y ) {
+
+		this.dom.style.cssText += `; left: ${ x }px; top: ${ y }px;`;
+
+		return this;
+
+	}
+
 	setStyle( style ) {
 
 		this.style = style;
@@ -48,6 +56,8 @@ export class Node {
 	}
 
 	add( element ) {
+
+		element.node = this;
 
 		this.dom.appendChild( element.dom );
 

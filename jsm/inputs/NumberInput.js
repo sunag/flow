@@ -1,4 +1,5 @@
 import { Input } from '../core/Input.js';
+import { dragabbleDOM } from '../core/Utils.js';
 
 const ENTER_KEY = 13;
 
@@ -55,53 +56,25 @@ export class NumberInput extends Input {
 
 		};
 
-		const onGlobalMouseMove = ( e ) => {
+		dragabbleDOM( dom, ( data ) => {
 
-			const diff = ( e.clientX - dragData.x ) - ( e.clientY - dragData.y );
+			const { delta } = data;
 
-			if ( dragData.dragging === true ) {
+			if ( data.value === undefined ) {
 
-				const value = dragData.value + ( diff * this.step );
-
-				this.dom.value = this._getString( value.toFixed( this.precision ) );
-
-				e.preventDefault();
-
-				dispatchEvent( 'change' );
-
-			} else {
-
-				if ( Math.abs( diff ) > 1 ) {
-
-					dragData.dragging = true;
-
-				}
+				data.value = this.value;
 
 			}
 
-		};
+			const diff = delta.x - delta.y;
 
-		const onGlobalMouseUp = () => {
+			const value = data.value + ( diff * this.step );
 
-			window.removeEventListener( "mousemove", onGlobalMouseMove );
-			window.removeEventListener( "mouseup", onGlobalMouseUp );
+			this.dom.value = this._getString( value.toFixed( this.precision ) );
 
-			if ( dragData.dragging === true ) {
+			dispatchEvent( 'change' );
 
-				dispatchEvent( 'complete' );
-
-			}
-
-		};
-
-		dom.onmousedown = ( e ) => {
-
-			dragData = { x: e.clientX, y: e.clientY, dragging: false, value: this.value };
-
-			window.addEventListener( "mousemove", onGlobalMouseMove );
-			window.addEventListener( "mouseup", onGlobalMouseUp );
-
-		};
+		} );
 
 	}
 
