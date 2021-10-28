@@ -24,7 +24,7 @@ __flow__addCSS( `f-node { position: absolute; margin: 0; padding: 0; box-sizing:
 	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Flow = {}));
 })(this, (function (exports) { 'use strict';
 
-	const dragabbleDOM = (dom, callback = null) => {
+	const draggableDOM = (dom, callback = null) => {
 	  let dragData = null;
 
 	  const onMouseDown = e => {
@@ -112,7 +112,7 @@ __flow__addCSS( `f-node { position: absolute; margin: 0; padding: 0; box-sizing:
 
 	var Utils = /*#__PURE__*/Object.freeze({
 		__proto__: null,
-		dragabbleDOM: dragabbleDOM,
+		draggableDOM: draggableDOM,
 		dispatchEventList: dispatchEventList,
 		toPX: toPX,
 		toHex: toHex
@@ -226,14 +226,14 @@ __flow__addCSS( `f-node { position: absolute; margin: 0; padding: 0; box-sizing:
 
 	}
 
-	class DragabbleElement extends Element {
+	class DraggableElement extends Element {
 	  constructor(dragabble = true) {
 	    super();
 	    this.dragabble = dragabble;
 
 	    this.dom.onmousedown = () => {
 	      if (dragabble === true) {
-	        dragabbleDOM(this.node.dom);
+	        draggableDOM(this.node.dom);
 	      }
 	    };
 	  }
@@ -265,7 +265,7 @@ __flow__addCSS( `f-node { position: absolute; margin: 0; padding: 0; box-sizing:
 
 	}
 
-	class TitleElement extends DragabbleElement {
+	class TitleElement extends DraggableElement {
 	  constructor(title, dragabble = true) {
 	    super(dragabble);
 	    this.dom.className = 'title';
@@ -313,7 +313,7 @@ __flow__addCSS( `f-node { position: absolute; margin: 0; padding: 0; box-sizing:
 	      e.stopPropagation();
 	    };
 
-	    dragabbleDOM(dom, data => {
+	    draggableDOM(dom, data => {
 	      const {
 	        delta
 	      } = data;
@@ -626,7 +626,7 @@ __flow__addCSS( `f-node { position: absolute; margin: 0; padding: 0; box-sizing:
 
 	exports.ButtonInput = ButtonInput;
 	exports.ColorInput = ColorInput;
-	exports.DragabbleElement = DragabbleElement;
+	exports.DraggableElement = DraggableElement;
 	exports.Element = Element;
 	exports.Input = Input;
 	exports.LabelElement = LabelElement;
