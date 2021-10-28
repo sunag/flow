@@ -2,9 +2,9 @@ import { DraggableElement } from './DraggableElement.js';
 
 export class TitleElement extends DraggableElement {
 
-	constructor( title, dragabble = true ) {
+	constructor( title, draggable = true ) {
 
-		super( dragabble );
+		super( draggable );
 
 		this.dom.className = 'title';
 

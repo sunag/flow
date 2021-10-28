@@ -3,15 +3,15 @@ import { draggableDOM } from '../core/Utils.js';
 
 export class DraggableElement extends Element {
 
-	constructor( dragabble = true ) {
+	constructor( draggable = true ) {
 
 		super();
 
-		this.dragabble = dragabble;
+		this.draggable = draggable;
 
 		this.dom.onmousedown = () => {
 
-			if ( dragabble === true ) {
+			if ( draggable === true ) {
 
 				draggableDOM( this.node.dom );
 
