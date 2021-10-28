@@ -28,27 +28,21 @@
 ```javascript
 import * as Flow from '../build/flow.module.js';
 
-const node = new Flow.Node();
-node.setWidth( 400 );
-node.setAlign( 'center' );
+const object = {
+	'string': 'Hello World!',
+	'color': 0x339933,
+	'number': 100,
+	'slider': .5,
+	'text': 'Text Area'
+};
 
-const numberElement = new Flow.LabelElement( 'onChange' );
-numberElement.add( new Flow.NumberInput( 1 ).onChange( ( input ) => {
-
-  console.log( 'Value:', input.value );
-
-} ) );
-
-const buttonElement = new Flow.LabelElement( 'onClick' );
-buttonElement.add( new Flow.ButtonInput( 'OK' ).onClick( () => {
-
-  console.log( 'Clicked!' );
-
-} ) );
-
-node.add( new Flow.TitleElement( 'Callback ( Open Console )' ) );
-node.add( numberElement );
-node.add( buttonElement );
+const node = new Flow.PanelNode( 'Panel', 'center' );
+node.addString( object, 'string' );
+node.addColor( object, 'color' );
+node.addNumber( object, 'number' );
+node.addSlider( object, 'slider', 0, 1 );
+node.addText( object, 'text' );
+node.addButton( 'My Button' );
 
 document.body.appendChild( node.dom );
 ```
