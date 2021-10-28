@@ -24,6 +24,72 @@ __flow__addCSS( `f-node { position: absolute; margin: 0; padding: 0; box-sizing:
 	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Flow = {}));
 })(this, (function (exports) { 'use strict';
 
+	const dragabbleDOM = (dom, callback = null) => {
+	  let dragData = null;
+
+	  const onMouseDown = e => {
+	    dragData = {
+	      client: {
+	        x: e.clientX,
+	        y: e.clientY
+	      },
+	      delta: {
+	        x: 0,
+	        y: 0
+	      },
+	      start: {
+	        x: dom.offsetLeft,
+	        y: dom.offsetTop
+	      },
+	      dragging: false
+	    };
+	    window.addEventListener("mousemove", onGlobalMouseMove);
+	    window.addEventListener("mouseup", onGlobalMouseUp);
+	  };
+
+	  const onGlobalMouseMove = e => {
+	    const {
+	      start,
+	      delta,
+	      client
+	    } = dragData;
+	    delta.x = e.clientX - client.x;
+	    delta.y = e.clientY - client.y;
+	    dragData.x = start.x + delta.x;
+	    dragData.y = start.y + delta.y;
+
+	    if (dragData.dragging === true) {
+	      e.preventDefault();
+
+	      if (callback !== null) {
+	        callback(dragData);
+	      } else {
+	        dom.style.cssText += `; left: ${dragData.x}px; top: ${dragData.y}px;`;
+	      }
+	    } else {
+	      if (Math.abs(delta.x) > 1 || Math.abs(delta.y) > 1) {
+	        dragData.dragging = true;
+	      }
+	    }
+	  };
+
+	  const onGlobalMouseUp = () => {
+	    window.removeEventListener("mousemove", onGlobalMouseMove);
+	    window.removeEventListener("mouseup", onGlobalMouseUp);
+
+	    if (dragData.dragging === true) {
+	      dragData.dragging = false;
+
+	      if (callback !== null) {
+	        callback(dragData);
+	      } else {
+	        dom.removeEventListener('mousedown', onMouseDown);
+	      }
+	    }
+	  };
+
+	  dom.addEventListener('mousedown', onMouseDown);
+	};
 	const dispatchEventList = (list, ...params) => {
 	  for (const callback of list) {
 	    callback(...params);
@@ -46,6 +112,7 @@ __flow__addCSS( `f-node { position: absolute; margin: 0; padding: 0; box-sizing:
 
 	var Utils = /*#__PURE__*/Object.freeze({
 		__proto__: null,
+		dragabbleDOM: dragabbleDOM,
 		dispatchEventList: dispatchEventList,
 		toPX: toPX,
 		toHex: toHex
@@ -117,6 +184,11 @@ __flow__addCSS( `f-node { position: absolute; margin: 0; padding: 0; box-sizing:
 	    this._updateClass();
 	  }
 
+	  setPosition(x, y) {
+	    this.dom.style.cssText += `; left: ${x}px; top: ${y}px;`;
+	    return this;
+	  }
+
 	  setStyle(style) {
 	    this.style = style;
 
@@ -143,12 +215,27 @@ __flow__addCSS( `f-node { position: absolute; margin: 0; padding: 0; box-sizing:
 	  }
 
 	  add(element) {
+	    element.node = this;
 	    this.dom.appendChild(element.dom);
 	    return this;
 	  }
 
 	  _updateClass() {
 	    this.dom.className = `${this.style} ${this.align}`;
+	  }
+
+	}
+
+	class DragabbleElement extends Element {
+	  constructor(dragabble = true) {
+	    super();
+	    this.dragabble = dragabble;
+
+	    this.dom.onmousedown = () => {
+	      if (dragabble === true) {
+	        dragabbleDOM(this.node.dom);
+	      }
+	    };
 	  }
 
 	}
@@ -178,9 +265,9 @@ __flow__addCSS( `f-node { position: absolute; margin: 0; padding: 0; box-sizing:
 
 	}
 
-	class TitleElement extends Element {
-	  constructor(title) {
-	    super();
+	class TitleElement extends DragabbleElement {
+	  constructor(title, dragabble = true) {
+	    super(dragabble);
 	    this.dom.className = 'title';
 	    const span = document.createElement('span');
 	    span.innerText = title;
@@ -203,7 +290,6 @@ __flow__addCSS( `f-node { position: absolute; margin: 0; padding: 0; box-sizing:
 	    dom.value = this._getString(value);
 	    dom.spellcheck = false;
 	    dom.autocomplete = 'off';
-	    let dragData = null;
 
 	    const dispatchEvent = type => {
 	      this.dispatchEvent(new Event(type));
@@ -227,40 +313,20 @@ __flow__addCSS( `f-node { position: absolute; margin: 0; padding: 0; box-sizing:
 	      e.stopPropagation();
 	    };
 
-	    const onGlobalMouseMove = e => {
-	      const diff = e.clientX - dragData.x - (e.clientY - dragData.y);
+	    dragabbleDOM(dom, data => {
+	      const {
+	        delta
+	      } = data;
 
-	      if (dragData.dragging === true) {
-	        const value = dragData.value + diff * this.step;
-	        this.dom.value = this._getString(value.toFixed(this.precision));
-	        e.preventDefault();
-	        dispatchEvent('change');
-	      } else {
-	        if (Math.abs(diff) > 1) {
-	          dragData.dragging = true;
-	        }
+	      if (data.value === undefined) {
+	        data.value = this.value;
 	      }
-	    };
 
-	    const onGlobalMouseUp = () => {
-	      window.removeEventListener("mousemove", onGlobalMouseMove);
-	      window.removeEventListener("mouseup", onGlobalMouseUp);
-
-	      if (dragData.dragging === true) {
-	        dispatchEvent('complete');
-	      }
-	    };
-
-	    dom.onmousedown = e => {
-	      dragData = {
-	        x: e.clientX,
-	        y: e.clientY,
-	        dragging: false,
-	        value: this.value
-	      };
-	      window.addEventListener("mousemove", onGlobalMouseMove);
-	      window.addEventListener("mouseup", onGlobalMouseUp);
-	    };
+	      const diff = delta.x - delta.y;
+	      const value = data.value + diff * this.step;
+	      this.dom.value = this._getString(value.toFixed(this.precision));
+	      dispatchEvent('change');
+	    });
 	  }
 
 	  setRange(min, max, step) {
@@ -560,6 +626,7 @@ __flow__addCSS( `f-node { position: absolute; margin: 0; padding: 0; box-sizing:
 
 	exports.ButtonInput = ButtonInput;
 	exports.ColorInput = ColorInput;
+	exports.DragabbleElement = DragabbleElement;
 	exports.Element = Element;
 	exports.Input = Input;
 	exports.LabelElement = LabelElement;
