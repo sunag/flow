@@ -17,7 +17,6 @@
 		const node = new Flow.Node();
 		node.setWidth( 350 );
 		node.setPosition( 100, 100 );
-		//node.setAlign( 'center' );
 
 		node.add( new Flow.TitleElement( 'Inputs' ) );
 
@@ -27,9 +26,28 @@
 				.add( new Flow.NumberInput( 2 ) )
 				.add( new Flow.NumberInput( 3 ) )
 		);
+		
+		node.add(
+			new Flow.LabelElement( 'Numbers' )
+				.add( new Flow.SliderInput( .5, 0, 1 ) )
+		);
+
+		const node2 = new Flow.Node();
+		node2.setWidth( 350 );
+		node2.setPosition( 200, 300 );
+		
+		node2.add( new Flow.TitleElement( 'Inputs' ) );
+		
+		node2.add(
+			new Flow.LabelElement( 'Numbers' )
+				.add( new Flow.NumberInput( 1 ) )
+				.add( new Flow.NumberInput( 2 ) )
+				.add( new Flow.NumberInput( 3 ) )
+		);
 
 		const canvas = new Flow.Canvas();
 		canvas.add( node );
+		canvas.add( node2 );
 
 		document.body.appendChild( canvas.dom );
 

@@ -6,20 +6,22 @@ export class TitleElement extends DraggableElement {
 
 		super( draggable );
 
-		this.buttons = [];
+		const { dom } = this;
 
-		this.dom.className = 'title';
+		dom.className = 'title';
 
 		const spanDOM = document.createElement( 'span' );
 		spanDOM.innerText = title;
 
 		const toolbarDOM = document.createElement( 'f-toolbar' );
 
+		this.buttons = [];
+
 		this.spanDOM = spanDOM;
 		this.toolbarDOM = toolbarDOM;
 
-		this.dom.appendChild( spanDOM );
-		this.dom.appendChild( toolbarDOM );
+		dom.appendChild( spanDOM );
+		dom.appendChild( toolbarDOM );
 
 	}
 

@@ -1,36 +1,20 @@
-export const drawLine = ( p1x, p1y, p2x, p2y, invert, size, color, ctx ) => {
 
-	const offset = 100 * ( invert ? - 1 : 1 );
-
-	ctx.beginPath();
-
-	ctx.moveTo( p1x, p1y );
-
-	ctx.bezierCurveTo(
-		p1x + offset, p1y,
-		p2x - offset, p2y,
-		p2x, p2y
-	);
-
-	ctx.lineWidth = size;
-	ctx.strokeStyle = color;
-	ctx.stroke();
-
-};
-
-export const draggableDOM = ( dom, callback = null ) => {
+export const draggableDOM = ( dom, callback = null, className = 'dragging' ) => {
 
 	let dragData = null;
 
 	const onMouseDown = ( e ) => {
 
-		const target = e.touches ? e.touches[ 0 ] : e;
+		const event = e.touches ? e.touches[ 0 ] : e;
+
+		e.stopImmediatePropagation();
 
 		dragData = {
-			client: { x: target.clientX, y: target.clientY },
+			client: { x: event.clientX, y: event.clientY },
 			delta: { x: 0, y: 0 },
 			start: { x: dom.offsetLeft, y: dom.offsetTop },
-			dragging: false
+			dragging: false,
+			isTouch: !! e.touches
 		};
 
 		window.addEventListener( 'mousemove', onGlobalMouseMove );
@@ -45,10 +29,10 @@ export const draggableDOM = ( dom, callback = null ) => {
 
 		const { start, delta, client } = dragData;
 
-		const target = e.touches ? e.touches[ 0 ] : e;
+		const event = e.touches ? e.touches[ 0 ] : e;
 
-		delta.x = target.clientX - client.x;
-		delta.y = target.clientY - client.y;
+		delta.x = event.clientX - client.x;
+		delta.y = event.clientY - client.y;
 
 		dragData.x = start.x + delta.x;
 		dragData.y = start.y + delta.y;
@@ -65,11 +49,19 @@ export const draggableDOM = ( dom, callback = null ) => {
 
 			}
 
+			e.stopImmediatePropagation();
+
 		} else {
 
 			if ( Math.abs( delta.x ) > 1 || Math.abs( delta.y ) > 1 ) {
 
 				dragData.dragging = true;
+
+				dom.classList.add( 'drag' );
+
+				if ( className ) document.body.classList.add( className );
+
+				e.stopImmediatePropagation();
 
 			}
 
@@ -77,7 +69,13 @@ export const draggableDOM = ( dom, callback = null ) => {
 
 	};
 
-	const onGlobalMouseUp = () => {
+	const onGlobalMouseUp = ( e ) => {
+
+		e.stopImmediatePropagation();
+
+		dom.classList.remove( 'drag' );
+
+		if ( className ) document.body.classList.remove( className );
 
 		window.removeEventListener( 'mousemove', onGlobalMouseMove );
 		window.removeEventListener( 'mouseup', onGlobalMouseUp );
@@ -85,27 +83,36 @@ export const draggableDOM = ( dom, callback = null ) => {
 		window.removeEventListener( 'touchmove', onGlobalMouseMove );
 		window.removeEventListener( 'touchend', onGlobalMouseUp );
 
-		if ( dragData.dragging === true ) {
+		if ( callback === null ) {
 
-			dragData.dragging = false;
+			dom.removeEventListener( 'mousedown', onMouseDown );
+			dom.removeEventListener( 'touchstart', onMouseDown );
 
-			if ( callback !== null ) {
+		}
 
-				callback( dragData );
+		dragData.dragging = false;
 
-			} else {
+		if ( callback !== null ) {
 
-				dom.removeEventListener( 'mousedown', onMouseDown );
-				dom.removeEventListener( 'touchstart', onMouseDown );
-
-			}
+			callback( dragData );
 
 		}
 
 	};
 
-	dom.addEventListener( 'mousedown', onMouseDown );
-	dom.addEventListener( 'touchstart', onMouseDown );
+	if ( dom instanceof Event ) {
+
+		const e = dom;
+		dom = e.target;
+
+		onMouseDown( e );
+
+	} else {
+
+		dom.addEventListener( 'mousedown', onMouseDown );
+		dom.addEventListener( 'touchstart', onMouseDown );
+
+	}
 
 };
 

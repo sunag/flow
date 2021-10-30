@@ -1,11 +1,32 @@
 import { toPX } from './Utils.js';
 
+let selected = null;
+
 export class Node {
 
 	constructor() {
 
-		this.dom = document.createElement( 'f-node' );
-		this.dom.className = 'rounded';
+		const dom = document.createElement( 'f-node' );
+		//dom.className = 'rounded';
+
+		const onClick = () => {
+
+			if ( selected ) {
+
+				selected.dom.style[ 'z-index' ] = 1;
+
+			}
+
+			dom.style[ 'z-index' ] = 2;
+
+			selected = this;
+
+		};
+
+		dom.addEventListener( 'mousedown', onClick, true );
+		dom.addEventListener( 'touchstart', onClick, true );
+
+		this.dom = dom;
 
 		this.style = '';
 

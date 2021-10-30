@@ -21,8 +21,8 @@ export class DraggableElement extends Element {
 
 		const { dom } = this;
 
-		dom.addEventListener( 'mousedown', onDrag );
-		dom.addEventListener( 'touchstart', onDrag );
+		dom.addEventListener( 'mousedown', onDrag, true );
+		dom.addEventListener( 'touchstart', onDrag, true );
 
 	}
 
