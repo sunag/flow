@@ -39,7 +39,7 @@ export class Canvas {
 			e.preventDefault();
 
 			const delta = e.deltaY / 100;
-			const zoom = Math.min( Math.max( this.zoom - delta * .1, .4 ), 1 );
+			const zoom = Math.min( Math.max( this.zoom - delta * .1, .5 ), 1 );
 
 			const offsetX = this.clientX - ( e.clientX / zoom );
 			const offsetY = this.clientY - ( e.clientY / zoom );
