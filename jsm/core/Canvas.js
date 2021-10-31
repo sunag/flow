@@ -27,10 +27,29 @@ export class Canvas {
 		this.clientX = 0;
 		this.clientY = 0;
 
+		this.zoom = 1;
+
 		this.nodes = [];
 
 		dom.appendChild( canvas );
 		dom.appendChild( contentDOM );
+
+		dom.addEventListener( 'wheel', ( e ) => {
+
+			e.preventDefault();
+
+			const delta = e.deltaY / 100;
+			const zoom = Math.min( Math.max( this.zoom - delta * .1, .4 ), 1 );
+
+			const offsetX = this.clientX - ( e.clientX / zoom );
+			const offsetY = this.clientY - ( e.clientY / zoom );
+
+			dom.style.zoom = this.zoom = zoom;
+
+			dom.scrollLeft += offsetX;
+			dom.scrollTop += offsetY;
+
+		} );
 
 		draggableDOM( dom, ( data ) => {
 
@@ -66,18 +85,20 @@ export class Canvas {
 
 			const event = e.touches ? e.touches[ 0 ] : e;
 
-			this.clientX = event.clientX;
-			this.clientY = event.clientY;
+			this.clientX = event.clientX / this.zoom;
+			this.clientY = event.clientY / this.zoom;
 
 		};
 
+		dom.addEventListener( 'wheel', onMoveEvent, true );
+
+		dom.addEventListener( 'mousedown', onMoveEvent, true );
+		dom.addEventListener( 'touchstart', onMoveEvent, true );
+
+		dom.addEventListener( 'mousemove', onMoveEvent, true );
+		dom.addEventListener( 'touchmove', onMoveEvent, true );
+
 		document.addEventListener( 'DOMContentLoaded', () => {
-
-			dom.addEventListener( 'mousestart', onMoveEvent, true );
-			dom.addEventListener( 'touchstart', onMoveEvent, true );
-
-			dom.addEventListener( 'mousemove', onMoveEvent, true );
-			dom.addEventListener( 'touchmove', onMoveEvent, true );
 
 			dom.scroll(
 				5000,
