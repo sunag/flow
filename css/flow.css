@@ -15,7 +15,8 @@ f-canvas {
 	cursor: grab;
 }
 
-body.dragging f-canvas {
+body.dragging f-canvas,
+body.connecting f-canvas {
 	overflow: hidden !important;
 }
 
