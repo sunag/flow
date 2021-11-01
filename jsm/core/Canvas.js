@@ -2,9 +2,9 @@ import { draggableDOM } from './Utils.js';
 import { drawLine } from './CanvasUtils.js';
 
 const inputColors = [
-	'#ff6666',
-	'#66ff66',
-	'#6666ff'
+	'#ff4444',
+	'#44ff44',
+	'#4444ff'
 ];
 
 export class Canvas {
@@ -311,7 +311,7 @@ export class Canvas {
 					drawLine(
 						aPos.x, Math.round( ( aPos.y + ( aIndex * 2 ) ) - outputLength ) - 1,
 						bPos.x, Math.round( ( bPos.y + ( bIndex * 2 ) ) - inputLength ) - 1,
-						false, 1, color, context
+						false, 2, color, context
 					);
 
 				}
