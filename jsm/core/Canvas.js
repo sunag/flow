@@ -34,22 +34,87 @@ export class Canvas {
 		dom.appendChild( canvas );
 		dom.appendChild( contentDOM );
 
-		dom.addEventListener( 'wheel', ( e ) => {
+		let zoomTouchData = null;
 
-			e.preventDefault();
+		const onZoomStart = ( e ) => {
 
-			const delta = e.deltaY / 100;
-			const zoom = Math.min( Math.max( this.zoom - delta * .1, .5 ), 1 );
+			zoomTouchData = null;
 
-			const offsetX = this.clientX - ( e.clientX / zoom );
-			const offsetY = this.clientY - ( e.clientY / zoom );
+		};
 
-			dom.style.zoom = this.zoom = zoom;
+		const onZoom = ( e ) => {
 
-			dom.scrollLeft += offsetX;
-			dom.scrollTop += offsetY;
+			if ( e.touches ) {
 
-		} );
+				if ( e.touches.length === 2 ) {
+
+					e.preventDefault();
+
+					e.stopImmediatePropagation();
+
+					const clientX = ( e.touches[ 0 ].clientX + e.touches[ 1 ].clientX ) / 2;
+					const clientY = ( e.touches[ 0 ].clientY + e.touches[ 1 ].clientY ) / 2;
+
+					const distance = Math.hypot(
+						e.touches[ 0 ].clientX - e.touches[ 1 ].clientX,
+						e.touches[ 0 ].clientY - e.touches[ 1 ].clientY
+					);
+
+					if ( zoomTouchData === null ) {
+
+						zoomTouchData = {
+							clientX,
+							clientY,
+							distance
+						};
+
+					}
+
+					const delta = ( zoomTouchData.distance - distance );
+					zoomTouchData.distance = distance;
+
+					let zoom = Math.min( Math.max( this.zoom - delta * .01, .5 ), 1.2 );
+
+					if ( zoom < .52 ) zoom = .5;
+					else if ( zoom > .98 ) zoom = 1;
+
+					const offsetX = ( zoomTouchData.clientX / this.zoom ) - ( clientX / zoom );
+					const offsetY = ( zoomTouchData.clientY / this.zoom ) - ( clientY / zoom );
+
+					zoomTouchData.clientX = clientX;
+					zoomTouchData.clientY = clientY;
+
+					dom.style.zoom = this.zoom = zoom;
+
+					dom.scrollLeft += offsetX;
+					dom.scrollTop += offsetY;
+
+				}
+
+			} else {
+
+				e.preventDefault();
+
+				e.stopImmediatePropagation();
+
+				const delta = e.deltaY / 100;
+				const zoom = Math.min( Math.max( this.zoom - delta * .1, .5 ), 1 );
+
+				const offsetX = this.clientX - ( e.clientX / zoom );
+				const offsetY = this.clientY - ( e.clientY / zoom );
+
+				dom.style.zoom = this.zoom = zoom;
+
+				dom.scrollLeft += offsetX;
+				dom.scrollTop += offsetY;
+
+			}
+
+		};
+
+		dom.addEventListener( 'wheel', onZoom );
+		dom.addEventListener( 'touchmove', onZoom );
+		dom.addEventListener( 'touchstart', onZoomStart );
 
 		draggableDOM( dom, ( data ) => {
 
