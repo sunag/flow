@@ -426,10 +426,16 @@ f-element f-io {
 	z-index: 1;
 }
 
-f-element f-io.dragging,
-f-canvas.dragging f-element:hover f-io {
+f-element f-io.connect,
+f-canvas.dragging-output f-element:hover f-io.input,
+f-canvas.dragging-input f-element:hover f-io.output {
 	border: 2px solid #0177fb;
 	zoom: 1.4;
+}
+
+f-node.io-connect f-io:not(.connect) {
+	border: 2px solid #dadada !important;
+	zoom: 1 !important;
 }
 
 f-element f-io.output {
@@ -477,7 +483,7 @@ f-element.large {
     height: 36px;
 }
 
-f-canvas.dragging f-element:hover,
+body.connecting f-node:not(.io-connect) f-element:hover,
 f-element.select {
 	background-color: rgba(61, 70, 82, 0.98);
 }

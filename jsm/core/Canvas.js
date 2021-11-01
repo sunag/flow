@@ -239,13 +239,13 @@ export class Canvas {
 		const aPos = { x: 0, y: 0 };
 		const bPos = { x: 0, y: 0 };
 
-		let dragging = false;
+		let dragging = '';
 
 		for ( const link of links ) {
 
 			const { sourceElement, targetElement } = link;
 
-			let draggingLink = false;
+			let draggingLink = '';
 			let length = 0;
 
 			if ( sourceElement !== null ) {
@@ -262,7 +262,7 @@ export class Canvas {
 				aPos.x = this.clientX;
 				aPos.y = this.clientY;
 
-				draggingLink = true;
+				draggingLink = 'input';
 
 			}
 
@@ -280,7 +280,7 @@ export class Canvas {
 				bPos.x = this.clientX;
 				bPos.y = this.clientY;
 
-				draggingLink = true;
+				draggingLink = 'output';
 
 			}
 
@@ -320,8 +320,16 @@ export class Canvas {
 
 		}
 
-		if ( dragging ) dom.classList.add( 'dragging' );
-		else dom.classList.remove( 'dragging' );
+		if ( dragging !== '' ) {
+
+			dom.classList.add( 'dragging-' + dragging );
+
+		} else {
+
+			dom.classList.remove( 'dragging-input' );
+			dom.classList.remove( 'dragging-output' );
+
+		}
 
 	}
 

@@ -133,7 +133,11 @@ export class Element {
 
 			selected = null;
 
-			ioDOM.classList.add( 'dragging' );
+			const nodeDOM = this.node.dom;
+
+			nodeDOM.classList.add( 'io-connect' );
+
+			ioDOM.classList.add( 'connect' );
 			dom.classList.add( 'select' );
 
 			const link = type === 'output' ? new Link( this ) : new Link( null, this );
@@ -144,7 +148,9 @@ export class Element {
 
 				if ( data.dragging === false ) {
 
-					ioDOM.classList.remove( 'dragging' );
+					nodeDOM.classList.remove( 'io-connect' );
+
+					ioDOM.classList.remove( 'connect' );
 					dom.classList.remove( 'select' );
 
 					this.links.splice( this.links.indexOf( link ), 1 );
