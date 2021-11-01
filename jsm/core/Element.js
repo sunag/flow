@@ -127,6 +127,8 @@ export class Element {
 
 		const onConnectEvent = ( e ) => {
 
+			e.preventDefault();
+
 			e.stopPropagation();
 
 			selected = null;
