@@ -3,7 +3,7 @@
 </h1>
 
 <h3 align="center">
-   Lightweight, cross-browser UI library. 
+   Node-Graph, lightweight, cross-browser UI library. 
 </h3>
 
 <p align="center">
