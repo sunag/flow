@@ -4,6 +4,8 @@ export { Element } from './core/Element.js';
 export { Input } from './core/Input.js';
 export { Node } from './core/Node.js';
 export { Canvas } from './core/Canvas.js';
+export { Serializer } from './core/Serializer.js';
+export { Loader } from './core/Loader.js';
 export * as Utils from './core/Utils.js';
 
 export { PanelNode } from './nodes/PanelNode.js';

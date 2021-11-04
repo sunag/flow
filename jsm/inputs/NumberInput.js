@@ -22,17 +22,9 @@ export class NumberInput extends Input {
 		dom.spellcheck = false;
 		dom.autocomplete = 'off';
 
-		let dragData = null;
-
-		const dispatchEvent = ( type ) => {
-
-			this.dispatchEvent( new Event( type ) );
-
-		};
-
 		dom.onblur = () => {
 
-			dispatchEvent( 'blur' );
+			this.dispatchEvent( new Event( 'blur' ) );
 
 		};
 
@@ -44,7 +36,7 @@ export class NumberInput extends Input {
 
 			}
 
-			dispatchEvent( 'change' );
+			this.dispatchEvent( new Event( 'change' ) );
 
 			if ( e.keyCode === ENTER_KEY ) {
 
@@ -72,7 +64,7 @@ export class NumberInput extends Input {
 
 			this.dom.value = this._getString( value.toFixed( this.precision ) );
 
-			dispatchEvent( 'change' );
+			this.dispatchEvent( new Event( 'change' ) );
 
 		} );
 
@@ -83,6 +75,13 @@ export class NumberInput extends Input {
 		this.min = min;
 		this.max = max;
 		this.step = step;
+
+		this.dom.value = this._getString( this.value );
+
+		this.dispatchEvent( new Event( 'range' ) );
+		this.dispatchEvent( new Event( 'change' ) );
+
+		return this;
 
 	}
 
@@ -105,6 +104,36 @@ export class NumberInput extends Input {
 	get value() {
 
 		return Number( this.dom.value );
+
+	}
+
+	serialize( data ) {
+
+		const { min, max } = this;
+
+		if ( min !== - Infinity && max !== Infinity ) {
+
+			data.min = this.min;
+			data.max = this.max;
+			data.step = this.step;
+
+		}
+
+		super.serialize( data );
+
+	}
+
+	deserialize( data ) {
+
+		if ( data.min !== undefined ) {
+
+			const { min, max, step } = this;
+
+			this.setRange( min, max, step );
+
+		}
+
+		super.deserialize( data );
 
 	}
 

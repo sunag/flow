@@ -22,6 +22,7 @@
 - [x] [Events](https://raw.githack.com/sunag/flow/master/examples/events.html)
 - [x] [Pure HTML5 ( No JavaScript )](https://raw.githack.com/sunag/flow/master/examples/pure.html)
 - [x] [WIP: Node-Graph Editor](https://raw.githack.com/sunag/flow/master/examples/nodes.html)
+- [x] [WIP: Loader / Serializer](https://raw.githack.com/sunag/flow/master/examples/loader.html)
 
 ### :keyboard: JavaScript
 

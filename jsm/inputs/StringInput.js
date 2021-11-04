@@ -14,21 +14,15 @@ export class StringInput extends Input {
 		dom.spellcheck = false;
 		dom.autocomplete = 'off';
 
-		const dispatchEvent = ( type ) => {
-
-			this.dispatchEvent( new Event( type ) );
-
-		};
-
 		dom.onblur = () => {
 
-			dispatchEvent( 'blur' );
+			this.dispatchEvent( new Event( 'blur' ) );
 
 		};
 
 		dom.onchange = () => {
 
-			dispatchEvent( 'change' );
+			this.dispatchEvent( new Event( 'change' ) );
 
 		};
 

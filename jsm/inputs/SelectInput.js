@@ -7,15 +7,9 @@ export class SelectInput extends Input {
 		const dom = document.createElement( 'select' );
 		super( dom );
 
-		const dispatchEvent = ( type ) => {
-
-			this.dispatchEvent( new Event( type ) );
-
-		};
-
 		dom.onchange = () => {
 
-			dispatchEvent( 'change' );
+			this.dispatchEvent( new Event( 'change' ) );
 
 		};
 

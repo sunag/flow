@@ -1,6 +1,7 @@
+import { Serializer } from './Serializer.js';
 import { dispatchEventList } from './Utils.js';
 
-export class Input extends EventTarget {
+export class Input extends Serializer {
 
 	constructor( dom ) {
 
@@ -54,6 +55,18 @@ export class Input extends EventTarget {
 	get value() {
 
 		return this.dom.value;
+
+	}
+
+	serialize( data ) {
+
+		data.value = this.value;
+
+	}
+
+	deserialize( data ) {
+
+		this.value = data.value;
 
 	}
 

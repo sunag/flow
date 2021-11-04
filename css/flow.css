@@ -16,6 +16,10 @@ f-canvas {
 	cursor: grab;
 }
 
+f-canvas canvas.front {
+	z-index: 10;
+}
+
 body.dragging f-canvas,
 body.connecting f-canvas {
 	overflow: hidden !important;
@@ -75,10 +79,21 @@ f-node {
 	width: 320px;
 	z-index: 1;
 	cursor: auto;
-	/*
+	/* */
 	box-sizing: border-box;
 	padding-right: 14px;
-	*/
+	/*box-shadow: 0 0 8px 5px #00000061;*/
+	filter: drop-shadow(0 0 10px #00000061);
+}
+
+f-node.selected {
+	z-index: 2;
+}
+
+f-node.selected,
+f-canvas.dragging-output f-node:hover,
+f-canvas.dragging-input f-node:hover {
+	filter: drop-shadow(0 0 10px #00000061) drop-shadow(0 0 8px #4444dd);
 }
 
 f-node.closed f-element:not(:first-child) {

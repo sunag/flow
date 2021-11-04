@@ -1,11 +1,14 @@
+import { Serializer } from './Serializer.js';
 import { toPX, draggableDOM } from './Utils.js';
 import { Link } from './Link.js';
 
 let selected = null;
 
-export class Element {
+export class Element extends Serializer {
 
 	constructor() {
+
+		super();
 
 		const dom = document.createElement( 'f-element' );
 		dom.element = this;
@@ -48,15 +51,15 @@ export class Element {
 
 		this.node = null;
 
-		this.inputDOM = null;
-		this.outputDOM = null;
-
 		this.inputsDOM = dom;
 
 		this.disconnectDOM = null;
 
-		this.setInput( 3 );
-		this.setOutput( 1 );
+		this.inputDOM = this._createIO( 'input' );
+		this.outputDOM = this._createIO( 'output' );
+
+		this.dom.appendChild( this.inputDOM );
+		this.dom.appendChild( this.outputDOM );
 
 	}
 
@@ -64,13 +67,7 @@ export class Element {
 
 		this.inputLength = length;
 
-		if ( this.inputDOM === null ) {
-
-			this.inputDOM = this._createIO( 'input' );
-
-			this.dom.appendChild( this.inputDOM );
-
-		}
+		this.inputDOM.style.visibility = length > 0 ? '' : 'hidden';
 
 		return this;
 
@@ -80,13 +77,7 @@ export class Element {
 
 		this.outputLength = length;
 
-		if ( this.outputDOM === null ) {
-
-			this.outputDOM = this._createIO( 'output' );
-
-			this.dom.appendChild( this.outputDOM );
-
-		}
+		this.outputDOM.style.visibility = length > 0 ? '' : 'hidden';
 
 		return this;
 
@@ -118,11 +109,126 @@ export class Element {
 
 	}
 
+	connect( element ) {
+
+		element.link( this );
+
+		return this;
+
+	}
+
+	link( element ) {
+
+		const link = new Link( element, this );
+
+		if ( this.disconnectDOM !== null ) {
+
+			// remove the current input
+
+			this.disconnectDOM.dispatchEvent( new Event( 'mousedown' ) );
+
+		}
+
+		//
+
+		if ( this.disconnectDOM === null ) {
+
+			this.disconnectDOM = document.createElement( 'f-disconnect' );
+			this.disconnectDOM.innerText = '✖';
+			this.dom.appendChild( this.disconnectDOM );
+
+			const onClick = ( e ) => {
+
+				e.stopPropagation();
+
+				this.links = [];
+				this.dom.removeChild( this.disconnectDOM );
+
+				this.disconnectDOM = null;
+
+			};
+
+			this.disconnectDOM.addEventListener( 'mousedown', onClick, true );
+			this.disconnectDOM.addEventListener( 'touchstart', onClick, true );
+
+		}
+
+		this.links.push( link );
+
+		this.dispatchEvent( new Event( 'connect' ) );
+
+		return this;
+
+	}
+
+	serialize( data ) {
+
+		const inputs = [];
+		const links = [];
+
+		for ( const input of this.inputs ) {
+
+			inputs.push( input.toJSON( data ).id );
+
+		}
+
+		for ( const link of this.links ) {
+
+			if ( link.targetElement !== null && link.sourceElement !== null ) {
+
+				links.push( link.sourceElement.toJSON( data ).id );
+
+			}
+
+		}
+
+		if ( this.outputLength > 0 ) data.outputLength = this.outputLength;
+		if ( this.inputLength > 0 ) data.inputLength = this.inputLength;
+
+		if ( inputs.length > 0 ) data.inputs = inputs;
+		if ( links.length > 0 ) data.links = links;
+
+	}
+
+	deserialize( data ) {
+
+		if ( data.outputLength !== undefined ) this.setOutput( data.outputLength );
+		if ( data.inputLength !== undefined ) this.setInput( data.inputLength );
+
+		if ( data.inputs !== undefined ) {
+
+			for ( const id of data.inputs ) {
+
+				this.add( data.objects[ id ] );
+
+			}
+
+		}
+
+		if ( data.links !== undefined ) {
+
+			for ( const id of data.links ) {
+
+				this.link( data.objects[ id ] );
+
+			}
+
+		}
+
+	}
+
+	get linkedElement() {
+
+		return this.links.length > 0 ? this.links[ 0 ].sourceElement : null;
+
+	}
+
 	_createIO( type ) {
 
 		const { dom } = this;
 
 		const ioDOM = document.createElement( 'f-io' );
+		ioDOM.style.visibility = 'hidden';
 		ioDOM.className = type;
 
 		const onConnectEvent = ( e ) => {
@@ -167,25 +273,9 @@ export class Element {
 
 						}
 
-						// check if the connection is valid
+						// check if is an is circular link
 
-						for ( const eLinks of link.sourceElement.links ) {
-
-							if ( link.sourceElement === eLinks.sourceElement &&
-								link.targetElement === eLinks.targetElement ) {
-
-								// ignore repeated link
-
-								return;
-
-							}
-
-						}
-
-						if ( link.sourceElement.node === link.targetElement.node ||
-							link.sourceElement.node === link.targetElement.node ) {
-
-							// ignore if source and target is the same
+						if ( link.sourceElement.node.isCircular( link.targetElement.node ) ) {
 
 							return;
 
@@ -193,39 +283,11 @@ export class Element {
 
 						//
 
-						if ( link.targetElement.disconnectDOM !== null ) {
+						if ( link.targetElement.inputLength > 0 && link.sourceElement.outputLength > 0 ) {
 
-							// remove the current input
-
-							link.targetElement.disconnectDOM.click();
+							link.targetElement.link( link.sourceElement );
 
 						}
-
-						//
-
-						if ( link.targetElement.disconnectDOM === null ) {
-
-							link.targetElement.disconnectDOM = document.createElement( 'f-disconnect' );
-							link.targetElement.disconnectDOM.innerText = '✖';
-							link.targetElement.dom.appendChild( link.targetElement.disconnectDOM );
-
-							const onClick = ( e ) => {
-
-								e.stopPropagation();
-
-								link.targetElement.links = [];
-								link.targetElement.dom.removeChild( link.targetElement.disconnectDOM );
-
-								link.targetElement.disconnectDOM = null;
-
-							};
-
-							link.targetElement.disconnectDOM.addEventListener( 'mousedown', onClick, true );
-							link.targetElement.disconnectDOM.addEventListener( 'touchstart', onClick, true );
-
-						}
-
-						link.targetElement.links.push( link );
 
 					}
 

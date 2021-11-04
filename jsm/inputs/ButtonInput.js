@@ -9,15 +9,9 @@ export class ButtonInput extends Input {
 
 		dom.innerText = innterText;
 
-		const dispatchEvent = ( type ) => {
-
-			this.dispatchEvent( new Event( type ) );
-
-		};
-
 		dom.onclick = () => {
 
-			dispatchEvent( 'click' );
+			this.dispatchEvent( new Event( 'click' ) );
 
 		};
 

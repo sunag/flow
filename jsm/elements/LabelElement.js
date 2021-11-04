@@ -35,4 +35,20 @@ export class LabelElement extends Element {
 
 	}
 
+	serialize( data ) {
+
+		super.serialize( data );
+
+		data.label = this.getLabel();
+
+	}
+
+	deserialize( data ) {
+
+		super.deserialize( data );
+
+		this.setLabel( data.label );
+
+	}
+
 }

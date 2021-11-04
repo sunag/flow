@@ -1,3 +1,4 @@
+import { Serializer } from './Serializer.js';
 import { draggableDOM } from './Utils.js';
 import { drawLine } from './CanvasUtils.js';
 
@@ -7,22 +8,32 @@ const inputColors = [
 	'#4444ff'
 ];
 
-export class Canvas {
+export class Canvas extends Serializer {
 
 	constructor() {
+
+		super();
 
 		const dom = document.createElement( 'f-canvas' );
 		const contentDOM = document.createElement( 'f-content' );
 		const canvas = document.createElement( 'canvas' );
+		const frontCanvas = document.createElement( 'canvas' );
+		frontCanvas.className = 'front';
+
+		const context = canvas.getContext( '2d' );
+		const frontContext = frontCanvas.getContext( '2d' );
+
+		//context.globalCompositeOperation = 'screen';
 
 		this.dom = dom;
 
 		this.contentDOM = contentDOM;
 
 		this.canvas = canvas;
+		this.frontCanvas = frontCanvas;
 
-		this.context = canvas.getContext( '2d' );
-		//this.context.globalCompositeOperation = 'screen';
+		this.context = context;
+		this.frontContext = frontContext;
 
 		this.clientX = 0;
 		this.clientY = 0;
@@ -32,11 +43,12 @@ export class Canvas {
 		this.nodes = [];
 
 		dom.appendChild( canvas );
+		dom.appendChild( frontCanvas );
 		dom.appendChild( contentDOM );
 
 		let zoomTouchData = null;
 
-		const onZoomStart = ( e ) => {
+		const onZoomStart = () => {
 
 			zoomTouchData = null;
 
@@ -165,13 +177,10 @@ export class Canvas {
 
 		document.addEventListener( 'DOMContentLoaded', () => {
 
-			dom.scroll(
-				5000,
-				5000,
-			);
+			this.centralize();
 
 		} );
-
+		
 		window.requestAnimationFrame( this.update.bind( this ) );
 
 	}
@@ -194,15 +203,7 @@ export class Canvas {
 
 		for ( const node of this.nodes ) {
 
-			for ( const element of node.elements ) {
-
-				for ( const element of node.elements ) {
-
-					links.push( ...element.links );
-
-				}
-
-			}
+			links.push( ...node.getLinks() );
 
 		}
 
@@ -210,11 +211,22 @@ export class Canvas {
 
 	}
 
+	centralize() {
+		
+		this.dom.scroll(
+			5000,
+			5000,
+		);
+		
+		return this;
+		
+	}
+
 	update() {
 
 		window.requestAnimationFrame( this.update.bind( this ) );
 
-		const { dom, canvas, context, nodes } = this;
+		const { dom, canvas, frontCanvas, frontContext, context } = this;
 
 		const rect = dom.getBoundingClientRect();
 
@@ -222,22 +234,23 @@ export class Canvas {
 
 			canvas.width = rect.width;
 			canvas.height = rect.height;
+			
+			frontCanvas.width = rect.width;
+			frontCanvas.height = rect.height;
 
 		}
+		
+		const { width, height } = canvas;
 
-		context.clearRect( 0, 0, canvas.width, canvas.height );
-
-		const sourceRect = dom.getBoundingClientRect();
-
-		const source = {
-			x: sourceRect.x - dom.scrollLeft,
-			y: sourceRect.y - dom.scrollTop
-		};
+		context.clearRect( 0, 0, width, height );
+		frontContext.clearRect( 0, 0, width, height );
 
 		const links = this.getLinks();
 
 		const aPos = { x: 0, y: 0 };
 		const bPos = { x: 0, y: 0 };
+
+		const offsetIORadius = 10;
 
 		let dragging = '';
 
@@ -286,12 +299,21 @@ export class Canvas {
 
 			dragging = dragging || draggingLink;
 
+			const drawContext = draggingLink ? frontContext : context;
+
+			if ( draggingLink ) {
+				
+				if ( sourceElement ) aPos.x += offsetIORadius;
+				else bPos.x -= offsetIORadius;
+				
+			}
+
 			if ( draggingLink || length === 1 ) {
 
 				drawLine(
 					aPos.x, aPos.y,
 					bPos.x, bPos.y,
-					false, 2, '#ffffff', context
+					false, 2, '#ffffff', drawContext
 				);
 
 			} else {
@@ -302,16 +324,24 @@ export class Canvas {
 
 					const color = inputColors[ i ] || '#ffffff';
 
-					const outputLength = Math.min( targetElement.outputLength - 1, 3 );
-					const inputLength = Math.min( targetElement.inputLength - 1, 3 );
-
-					const aIndex = Math.min( i, outputLength );
-					const bIndex = Math.min( i, inputLength );
+					const marginY = 4;
+					
+					const outputLength = Math.min( sourceElement.outputLength, length );
+					const inputLength = Math.min( targetElement.inputLength, length );
+					
+					const aCenterY = ( ( outputLength * marginY ) * .5 ) - ( marginY / 2 );
+					const bCenterY = ( ( inputLength * marginY ) * .5 ) - ( marginY / 2 );
+					
+					const aIndex = Math.min( i, outputLength - 1 );
+					const bIndex = Math.min( i, inputLength - 1 );
+					
+					const aPosY = aIndex * marginY;
+					const bPosY = bIndex * marginY;
 
 					drawLine(
-						aPos.x, Math.round( ( aPos.y + ( aIndex * 2 ) ) - outputLength ) - 1,
-						bPos.x, Math.round( ( bPos.y + ( bIndex * 2 ) ) - inputLength ) - 1,
-						false, 2, color, context
+						aPos.x, ( aPos.y + aPosY ) - aCenterY,
+						bPos.x, ( bPos.y + bPosY ) - bCenterY,
+						false, 2, color, drawContext
 					);
 
 				}
@@ -331,6 +361,30 @@ export class Canvas {
 
 		}
 
+	}
+	
+	serialize( data ) {
+		
+		const nodes = [];
+		
+		for(const node of this.nodes) {
+			
+			nodes.push( node.toJSON( data ).id );
+			
+		}
+		
+		data.nodes = nodes;
+		
+	}
+	
+	deserialize( data ) {
+		
+		for(const id of data.nodes) {
+			
+			this.add( data.objects[ id ] );
+			
+		}
+		
 	}
 
 }

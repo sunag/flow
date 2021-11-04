@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>flow - javascript ui</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<link rel="icon" href="../favicon.ico" />
+	<link rel="stylesheet" href="css/page.css" type="text/css"/>
+	<link rel="stylesheet" href="../css/flow.css" type="text/css"/>
+	<!-- <link rel="stylesheet" href="../fonts/open-sans/open-sans.css" type="text/css"/> -->
+</head>
+<body>
+	<script type="module">
+
+		import * as Flow from '../jsm/Flow.js';
+
+		( async () => {
+
+			const loader = new Flow.Loader();
+			const canvas = await loader.load( './json/test.json' );
+
+			document.body.appendChild( canvas.dom );
+
+			canvas.centralize();
+
+		} )();
+
+	</script>
+</body>
+</html>

@@ -1,30 +1,33 @@
+import { Serializer } from './Serializer.js';
 import { toPX } from './Utils.js';
 
 let selected = null;
 
-export class Node {
+export class Node extends Serializer {
 
 	constructor() {
+
+		super();
 
 		const dom = document.createElement( 'f-node' );
 		//dom.className = 'rounded';
 
-		const onClick = () => {
+		const onDown = () => {
 
 			if ( selected ) {
 
-				selected.dom.style[ 'z-index' ] = 1;
+				selected.dom.classList.remove( 'selected' );
 
 			}
 
-			dom.style[ 'z-index' ] = 2;
+			dom.classList.add( 'selected' );
 
 			selected = this;
 
 		};
 
-		dom.addEventListener( 'mousedown', onClick, true );
-		dom.addEventListener( 'touchstart', onClick, true );
+		dom.addEventListener( 'mousedown', onDown, true );
+		dom.addEventListener( 'touchstart', onDown, true );
 
 		this.dom = dom;
 
@@ -38,8 +41,10 @@ export class Node {
 
 	setStyle( style ) {
 
-		if ( this.style ) this.dom.classList.remove( this.style );
-		this.dom.classList.add( style );
+		const dom = this;
+
+		if ( this.style ) dom.classList.remove( this.style );
+		dom.classList.add( style );
 
 		this.style = style;
 
@@ -49,7 +54,10 @@ export class Node {
 
 	setPosition( x, y ) {
 
-		this.dom.style.cssText += `; left: ${ x }px; top: ${ y }px;`;
+		const dom = this.dom;
+
+		dom.style.left = toPX( x );
+		dom.style.top = toPX( y );
 
 		return this;
 
@@ -59,7 +67,10 @@ export class Node {
 
 		const dom = this.dom;
 
-		return { x: dom.offsetLeft, y: dom.offsetTop };
+		return {
+			x: parseInt( dom.style.left ),
+			y: parseInt( dom.style.top )
+		};
 
 	}
 
@@ -86,6 +97,72 @@ export class Node {
 		this.dom.appendChild( element.dom );
 
 		return this;
+
+	}
+
+	isCircular( node ) {
+
+		if ( node === this ) return true;
+
+		const links = this.getLinks();
+
+		for ( const link of links ) {
+
+			if ( link.sourceElement.node.isCircular( node ) ) {
+
+				return true;
+
+			}
+
+		}
+
+		return false;
+
+	}
+
+	getLinks() {
+
+		const links = [];
+
+		for ( const element of this.elements ) {
+
+			links.push( ...element.links );
+
+		}
+
+		return links;
+
+	}
+
+	serialize( data ) {
+
+		const { x, y } = this.getPosition();
+
+		const elements = [];
+
+		for ( const element of this.elements ) {
+
+			elements.push( element.toJSON( data ).id );
+
+		}
+
+		data.x = x;
+		data.y = y;
+		data.width = this.getWidth();
+		data.elements = elements;
+
+	}
+
+	deserialize( data ) {
+
+		this.setPosition( data.x, data.y );
+		this.setWidth( data.width );
+
+		for ( const id of data.elements ) {
+
+			this.add( data.objects[ id ] );
+
+		}
 
 	}
 

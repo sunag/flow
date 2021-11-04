@@ -25,6 +25,20 @@ export class TitleElement extends DraggableElement {
 
 	}
 
+	setTitle( value ) {
+
+		this.spanDOM.innerText = value;
+
+		return this;
+
+	}
+
+	getTitle() {
+
+		return this.spanDOM.innerText;
+
+	}
+
 	addButton( button ) {
 
 		this.buttons.push( button );
@@ -32,6 +46,22 @@ export class TitleElement extends DraggableElement {
 		this.toolbarDOM.appendChild( button.dom );
 
 		return this;
+
+	}
+
+	serialize( data ) {
+
+		super.serialize( data );
+
+		data.title = this.getTitle();
+
+	}
+
+	deserialize( data ) {
+
+		super.deserialize( data );
+
+		this.setTitle( data.title );
 
 	}
 

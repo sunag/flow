@@ -3,6 +3,28 @@ export const draggableDOM = ( dom, callback = null, className = 'dragging' ) => 
 
 	let dragData = null;
 
+	const getZoom = () => {
+
+		let zoomDOM = dom;
+
+		while ( zoomDOM && zoomDOM !== document ) {
+
+			const zoom = zoomDOM.style.zoom;
+
+			if ( zoom ) {
+
+				return Number( zoom );
+
+			}
+
+			zoomDOM = zoomDOM.parentNode;
+
+		}
+
+		return 1;
+
+	};
+
 	const onMouseDown = ( e ) => {
 
 		const event = e.touches ? e.touches[ 0 ] : e;
@@ -31,8 +53,10 @@ export const draggableDOM = ( dom, callback = null, className = 'dragging' ) => 
 
 		const event = e.touches ? e.touches[ 0 ] : e;
 
-		delta.x = event.clientX - client.x;
-		delta.y = event.clientY - client.y;
+		const zoom = getZoom();
+
+		delta.x = ( event.clientX - client.x ) / zoom;
+		delta.y = ( event.clientY - client.y ) / zoom;
 
 		dragData.x = start.x + delta.x;
 		dragData.y = start.y + delta.y;

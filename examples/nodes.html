@@ -26,30 +26,45 @@
 				.add( new Flow.NumberInput( 1 ) )
 				.add( new Flow.NumberInput( 2 ) )
 				.add( new Flow.NumberInput( 3 ) )
+				.setOutput( 1 )
 		);
-		
-		node.add(
-			new Flow.LabelElement( 'Numbers' )
-				.add( new Flow.SliderInput( .5, 0, 1 ) )
-		);
+
+		const slider = new Flow.LabelElement( 'Numbers' )
+			.add( new Flow.SliderInput( .5, 0, 1 ) );
+
+		node.add( slider );
 
 		const node2 = new Flow.Node();
 		node2.setWidth( 350 );
 		node2.setPosition( 200, 300 );
-		
+
 		node2.add( new Flow.TitleElement( 'Inputs' ) );
-		
-		node2.add(
-			new Flow.LabelElement( 'Numbers' )
-				.add( new Flow.NumberInput( 1 ) )
-				.add( new Flow.NumberInput( 2 ) )
-				.add( new Flow.NumberInput( 3 ) )
-		);
+
+		const vector = new Flow.LabelElement( 'Numbers' )
+			.add( new Flow.NumberInput( 1 ) )
+			.add( new Flow.NumberInput( 2 ) )
+			.add( new Flow.NumberInput( 3 ) );
+
+		node2.add( vector );
+		node2.add( new Flow.LabelElement( 'Numbers' ).add( new Flow.SliderInput( .5, 0, 1 ) ) );
+
+		vector.setInput( 1 );
+		vector.setOutput( 3 );
+		slider.setInput( 3 );
+		slider.setOutput( 3 );
+		vector.link( slider );
 
 		const canvas = new Flow.Canvas();
 		canvas.add( node );
 		canvas.add( node2 );
 
+		const json = canvas.toJSON();
+		//console.log( JSON.stringify( json ) );
+
+		const loader = new Flow.Loader();
+		const jsonCanvas = loader.parse( json );
+
+		//document.body.appendChild( jsonCanvas.dom );
 		document.body.appendChild( canvas.dom );
 
 	</script>
