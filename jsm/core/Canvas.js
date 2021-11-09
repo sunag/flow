@@ -1,11 +1,6 @@
 import { Serializer } from './Serializer.js';
-import { draggableDOM } from './Utils.js';
+import { draggableDOM, toPX } from './Utils.js';
 import { drawLine } from './CanvasUtils.js';
-
-const center = {
-	x: 5000,
-	y: 5000
-};
 
 const inputColors = [
 	'#ff4444',
@@ -21,18 +16,17 @@ export class Canvas extends Serializer {
 
 		const dom = document.createElement( 'f-canvas' );
 		const contentDOM = document.createElement( 'f-content' );
+		const areaDOM = document.createElement( 'f-area' );
 		const canvas = document.createElement( 'canvas' );
 		const frontCanvas = document.createElement( 'canvas' );
-		frontCanvas.className = 'front';
 
 		const context = canvas.getContext( '2d' );
 		const frontContext = frontCanvas.getContext( '2d' );
 
-		//context.globalCompositeOperation = 'screen';
-
 		this.dom = dom;
 
 		this.contentDOM = contentDOM;
+		this.areaDOM = areaDOM;
 
 		this.canvas = canvas;
 		this.frontCanvas = frontCanvas;
@@ -40,11 +34,14 @@ export class Canvas extends Serializer {
 		this.context = context;
 		this.frontContext = frontContext;
 
+		this.width = 10000;
+		this.height = 10000;
+
 		this.clientX = 0;
 		this.clientY = 0;
 
-		this.pageX = 0;
-		this.pageY = 0;
+		this.relativeX = 0;
+		this.relativeY = 0;
 
 		this.zoom = 1;
 
@@ -54,10 +51,19 @@ export class Canvas extends Serializer {
 
 		this.updating = false;
 
+		frontCanvas.className = 'front';
+
+		contentDOM.style.left = toPX( this.centerX );
+		contentDOM.style.top = toPX( this.centerY );
+
+		areaDOM.style.width = `calc( 100% + ${ this.width }px )`;
+		areaDOM.style.height = `calc( 100% + ${ this.height }px )`;
+
 		dom.appendChild( canvas );
 		dom.appendChild( frontCanvas );
 		dom.appendChild( contentDOM );
-
+		dom.appendChild( areaDOM );
+		/*
 		let zoomTouchData = null;
 
 		const onZoomStart = () => {
@@ -65,7 +71,7 @@ export class Canvas extends Serializer {
 			zoomTouchData = null;
 
 		};
-
+*/
 		const onZoom = ( e ) => {
 
 			if ( e.touches ) {
@@ -75,7 +81,7 @@ export class Canvas extends Serializer {
 					e.preventDefault();
 
 					e.stopImmediatePropagation();
-
+					/*
 					const clientX = ( e.touches[ 0 ].clientX + e.touches[ 1 ].clientX ) / 2;
 					const clientY = ( e.touches[ 0 ].clientY + e.touches[ 1 ].clientY ) / 2;
 
@@ -87,8 +93,6 @@ export class Canvas extends Serializer {
 					if ( zoomTouchData === null ) {
 
 						zoomTouchData = {
-							clientX,
-							clientY,
 							distance
 						};
 
@@ -102,16 +106,10 @@ export class Canvas extends Serializer {
 					if ( zoom < .52 ) zoom = .5;
 					else if ( zoom > .98 ) zoom = 1;
 
-					const offsetX = ( zoomTouchData.clientX / this.zoom ) - ( clientX / zoom );
-					const offsetY = ( zoomTouchData.clientY / this.zoom ) - ( clientY / zoom );
-
-					zoomTouchData.clientX = clientX;
-					zoomTouchData.clientY = clientY;
-
-					dom.style.zoom = this.zoom = zoom;
-
-					dom.scrollLeft += offsetX;
-					dom.scrollTop += offsetY;
+					contentDOM.style.left = toPX( this.centerX / zoom );
+					contentDOM.style.top = toPX( this.centerY / zoom );
+					contentDOM.style.zoom = this.zoom = zoom;
+*/
 
 				}
 
@@ -120,17 +118,14 @@ export class Canvas extends Serializer {
 				e.preventDefault();
 
 				e.stopImmediatePropagation();
-
+				/*
 				const delta = e.deltaY / 100;
 				const zoom = Math.min( Math.max( this.zoom - delta * .1, .5 ), 1 );
 
-				const offsetX = this.clientX - ( e.clientX / zoom );
-				const offsetY = this.clientY - ( e.clientY / zoom );
-
-				dom.style.zoom = this.zoom = zoom;
-
-				dom.scrollLeft += offsetX;
-				dom.scrollTop += offsetY;
+				contentDOM.style.left = toPX( this.centerX / zoom );
+				contentDOM.style.top = toPX( this.centerY / zoom );
+				contentDOM.style.zoom = this.zoom = zoom;
+*/
 
 			}
 
@@ -138,7 +133,7 @@ export class Canvas extends Serializer {
 
 		dom.addEventListener( 'wheel', onZoom );
 		dom.addEventListener( 'touchmove', onZoom );
-		dom.addEventListener( 'touchstart', onZoomStart );
+		//dom.addEventListener( 'touchstart', onZoomStart );
 
 		draggableDOM( dom, ( data ) => {
 
@@ -174,12 +169,13 @@ export class Canvas extends Serializer {
 
 			const event = e.touches ? e.touches[ 0 ] : e;
 			const zoom = this.zoom;
+			const rect = dom.getBoundingClientRect();
 
-			this.clientX = event.clientX / zoom;
-			this.clientY = event.clientY / zoom;
+			this.clientX = event.clientX;
+			this.clientY = event.clientY;
 
-			this.pageX = ( dom.scrollLeft - center.x ) + event.clientX;
-			this.pageY = ( dom.scrollTop - center.y ) + event.clientY;
+			this.relativeX = ( ( ( dom.scrollLeft - this.centerX ) + event.clientX ) - rect.left ) / zoom;
+			this.relativeY = ( ( ( dom.scrollTop - this.centerY ) + event.clientY ) - rect.top ) / zoom;
 
 		};
 
@@ -196,6 +192,18 @@ export class Canvas extends Serializer {
 		};
 
 		this.start();
+
+	}
+
+	get centerX() {
+
+		return this.width / 2;
+
+	}
+
+	get centerY() {
+
+		return this.height / 2;
 
 	}
 
@@ -291,7 +299,7 @@ export class Canvas extends Serializer {
 
 	centralize() {
 
-		this.dom.scroll( center.x, center.y );
+		this.dom.scroll( this.centerX, this.centerY );
 
 		return this;
 
@@ -321,21 +329,22 @@ export class Canvas extends Serializer {
 
 		requestAnimationFrame( this._onUpdate );
 
-		const { dom, canvas, frontCanvas, frontContext, context } = this;
+		const { dom, zoom, canvas, frontCanvas, frontContext, context } = this;
 
-		const rect = dom.getBoundingClientRect();
+		const width = window.innerWidth;
+		const height = window.innerHeight;
 
-		if ( canvas.width !== rect.width || canvas.height !== rect.height ) {
+		const domRect = dom.getBoundingClientRect();
 
-			canvas.width = rect.width;
-			canvas.height = rect.height;
+		if ( canvas.width !== width || canvas.height !== height ) {
 
-			frontCanvas.width = rect.width;
-			frontCanvas.height = rect.height;
+			canvas.width = width;
+			canvas.height = height;
+
+			frontCanvas.width = width;
+			frontCanvas.height = height;
 
 		}
-
-		const { width, height } = canvas;
 
 		context.clearRect( 0, 0, width, height );
 		frontContext.clearRect( 0, 0, width, height );
@@ -399,18 +408,25 @@ export class Canvas extends Serializer {
 
 			const drawContext = draggingLink ? frontContext : context;
 
-			if ( draggingLink ) {
-
-				if ( sourceElement ) aPos.x += offsetIORadius;
-				else bPos.x -= offsetIORadius;
-
-			}
-
 			if ( draggingLink || length === 1 ) {
 
+				if ( draggingLink === 'output' ) {
+
+					aPos.x += offsetIORadius;
+					bPos.x /= zoom;
+					bPos.y /= zoom;
+
+				} else if ( draggingLink === 'input' ) {
+
+					bPos.x -= offsetIORadius;
+					aPos.x /= zoom;
+					aPos.y /= zoom;
+
+				}
+
 				drawLine(
-					aPos.x, aPos.y,
-					bPos.x, bPos.y,
+					aPos.x * zoom, aPos.y * zoom,
+					bPos.x * zoom, bPos.y * zoom,
 					false, 2, '#ffffff', drawContext
 				);
 
@@ -437,8 +453,8 @@ export class Canvas extends Serializer {
 					const bPosY = bIndex * marginY;
 
 					drawLine(
-						aPos.x, ( aPos.y + aPosY ) - aCenterY,
-						bPos.x, ( bPos.y + bPosY ) - bCenterY,
+						aPos.x * zoom, ( ( aPos.y + aPosY ) - aCenterY ) * zoom,
+						bPos.x * zoom, ( ( bPos.y + bPosY ) - bCenterY ) * zoom,
 						false, 2, color, drawContext
 					);
 
@@ -450,7 +466,7 @@ export class Canvas extends Serializer {
 
 		context.globalCompositeOperation = 'destination-in';
 
-		context.fillRect( rect.x, rect.y, rect.width, rect.height );
+		context.fillRect( domRect.x, domRect.y, domRect.width, domRect.height );
 
 		if ( dragging !== '' ) {
 

@@ -59,16 +59,10 @@ f-canvas::-webkit-scrollbar-thumb {
 	border: 0;
 }
 
-f-canvas f-content {
+f-canvas f-content,
+f-canvas f-area {
 	position: absolute;
     display: block;
-}
-
-f-canvas f-content {
-	top: 5000px;
-	left: 5000px;
-	width: calc( 100% + 5000px );
-	height: calc( 100% + 5000px );
 }
 
 f-node {

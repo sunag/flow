@@ -43,7 +43,9 @@ export class Menu {
 
 				e.preventDefault();
 
-				this.show( e.pageX, e.pageY );
+				const rect = this.target.getBoundingClientRect();
+
+				this.show( e.pageX  - rect.left, e.pageY - rect.top );
 
 			};
 
