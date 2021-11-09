@@ -124,13 +124,18 @@ f-element textarea {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 13px;
 	color: #eeeeee;
-	outline: 0;
+	outline: solid 0px #000;
 	letter-spacing: .2px;
 	margin: 0;
 	padding: 0;
 	border: 0;
 	user-select: none;
 	-webkit-tap-highlight-color: transparent;
+	transition: background 0.2s ease;
+}
+
+f-element input {
+	transition: background 0.1s ease;
 }
 
 f-element input,
