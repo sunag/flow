@@ -8,9 +8,24 @@
 	<link rel="icon" href="../favicon.ico" />
 	<link rel="stylesheet" href="css/page.css" type="text/css"/>
 	<link rel="stylesheet" href="../css/flow.css" type="text/css"/>
-	<!-- <link rel="stylesheet" href="../fonts/open-sans/open-sans.css" type="text/css"/> -->
+	
+	<link rel="stylesheet" href="../fonts/open-sans/open-sans.css" type="text/css"/>
+	<link rel="stylesheet" href="../fonts/tabler-icons/tabler-icons.css" type="text/css"/>
+	<!-- -->
 </head>
+<style>
+/*
+flow {
+	position: absolute;
+	left: 50px;
+	top: 50px;
+	width: 100%;
+	height: 100%;
+}
+*/
+</style>
 <body>
+	<flow></flow>
 	<script type="module">
 
 		import * as Flow from '../jsm/Flow.js';
@@ -19,7 +34,7 @@
 		node.setWidth( 350 );
 		node.setPosition( 100, 100 );
 
-		node.add( new Flow.TitleElement( 'Inputs' ) );
+		node.add( new Flow.TitleElement( 'Inputs' ).setIcon( 'ti ti-box-multiple-2' ).setStyle( 'blue' ) );
 
 		node.add(
 			new Flow.LabelElement( 'Numbers' )
@@ -29,7 +44,7 @@
 				.setOutput( 1 )
 		);
 
-		const slider = new Flow.LabelElement( 'Numbers' )
+		const slider = new Flow.LabelElement( 'Numbers' ).setStyle( 'blue' )
 			.add( new Flow.SliderInput( .5, 0, 1 ) );
 
 		node.add( slider );
@@ -40,13 +55,20 @@
 
 		node2.add( new Flow.TitleElement( 'Inputs' ) );
 
-		const vector = new Flow.LabelElement( 'Numbers' )
+		const vector = new Flow.LabelElement( 'Numbers' ).setIcon( 'ti ti-palette' ).setHeight( 50 )
 			.add( new Flow.NumberInput( 1 ) )
 			.add( new Flow.NumberInput( 2 ) )
 			.add( new Flow.NumberInput( 3 ) );
 
 		node2.add( vector );
+		node2.add( new Flow.LabelElement( 'Numbers' ).add( new Flow.ButtonInput( 'Test' ) ) );
 		node2.add( new Flow.LabelElement( 'Numbers' ).add( new Flow.SliderInput( .5, 0, 1 ) ) );
+
+		node2.add( new Flow.Element().add( new Flow.SelectInput( [ 'Test A', 'Test B' ] ).setValue( 1 ) ) );
+		node2.add( new Flow.Element().add( new Flow.ColorInput( 0x0066FF ) ) );
+		node2.add( new Flow.Element().add( new Flow.StringInput( 'Test' ) ) );
+		node2.add( new Flow.Element().add( new Flow.TextInput( 'Test' ) ) );
+		node2.add( new Flow.LabelElement( 'Boolean' ).add( new Flow.ToggleInput( true ) ) );
 
 		vector.setInput( 1 );
 		vector.setOutput( 3 );
@@ -58,14 +80,76 @@
 		canvas.add( node );
 		canvas.add( node2 );
 
+		// context-menu
+
+		const context = new Flow.ContextMenu( document.body );
+		context.add( new Flow.ButtonInput( 'Float' ).setIcon( 'ti ti-box-multiple-1' ).onClick( () => {
+
+			const node3 = new Flow.Node();
+			node3.setWidth( 350 );
+			node3.setPosition( canvas.pageX - ( 350 / 2 ), canvas.pageY - 20 );
+			node3.add( new Flow.TitleElement( 'Dynamic' ).addButton( new Flow.ButtonInput( '✖' ).onClick( () => {
+
+				canvas.remove( node3 );
+
+			} ) ) );
+			node3.add( new Flow.LabelElement( 'Numbers' ).add( new Flow.SliderInput( .5, 0, 1 ) ).setInput( 1 ).setOutput( 1 ) );
+			node3.add( new Flow.LabelElement( 'Menu' )
+					  .add( new Flow.ButtonInput( 'Remove' ) )
+					  .add( new Flow.ButtonInput( 'Add' ) )
+					 );
+
+			canvas.add( node3 );
+			canvas.select( node3 );
+
+			context.hide();
+
+
+		} ) );
+
+		const context3 = new Flow.ContextMenu();
+		context3.add( new Flow.ButtonInput( '1' ) );
+		context3.add( new Flow.ButtonInput( '2' ) );
+		context3.add( new Flow.ButtonInput( '3' ) );
+
+		const context2 = new Flow.ContextMenu();
+		context2.add( new Flow.ButtonInput( 'A' ) );
+		context2.add( new Flow.ButtonInput( 'B' ) );
+		context2.add( new Flow.ButtonInput( 'C' ), context3 );
+
+		context.add( new Flow.ButtonInput( 'Vector 2' ).setIcon( 'ti ti-box-multiple-2' ) );
+		context.add( new Flow.ButtonInput( 'Vector 3' ).setIcon( 'ti ti-box-multiple-3' ), context2 );
+		context.add( new Flow.ButtonInput( 'Vector 4' ).setIcon( 'ti ti-box-multiple-2' ) );
+		context.add( new Flow.ButtonInput( 'Color' ).setIcon( 'ti ti-palette' ) );
+		context.add( new Flow.ButtonInput( 'Map' ).setIcon( 'ti ti-photo' ) );
+		context.add( new Flow.ButtonInput( 'Cube Map' ).setIcon( 'ti ti-box' ) );
+		context.add( new Flow.ButtonInput( 'Slider' ).setIcon( 'ti ti-adjustments-horizontal' ) );
+		context.add( new Flow.ButtonInput( 'Integer' ).setIcon( 'ti ti-list-numbers' ) );
+
+		const menu = new Flow.CircleMenu();
+		menu.add( new Flow.ButtonInput( /*'☰'*/ )
+				 .setIcon( 'ti ti-menu-2' )
+				 /*.setIcon( 'ti ti-menu-2' )*/
+				 .onClick( () => {
+
+				context.show( 50, 50 );
+
+			} )
+		);
+
+		const dom = document.querySelector( 'flow' );
+
+		dom.appendChild( context.dom );
+		dom.appendChild( menu.dom );
+
 		const json = canvas.toJSON();
 		//console.log( JSON.stringify( json ) );
 
 		const loader = new Flow.Loader();
 		const jsonCanvas = loader.parse( json );
 
-		//document.body.appendChild( jsonCanvas.dom );
-		document.body.appendChild( canvas.dom );
+		//dom.appendChild( jsonCanvas.dom );
+		dom.appendChild( canvas.dom );
 
 	</script>
 </body>
