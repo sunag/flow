@@ -5,11 +5,13 @@ export class DraggableElement extends Element {
 
 	constructor( draggable = true ) {
 
-		super();
+		super( true );
 
 		this.draggable = draggable;
 
-		const onDrag = () => {
+		const onDrag = ( e ) => {
+
+			e.preventDefault();
 
 			if ( this.draggable === true ) {
 

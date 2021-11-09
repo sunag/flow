@@ -46,13 +46,15 @@ export class Input extends Serializer {
 
 	}
 
-	set value( value ) {
+	setValue( value ) {
 
 		this.dom.value = value;
 
+		return this;
+
 	}
 
-	get value() {
+	getValue() {
 
 		return this.dom.value;
 
@@ -60,13 +62,13 @@ export class Input extends Serializer {
 
 	serialize( data ) {
 
-		data.value = this.value;
+		data.value = this.getValue();
 
 	}
 
 	deserialize( data ) {
 
-		this.value = data.value;
+		this.setValue( data.value );
 
 	}
 

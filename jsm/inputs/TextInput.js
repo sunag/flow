@@ -11,13 +11,15 @@ export class TextInput extends Input {
 
 	}
 
-	set value( val ) {
+	setValue( val ) {
 
 		this.dom.innerText = val;
 
+		return this;
+
 	}
 
-	get value() {
+	getValue() {
 
 		return this.dom.innerText;
 

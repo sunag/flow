@@ -54,7 +54,7 @@ export class NumberInput extends Input {
 
 			if ( data.value === undefined ) {
 
-				data.value = this.value;
+				data.value = this.getValue();
 
 			}
 
@@ -95,13 +95,15 @@ export class NumberInput extends Input {
 
 	}
 
-	set value( val ) {
+	setValue( val ) {
 
 		this.dom.value = this._getString( val );
 
+		return this;
+
 	}
 
-	get value() {
+	getValue() {
 
 		return Number( this.dom.value );
 
@@ -154,4 +156,3 @@ export class NumberInput extends Input {
 	}
 
 }
-

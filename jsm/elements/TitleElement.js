@@ -13,15 +13,33 @@ export class TitleElement extends DraggableElement {
 		const spanDOM = document.createElement( 'span' );
 		spanDOM.innerText = title;
 
+		const iconDOM = document.createElement( 'i' );
+
 		const toolbarDOM = document.createElement( 'f-toolbar' );
 
 		this.buttons = [];
 
 		this.spanDOM = spanDOM;
+		this.iconDOM = iconDOM;
 		this.toolbarDOM = toolbarDOM;
 
 		dom.appendChild( spanDOM );
+		dom.appendChild( iconDOM );
 		dom.appendChild( toolbarDOM );
+
+	}
+
+	setIcon( value ) {
+
+		this.iconDOM.className = value;
+
+		return this;
+
+	}
+
+	getIcon() {
+
+		return this.iconDOM.className;
 
 	}
 
@@ -53,7 +71,16 @@ export class TitleElement extends DraggableElement {
 
 		super.serialize( data );
 
-		data.title = this.getTitle();
+		const title = this.getTitle();
+		const icon = this.getIcon();
+
+		data.title = title;
+
+		if ( icon !== '' ) {
+
+			data.icon = icon;
+
+		}
 
 	}
 
@@ -62,6 +89,12 @@ export class TitleElement extends DraggableElement {
 		super.deserialize( data );
 
 		this.setTitle( data.title );
+
+		if ( data.icon !== undefined ) {
+
+			this.setIcon( data.icon );
+
+		}
 
 	}
 

@@ -32,7 +32,7 @@ export class SliderInput extends Input {
 		field.dom.className = 'range-value';
 		field.onChange( () => {
 
-			rangeDOM.value = field.value;
+			rangeDOM.value = field.getValue();
 
 		} );
 
@@ -41,7 +41,7 @@ export class SliderInput extends Input {
 			rangeDOM.min = field.min;
 			rangeDOM.max = field.max;
 			rangeDOM.step = field.step;
-			rangeDOM.value = field.value;
+			rangeDOM.value = field.getValue();
 
 		} );
 
@@ -67,7 +67,7 @@ export class SliderInput extends Input {
 
 			}
 
-			this.field.value = value;
+			this.field.setValue( value );
 
 		};
 
@@ -92,16 +92,18 @@ export class SliderInput extends Input {
 
 	}
 
-	set value( val ) {
+	setValue( val ) {
 
-		this.field.value = val;
+		this.field.setValue( val );
 		this.rangeDOM.value = val;
+
+		return this;
 
 	}
 
-	get value() {
+	getValue() {
 
-		return this.field.value;
+		return this.field.getValue();
 
 	}
 
@@ -125,4 +127,3 @@ export class SliderInput extends Input {
 	}
 
 }
-

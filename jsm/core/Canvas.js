@@ -2,6 +2,11 @@ import { Serializer } from './Serializer.js';
 import { draggableDOM } from './Utils.js';
 import { drawLine } from './CanvasUtils.js';
 
+const center = {
+	x: 5000,
+	y: 5000
+};
+
 const inputColors = [
 	'#ff4444',
 	'#44ff44',
@@ -38,9 +43,16 @@ export class Canvas extends Serializer {
 		this.clientX = 0;
 		this.clientY = 0;
 
+		this.pageX = 0;
+		this.pageY = 0;
+
 		this.zoom = 1;
 
 		this.nodes = [];
+
+		this.selected = null;
+
+		this.updating = false;
 
 		dom.appendChild( canvas );
 		dom.appendChild( frontCanvas );
@@ -158,30 +170,66 @@ export class Canvas extends Serializer {
 
 		}, 'dragging-canvas' );
 
-		const onMoveEvent = ( e ) => {
+		this._onMoveEvent = ( e ) => {
 
 			const event = e.touches ? e.touches[ 0 ] : e;
+			const zoom = this.zoom;
 
-			this.clientX = event.clientX / this.zoom;
-			this.clientY = event.clientY / this.zoom;
+			this.clientX = event.clientX / zoom;
+			this.clientY = event.clientY / zoom;
+
+			this.pageX = ( dom.scrollLeft - center.x ) + event.clientX;
+			this.pageY = ( dom.scrollTop - center.y ) + event.clientY;
 
 		};
 
-		dom.addEventListener( 'wheel', onMoveEvent, true );
-
-		dom.addEventListener( 'mousedown', onMoveEvent, true );
-		dom.addEventListener( 'touchstart', onMoveEvent, true );
-
-		dom.addEventListener( 'mousemove', onMoveEvent, true );
-		dom.addEventListener( 'touchmove', onMoveEvent, true );
-
-		document.addEventListener( 'DOMContentLoaded', () => {
+		this._onContentLoaded = () => {
 
 			this.centralize();
 
-		} );
-		
-		window.requestAnimationFrame( this.update.bind( this ) );
+		};
+
+		this._onUpdate = () => {
+
+			this.update();
+
+		};
+
+		this.start();
+
+	}
+
+	start() {
+
+		this.updating = true;
+
+		document.addEventListener( 'wheel', this._onMoveEvent, true );
+
+		document.addEventListener( 'mousedown', this._onMoveEvent, true );
+		document.addEventListener( 'touchstart', this._onMoveEvent, true );
+
+		document.addEventListener( 'mousemove', this._onMoveEvent, true );
+		document.addEventListener( 'touchmove', this._onMoveEvent, true );
+
+		document.addEventListener( 'DOMContentLoaded', this._onContentLoaded );
+
+		requestAnimationFrame( this._onUpdate );
+
+	}
+
+	stop() {
+
+		this.updating = false;
+
+		document.removeEventListener( 'wheel', this._onMoveEvent, true );
+
+		document.removeEventListener( 'mousedown', this._onMoveEvent, true );
+		document.removeEventListener( 'touchstart', this._onMoveEvent, true );
+
+		document.removeEventListener( 'mousemove', this._onMoveEvent, true );
+		document.removeEventListener( 'touchmove', this._onMoveEvent, true );
+
+		document.removeEventListener( 'DOMContentLoaded', this._onContentLoaded );
 
 	}
 
@@ -194,6 +242,36 @@ export class Canvas extends Serializer {
 		this.contentDOM.appendChild( node.dom );
 
 		return this;
+
+	}
+
+	remove( node ) {
+
+		this.unlink( node );
+
+		const nodes = this.nodes;
+
+		nodes.splice( nodes.indexOf( node ), 1 );
+
+		node.canvas = null;
+
+		this.contentDOM.removeChild( node.dom );
+
+	}
+
+	unlink( node ) {
+
+		const links = this.getLinks();
+
+		for ( const link of links ) {
+
+			if ( link.sourceElement && link.sourceElement.node === node ) {
+
+				link.targetElement.link();
+
+			}
+
+		}
 
 	}
 
@@ -212,19 +290,36 @@ export class Canvas extends Serializer {
 	}
 
 	centralize() {
-		
-		this.dom.scroll(
-			5000,
-			5000,
-		);
-		
+
+		this.dom.scroll( center.x, center.y );
+
 		return this;
-		
+
+	}
+
+	select( node = null ) {
+
+		if ( this.selected !== null ) {
+
+			this.selected.dom.classList.remove( 'selected' );
+
+		}
+
+		if ( node !== null ) {
+
+			node.dom.classList.add( 'selected' );
+
+		}
+
+		this.selected = node;
+
 	}
 
 	update() {
 
-		window.requestAnimationFrame( this.update.bind( this ) );
+		if ( this.updating === false ) return;
+
+		requestAnimationFrame( this._onUpdate );
 
 		const { dom, canvas, frontCanvas, frontContext, context } = this;
 
@@ -234,16 +329,19 @@ export class Canvas extends Serializer {
 
 			canvas.width = rect.width;
 			canvas.height = rect.height;
-			
+
 			frontCanvas.width = rect.width;
 			frontCanvas.height = rect.height;
 
 		}
-		
+
 		const { width, height } = canvas;
 
 		context.clearRect( 0, 0, width, height );
 		frontContext.clearRect( 0, 0, width, height );
+
+		context.globalCompositeOperation = 'lighter';
+		frontContext.globalCompositeOperation = 'source-over';
 
 		const links = this.getLinks();
 
@@ -302,10 +400,10 @@ export class Canvas extends Serializer {
 			const drawContext = draggingLink ? frontContext : context;
 
 			if ( draggingLink ) {
-				
+
 				if ( sourceElement ) aPos.x += offsetIORadius;
 				else bPos.x -= offsetIORadius;
-				
+
 			}
 
 			if ( draggingLink || length === 1 ) {
@@ -325,16 +423,16 @@ export class Canvas extends Serializer {
 					const color = inputColors[ i ] || '#ffffff';
 
 					const marginY = 4;
-					
+
 					const outputLength = Math.min( sourceElement.outputLength, length );
 					const inputLength = Math.min( targetElement.inputLength, length );
-					
+
 					const aCenterY = ( ( outputLength * marginY ) * .5 ) - ( marginY / 2 );
 					const bCenterY = ( ( inputLength * marginY ) * .5 ) - ( marginY / 2 );
-					
+
 					const aIndex = Math.min( i, outputLength - 1 );
 					const bIndex = Math.min( i, inputLength - 1 );
-					
+
 					const aPosY = aIndex * marginY;
 					const bPosY = bIndex * marginY;
 
@@ -350,6 +448,10 @@ export class Canvas extends Serializer {
 
 		}
 
+		context.globalCompositeOperation = 'destination-in';
+
+		context.fillRect( rect.x, rect.y, rect.width, rect.height );
+
 		if ( dragging !== '' ) {
 
 			dom.classList.add( 'dragging-' + dragging );
@@ -362,29 +464,29 @@ export class Canvas extends Serializer {
 		}
 
 	}
-	
+
 	serialize( data ) {
-		
+
 		const nodes = [];
-		
-		for(const node of this.nodes) {
-			
+
+		for ( const node of this.nodes ) {
+
 			nodes.push( node.toJSON( data ).id );
-			
+
 		}
-		
+
 		data.nodes = nodes;
-		
+
 	}
-	
+
 	deserialize( data ) {
-		
-		for(const id of data.nodes) {
-			
+
+		for ( const id of data.nodes ) {
+
 			this.add( data.objects[ id ] );
-			
+
 		}
-		
+
 	}
 
 }

@@ -13,13 +13,15 @@ export class ToggleInput extends Input {
 
 	}
 
-	set value( val ) {
+	setValue( val ) {
 
 		this.dom.checked = val;
 
+		return this;
+
 	}
 
-	get value() {
+	getValue() {
 
 		return this.dom.checked;
 

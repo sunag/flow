@@ -5,9 +5,19 @@ export class ButtonInput extends Input {
 	constructor( innterText = '' ) {
 
 		const dom = document.createElement( 'button' );
+
+		const spanDOM = document.createElement( 'span' );
+		dom.appendChild( spanDOM );
+
+		const iconDOM = document.createElement( 'i' );
+		dom.appendChild( iconDOM );
+
 		super( dom );
 
-		dom.innerText = innterText;
+		this.spanDOM = spanDOM;
+		this.iconDOM = iconDOM;
+
+		spanDOM.innerText = innterText;
 
 		dom.onclick = () => {
 
@@ -17,17 +27,26 @@ export class ButtonInput extends Input {
 
 	}
 
-	set value( val ) {
+	setIcon( className ) {
 
-		this.dom.innerText = val;
+		this.iconDOM.className = className;
+
+		return this;
 
 	}
 
-	get value() {
+	setValue( val ) {
 
-		return this.dom.innerText;
+		this.spanDOM.innerText = val;
+
+		return this;
+
+	}
+
+	getValue() {
+
+		return this.spanDOM.innerText;
 
 	}
 
 }
-

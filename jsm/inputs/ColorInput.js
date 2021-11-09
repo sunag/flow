@@ -14,4 +14,3 @@ export class ColorInput extends Input {
 	}
 
 }
-

@@ -1,8 +1,6 @@
 import { Serializer } from './Serializer.js';
 import { toPX } from './Utils.js';
 
-let selected = null;
-
 export class Node extends Serializer {
 
 	constructor() {
@@ -14,15 +12,13 @@ export class Node extends Serializer {
 
 		const onDown = () => {
 
-			if ( selected ) {
+			const canvas = this.canvas;
 
-				selected.dom.classList.remove( 'selected' );
+			if ( canvas !== null ) {
+
+				canvas.select( this );
 
 			}
-
-			dom.classList.add( 'selected' );
-
-			selected = this;
 
 		};
 
@@ -41,10 +37,11 @@ export class Node extends Serializer {
 
 	setStyle( style ) {
 
-		const dom = this;
+		const dom = this.dom;
 
 		if ( this.style ) dom.classList.remove( this.style );
-		dom.classList.add( style );
+
+		if ( style ) dom.classList.add( style );
 
 		this.style = style;
 
@@ -136,7 +133,7 @@ export class Node extends Serializer {
 
 	serialize( data ) {
 
-		const { x, y } = this.getPosition();
+		const { x, y, style } = this.getPosition();
 
 		const elements = [];
 
@@ -151,6 +148,12 @@ export class Node extends Serializer {
 		data.width = this.getWidth();
 		data.elements = elements;
 
+		if ( style !== '' ) {
+
+			data.style = style;
+
+		}
+
 	}
 
 	deserialize( data ) {
@@ -161,6 +164,12 @@ export class Node extends Serializer {
 		for ( const id of data.elements ) {
 
 			this.add( data.objects[ id ] );
+
+		}
+
+		if ( data.style !== undefined ) {
+
+			this.setStyle( data.style );
 
 		}
 

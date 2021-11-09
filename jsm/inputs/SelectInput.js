@@ -13,21 +13,21 @@ export class SelectInput extends Input {
 
 		};
 
-		this.options = options;
+		this.setOptions( options );
 
 	}
 
-	set options( list ) {
+	setOptions( options ) {
 
 		const dom = this.dom;
 
-		this._options = list;
+		this.options = options;
 
 		dom.innerHTML = '';
 
-		for ( let index = 0; index < list.length; index ++ ) {
+		for ( let index = 0; index < options.length; index ++ ) {
 
-			let opt = list[ index ];
+			let opt = options[ index ];
 
 			if ( typeof opt === 'string' ) {
 
@@ -43,13 +43,30 @@ export class SelectInput extends Input {
 
 		}
 
+		return this;
+
 	}
 
-	get options() {
+	getOptions() {
 
 		return this._options;
 
 	}
 
-}
+	serialize( data ) {
 
+		data.options = [ ...this.options ];
+
+		super.serialize( data );
+
+	}
+
+	deserialize( data ) {
+
+		this.setOptions( data.options );
+
+		super.deserialize( data );
+
+	}
+
+}

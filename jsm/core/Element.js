@@ -6,7 +6,7 @@ let selected = null;
 
 export class Element extends Serializer {
 
-	constructor() {
+	constructor( draggable = false ) {
 
 		super();
 
@@ -37,6 +37,16 @@ export class Element extends Serializer {
 
 		};
 
+		if ( draggable === false ) {
+
+			dom.ontouchstart = dom.onmousedown = ( e ) => {
+
+				e.stopPropagation();
+
+			};
+
+		}
+
 		dom.addEventListener( 'mouseup', onSelect, true );
 		dom.addEventListener( 'touchend', onSelect );
 
@@ -51,6 +61,8 @@ export class Element extends Serializer {
 
 		this.node = null;
 
+		this.style = '';
+
 		this.inputsDOM = dom;
 
 		this.disconnectDOM = null;
@@ -60,6 +72,20 @@ export class Element extends Serializer {
 
 		this.dom.appendChild( this.inputDOM );
 		this.dom.appendChild( this.outputDOM );
+
+	}
+
+	setStyle( style ) {
+
+		const dom = this.dom;
+
+		if ( this.style ) dom.classList.remove( this.style );
+
+		if ( style ) dom.classList.add( style );
+
+		this.style = style;
+
+		return this;
 
 	}
 
@@ -105,7 +131,7 @@ export class Element extends Serializer {
 
 	getHeight() {
 
-		return this.style.height;
+		return this.dom.style.height;
 
 	}
 
@@ -117,9 +143,7 @@ export class Element extends Serializer {
 
 	}
 
-	link( element ) {
-
-		const link = new Link( element, this );
+	link( element = null ) {
 
 		if ( this.disconnectDOM !== null ) {
 
@@ -131,29 +155,35 @@ export class Element extends Serializer {
 
 		//
 
-		if ( this.disconnectDOM === null ) {
+		if ( element !== null ) {
 
-			this.disconnectDOM = document.createElement( 'f-disconnect' );
-			this.disconnectDOM.innerText = '✖';
-			this.dom.appendChild( this.disconnectDOM );
+			const link = new Link( element, this );
 
-			const onClick = ( e ) => {
+			this.links.push( link );
 
-				e.stopPropagation();
+			if ( this.disconnectDOM === null ) {
 
-				this.links = [];
-				this.dom.removeChild( this.disconnectDOM );
+				this.disconnectDOM = document.createElement( 'f-disconnect' );
+				this.disconnectDOM.innerText = '✖';
+				this.dom.appendChild( this.disconnectDOM );
 
-				this.disconnectDOM = null;
+				const onClick = ( e ) => {
 
-			};
+					e.stopPropagation();
 
-			this.disconnectDOM.addEventListener( 'mousedown', onClick, true );
-			this.disconnectDOM.addEventListener( 'touchstart', onClick, true );
+					this.links = [];
+					this.dom.removeChild( this.disconnectDOM );
+
+					this.disconnectDOM = null;
+
+				};
+
+				this.disconnectDOM.addEventListener( 'mousedown', onClick, true );
+				this.disconnectDOM.addEventListener( 'touchstart', onClick, true );
+
+			}
 
 		}
-
-		this.links.push( link );
 
 		this.dispatchEvent( new Event( 'connect' ) );
 
@@ -162,6 +192,8 @@ export class Element extends Serializer {
 	}
 
 	serialize( data ) {
+
+		const height = this.getHeight();
 
 		const inputs = [];
 		const links = [];
@@ -188,6 +220,18 @@ export class Element extends Serializer {
 		if ( inputs.length > 0 ) data.inputs = inputs;
 		if ( links.length > 0 ) data.links = links;
 
+		if ( this.style !== '' ) {
+
+			data.style = this.style;
+
+		}
+
+		if ( height !== '' ) {
+
+			data.height = height;
+
+		}
+
 	}
 
 	deserialize( data ) {
@@ -212,6 +256,18 @@ export class Element extends Serializer {
 				this.link( data.objects[ id ] );
 
 			}
+
+		}
+
+		if ( data.style !== undefined ) {
+
+			this.setStyle( data.style );
+
+		}
+
+		if ( data.height !== undefined ) {
+
+			this.setHeight( data.height );
 
 		}
 

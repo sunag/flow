@@ -9,11 +9,34 @@ export class LabelElement extends Element {
 		this.labelDOM = document.createElement( 'f-label' );
 		this.inputsDOM = document.createElement( 'f-inputs' );
 
+		const spanDOM = document.createElement( 'span' );
+		const iconDOM = document.createElement( 'i' );
+
+		this.spanDOM = spanDOM;
+		this.iconDOM = iconDOM;
+
+		this.labelDOM.appendChild( this.spanDOM );
+		this.labelDOM.appendChild( this.iconDOM );
+
 		this.dom.appendChild( this.labelDOM );
 		this.dom.appendChild( this.inputsDOM );
 
 		this.setLabel( label );
 		this.setAlign( align );
+
+	}
+
+	setIcon( value ) {
+
+		this.iconDOM.className = value;
+
+		return this;
+
+	}
+
+	getIcon() {
+
+		return this.iconDOM.className;
 
 	}
 
@@ -25,13 +48,13 @@ export class LabelElement extends Element {
 
 	setLabel( val ) {
 
-		this.labelDOM.innerText = val;
+		this.spanDOM.innerText = val;
 
 	}
 
 	getLabel() {
 
-		return this.labelDOM.innerText;
+		return this.spanDOM.innerText;
 
 	}
 
@@ -39,7 +62,16 @@ export class LabelElement extends Element {
 
 		super.serialize( data );
 
-		data.label = this.getLabel();
+		const label = this.getLabel();
+		const icon = this.getIcon();
+
+		data.label = label;
+
+		if ( icon !== '' ) {
+
+			data.icon = icon;
+
+		}
 
 	}
 
@@ -48,6 +80,12 @@ export class LabelElement extends Element {
 		super.deserialize( data );
 
 		this.setLabel( data.label );
+
+		if ( data.icon !== undefined ) {
+
+			this.setIcon( data.icon );
+
+		}
 
 	}
 
