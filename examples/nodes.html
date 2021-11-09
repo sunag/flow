@@ -137,6 +137,9 @@ flow {
 			} )
 		);
 
+		menu.add( new Flow.ButtonInput().setIcon( 'ti ti-download' ).setToolTip( 'Save' ) );
+		menu.add( new Flow.ButtonInput().setIcon( 'ti ti-upload' ).setToolTip( 'Open' ) );
+
 		const dom = document.querySelector( 'flow' );
 
 		dom.appendChild( context.dom );

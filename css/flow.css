@@ -381,10 +381,13 @@ f-element f-inputs {
     padding-left: 30px;
 }
 
-f-element f-label, 
-f-element span {	
-    text-shadow: 1px 1px 0px #0007;
+f-element f-label,
+f-element span {
 	margin: auto;
+	text-shadow: 1px 1px 0px #0007;
+}
+
+f-element f-label {	
 	padding-left: 4px;
 }
 
@@ -396,6 +399,7 @@ f-element f-label {
 f-element f-label i {
 	float: left;
 	font-size: 16px;
+	margin-right: 4px;
 }
 
 f-element f-label.center {
@@ -531,6 +535,10 @@ f-element.select {
 
 /* menu */
 
+f-tooltip {
+	pointer-events: none;
+}
+
 f-menu.context {
 	position: absolute;
 	width: 170px;
@@ -624,6 +632,7 @@ f-menu.circle f-item {
 	display: flex;
 	justify-content: end;
     align-content: space-around;
+	margin-bottom: 12px;
 }
 
 f-menu.circle f-item button {
@@ -639,8 +648,32 @@ f-menu.circle f-item button {
 	box-shadow: 3px 3px 6px rgba(0,0,0,.2);
 }
 
+f-menu.circle f-item f-tooltip {
+	position: absolute;
+	left: 0;
+	top: 0;	
+	margin-left: 50px;
+	background: rgba(0,0,0,.8);
+	backdrop-filter: blur(4px);
+	font-size: 14px;
+	padding: 7px;
+	border-radius: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+	visibility: hidden;
+	pointer-events: none;
+	opacity: 0;
+	transition: all 0.3s ease;
+}
+
 f-menu.circle f-item button:hover {
 	background-color: #2a2a2a;
+}
+
+f-menu.circle f-item button:hover > f-tooltip {
+	visibility: visible;
+	transform: translate(10px, -50%);
+	opacity: 1;
 }
 
 /* rounded */

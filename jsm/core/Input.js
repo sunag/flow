@@ -30,6 +30,17 @@ export class Input extends Serializer {
 
 	}
 
+	setToolTip( text ) {
+
+		const div = document.createElement( 'f-tooltip' );
+		div.innerText = text;
+
+		this.dom.appendChild( div );
+
+		return this;
+
+	}
+
 	onChange( callback ) {
 
 		this.events.change.push( callback );
