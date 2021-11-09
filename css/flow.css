@@ -114,6 +114,10 @@ f-node.top-left {
 	left: 0;
 }
 
+f-node {
+	transition: filter 0.2s ease;
+}
+
 f-menu,
 f-menu button,
 f-element,
