@@ -87,7 +87,7 @@ flow {
 
 			const node3 = new Flow.Node();
 			node3.setWidth( 350 );
-			node3.setPosition( canvas.pageX - ( 350 / 2 ), canvas.pageY - 20 );
+			node3.setPosition( canvas.relativeX - ( 350 / 2 ), canvas.relativeY - 20 );
 			node3.add( new Flow.TitleElement( 'Dynamic' ).addButton( new Flow.ButtonInput( '✖' ).onClick( () => {
 
 				canvas.remove( node3 );
