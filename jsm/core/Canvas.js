@@ -2,7 +2,7 @@ import { Serializer } from './Serializer.js';
 import { draggableDOM, toPX } from './Utils.js';
 import { drawLine } from './CanvasUtils.js';
 
-const inputColors = [
+const colors = [
 	'#ff4444',
 	'#44ff44',
 	'#4444ff'
@@ -290,9 +290,9 @@ export class Canvas extends Serializer {
 
 		for ( const link of links ) {
 
-			if ( link.sourceElement && link.sourceElement.node === node ) {
+			if ( link.lioElement && link.lioElement.node === node ) {
 
-				link.targetElement.link();
+				link.rioElement.link();
 
 			}
 
@@ -380,16 +380,16 @@ export class Canvas extends Serializer {
 
 		for ( const link of links ) {
 
-			const { sourceElement, targetElement } = link;
+			const { lioElement, rioElement } = link;
 
 			let draggingLink = '';
 			let length = 0;
 
-			if ( sourceElement !== null ) {
+			if ( lioElement !== null ) {
 
-				const rect = sourceElement.dom.getBoundingClientRect();
+				const rect = lioElement.dom.getBoundingClientRect();
 
-				length = Math.max( length, sourceElement.outputLength );
+				length = Math.max( length, lioElement.rioLength );
 
 				aPos.x = rect.x + rect.width;
 				aPos.y = rect.y + ( rect.height / 2 );
@@ -399,15 +399,15 @@ export class Canvas extends Serializer {
 				aPos.x = this.clientX;
 				aPos.y = this.clientY;
 
-				draggingLink = 'input';
+				draggingLink = 'lio';
 
 			}
 
-			if ( targetElement !== null ) {
+			if ( rioElement !== null ) {
 
-				const rect = targetElement.dom.getBoundingClientRect();
+				const rect = rioElement.dom.getBoundingClientRect();
 
-				length = Math.max( length, targetElement.inputLength );
+				length = Math.max( length, rioElement.lioLength );
 
 				bPos.x = rect.x;
 				bPos.y = rect.y + ( rect.height / 2 );
@@ -417,7 +417,7 @@ export class Canvas extends Serializer {
 				bPos.x = this.clientX;
 				bPos.y = this.clientY;
 
-				draggingLink = 'output';
+				draggingLink = 'rio';
 
 			}
 
@@ -427,13 +427,13 @@ export class Canvas extends Serializer {
 
 			if ( draggingLink || length === 1 ) {
 
-				if ( draggingLink === 'output' ) {
+				if ( draggingLink === 'rio' ) {
 
 					aPos.x += offsetIORadius;
 					bPos.x /= zoom;
 					bPos.y /= zoom;
 
-				} else if ( draggingLink === 'input' ) {
+				} else if ( draggingLink === 'lio' ) {
 
 					bPos.x -= offsetIORadius;
 					aPos.x /= zoom;
@@ -453,18 +453,18 @@ export class Canvas extends Serializer {
 
 				for ( let i = 0; i < length; i ++ ) {
 
-					const color = inputColors[ i ] || '#ffffff';
+					const color = colors[ i ] || '#ffffff';
 
 					const marginY = 4;
 
-					const outputLength = Math.min( sourceElement.outputLength, length );
-					const inputLength = Math.min( targetElement.inputLength, length );
+					const rioLength = Math.min( lioElement.rioLength, length );
+					const lioLength = Math.min( rioElement.lioLength, length );
 
-					const aCenterY = ( ( outputLength * marginY ) * .5 ) - ( marginY / 2 );
-					const bCenterY = ( ( inputLength * marginY ) * .5 ) - ( marginY / 2 );
+					const aCenterY = ( ( rioLength * marginY ) * .5 ) - ( marginY / 2 );
+					const bCenterY = ( ( lioLength * marginY ) * .5 ) - ( marginY / 2 );
 
-					const aIndex = Math.min( i, outputLength - 1 );
-					const bIndex = Math.min( i, inputLength - 1 );
+					const aIndex = Math.min( i, rioLength - 1 );
+					const bIndex = Math.min( i, lioLength - 1 );
 
 					const aPosY = aIndex * marginY;
 					const bPosY = bIndex * marginY;
@@ -491,8 +491,8 @@ export class Canvas extends Serializer {
 
 		} else {
 
-			dom.classList.remove( 'dragging-input' );
-			dom.classList.remove( 'dragging-output' );
+			dom.classList.remove( 'dragging-lio' );
+			dom.classList.remove( 'dragging-rio' );
 
 		}
 

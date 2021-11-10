@@ -88,6 +88,8 @@ export class Menu {
 
 		this.dom.appendChild( liDOM );
 
+		return this;
+
 	}
 
 	setPosition( x, y ) {

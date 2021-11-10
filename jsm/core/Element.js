@@ -56,8 +56,8 @@ export class Element extends Serializer {
 
 		this.dom = dom;
 
-		this.inputLength = 0;
-		this.outputLength = 0;
+		this.lioLength = 0;
+		this.rioLength = 0;
 
 		this.node = null;
 
@@ -67,11 +67,11 @@ export class Element extends Serializer {
 
 		this.disconnectDOM = null;
 
-		this.inputDOM = this._createIO( 'input' );
-		this.outputDOM = this._createIO( 'output' );
+		this.lioDOM = this._createIO( 'lio' );
+		this.rioDOM = this._createIO( 'rio' );
 
-		this.dom.appendChild( this.inputDOM );
-		this.dom.appendChild( this.outputDOM );
+		this.dom.appendChild( this.lioDOM );
+		this.dom.appendChild( this.rioDOM );
 
 	}
 
@@ -90,20 +90,44 @@ export class Element extends Serializer {
 	}
 
 	setInput( length ) {
+		
+		return this.setRIO( length );
+		
+	}
+	
+	setOutput( length ) {
+		
+		return this.setLIO( length );
+		
+	}
 
-		this.inputLength = length;
+	get inputLength() {
+		
+		return this.rioLength;
+		
+	}
+	
+	get outputLength() {
+		
+		return this.lioLength;
+		
+	}
 
-		this.inputDOM.style.visibility = length > 0 ? '' : 'hidden';
+	setLIO( length ) {
+
+		this.lioLength = length;
+
+		this.lioDOM.style.visibility = length > 0 ? '' : 'hidden';
 
 		return this;
 
 	}
 
-	setOutput( length ) {
+	setRIO( length ) {
 
-		this.outputLength = length;
+		this.rioLength = length;
 
-		this.outputDOM.style.visibility = length > 0 ? '' : 'hidden';
+		this.rioDOM.style.visibility = length > 0 ? '' : 'hidden';
 
 		return this;
 
@@ -135,15 +159,7 @@ export class Element extends Serializer {
 
 	}
 
-	connect( element ) {
-
-		element.link( this );
-
-		return this;
-
-	}
-
-	link( element = null ) {
+	connect( element = null ) {
 
 		if ( this.disconnectDOM !== null ) {
 
@@ -152,8 +168,6 @@ export class Element extends Serializer {
 			this.disconnectDOM.dispatchEvent( new Event( 'mousedown' ) );
 
 		}
-
-		//
 
 		if ( element !== null ) {
 
@@ -206,16 +220,16 @@ export class Element extends Serializer {
 
 		for ( const link of this.links ) {
 
-			if ( link.targetElement !== null && link.sourceElement !== null ) {
+			if ( link.inputElement !== null && link.outputElement !== null ) {
 
-				links.push( link.sourceElement.toJSON( data ).id );
+				links.push( link.outputElement.toJSON( data ).id );
 
 			}
 
 		}
 
-		if ( this.outputLength > 0 ) data.outputLength = this.outputLength;
 		if ( this.inputLength > 0 ) data.inputLength = this.inputLength;
+		if ( this.outputLength > 0 ) data.outputLength = this.outputLength;
 
 		if ( inputs.length > 0 ) data.inputs = inputs;
 		if ( links.length > 0 ) data.links = links;
@@ -236,8 +250,8 @@ export class Element extends Serializer {
 
 	deserialize( data ) {
 
-		if ( data.outputLength !== undefined ) this.setOutput( data.outputLength );
-		if ( data.inputLength !== undefined ) this.setInput( data.inputLength );
+		if ( data.inputLength !== undefined ) this.setInput( data.rioLength );
+		if ( data.outputLength !== undefined ) this.setOutput( data.lioLength );
 
 		if ( data.inputs !== undefined ) {
 
@@ -275,7 +289,7 @@ export class Element extends Serializer {
 
 	get linkedElement() {
 
-		return this.links.length > 0 ? this.links[ 0 ].sourceElement : null;
+		return this.links.length > 0 ? this.links[ 0 ].lioElement : null;
 
 	}
 
@@ -302,7 +316,7 @@ export class Element extends Serializer {
 			ioDOM.classList.add( 'connect' );
 			dom.classList.add( 'select' );
 
-			const link = type === 'output' ? new Link( this ) : new Link( null, this );
+			const link = type === 'lio' ? new Link( this ) : new Link( null, this );
 
 			this.links.push( link );
 
@@ -319,19 +333,19 @@ export class Element extends Serializer {
 
 					if ( selected !== null ) {
 
-						if ( type === 'output' ) {
+						if ( type === 'lio' ) {
 
-							link.targetElement = selected;
+							link.inputElement = selected;
 
 						} else {
 
-							link.sourceElement = selected;
+							link.outputElement = selected;
 
 						}
 
 						// check if is an is circular link
 
-						if ( link.sourceElement.node.isCircular( link.targetElement.node ) ) {
+						if ( link.outputElement.node.isCircular( link.inputElement.node ) ) {
 
 							return;
 
@@ -339,9 +353,9 @@ export class Element extends Serializer {
 
 						//
 
-						if ( link.targetElement.inputLength > 0 && link.sourceElement.outputLength > 0 ) {
+						if ( link.inputElement.inputLength > 0 && link.outputElement.outputLength > 0 ) {
 
-							link.targetElement.link( link.sourceElement );
+							link.inputElement.connect( link.outputElement );
 
 						}
 

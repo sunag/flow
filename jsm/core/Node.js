@@ -32,6 +32,8 @@ export class Node extends Serializer {
 
 		this.elements = [];
 
+		this.setPosition( 0, 0 );
+
 	}
 
 	setStyle( style ) {
@@ -104,7 +106,7 @@ export class Node extends Serializer {
 
 		for ( const link of links ) {
 
-			if ( link.sourceElement.node.isCircular( node ) ) {
+			if ( link.outputElement.node.isCircular( node ) ) {
 
 				return true;
 

@@ -1,10 +1,22 @@
 export class Link {
 
-	constructor( sourceElement = null, targetElement = null ) {
+	constructor( outputElement = null, inputElement = null ) {
 
-		this.sourceElement = sourceElement;
-		this.targetElement = targetElement;
+		this.outputElement = outputElement;
+		this.inputElement = inputElement;
 
+	}
+
+	get lioElement() {
+		
+		return this.inputElement;
+		
+	}
+	
+	get rioElement() {
+		
+		return this.outputElement;
+		
 	}
 
 }

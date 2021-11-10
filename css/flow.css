@@ -83,8 +83,8 @@ f-node.selected {
 }
 
 f-node.selected,
-f-canvas.dragging-output f-node:hover,
-f-canvas.dragging-input f-node:hover {
+f-canvas.dragging-rio f-node:hover,
+f-canvas.dragging-lio f-node:hover {
 	filter: drop-shadow(0 0 10px #00000061) drop-shadow(0 0 8px #4444dd);
 }
 
@@ -145,6 +145,7 @@ f-element button,
 f-element textarea {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 13px;
+	text-transform: capitalize;
 	color: #eeeeee;
 	outline: solid 0px #000;
 	letter-spacing: .2px;
@@ -511,8 +512,8 @@ f-element f-io {
 }
 
 f-element f-io.connect,
-f-canvas.dragging-output f-element:hover f-io.input,
-f-canvas.dragging-input f-element:hover f-io.output {
+f-canvas.dragging-rio f-element:hover f-io.lio,
+f-canvas.dragging-lio f-element:hover f-io.rio {
 	border: 2px solid #0177fb;
 	zoom: 1.4;
 }
@@ -522,7 +523,7 @@ f-node.io-connect f-io:not(.connect) {
 	zoom: 1 !important;
 }
 
-f-element f-io.output {
+f-element f-io.rio {
 	float: right;
     right: -7px;
     left: unset;
@@ -530,7 +531,7 @@ f-element f-io.output {
 
 f-element f-disconnect {
 	position: absolute;
-	left: -35px;
+	right: -35px;
 	top: 50%;
 	font-size: 22px;
 	transform: translateY( -50% );
@@ -717,27 +718,27 @@ f-menu.circle f-item button:hover > f-tooltip {
 
 /* rounded */
 
-flow.rounded f-node f-element,
-flow.rounded f-node f-element.title.left {
+.f-rounded f-node f-element,
+.f-rounded f-node f-element.title.left {
 	border-radius: 10px 5px 10px 5px;
 }
 
-flow.rounded f-node f-element input, 
-flow.rounded f-node f-element select,
-flow.rounded f-node f-element button,
-flow.rounded f-node f-element textarea,
-flow.rounded f-node f-element input[type='checkbox'].toggle,
-flow.rounded f-node f-element input[type='checkbox'].toggle:after {
+.f-rounded f-node f-element input, 
+.f-rounded f-node f-element select,
+.f-rounded f-node f-element button,
+.f-rounded f-node f-element textarea,
+.f-rounded f-node f-element input[type='checkbox'].toggle,
+.f-rounded f-node f-element input[type='checkbox'].toggle:after {
 	border-radius: 20px 10px;
 }
 
-flow.rounded f-node f-element input {
+.f-rounded f-node f-element input {
 	padding-left: 7px;
 	padding-right: 7px;
 }
 
-flow.rounded f-menu.context,
-flow.rounded f-menu.context f-item button {
+.f-rounded f-menu.context,
+.f-rounded f-menu.context f-item button {
 	border-radius: 20px 10px;
 }
 
