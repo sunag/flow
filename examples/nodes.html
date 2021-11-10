@@ -49,11 +49,14 @@ flow {
 
 		node.add( slider );
 
+		const node1 = new Flow.Node();
+		node1.add( new Flow.TitleElement( 'Inputs' ).setStyle( 'yellow' ) );
+
 		const node2 = new Flow.Node();
 		node2.setWidth( 350 );
 		node2.setPosition( 200, 300 );
 
-		node2.add( new Flow.TitleElement( 'Inputs' ) );
+		node2.add( new Flow.TitleElement( 'Inputs' ).setStyle( 'red' ) );
 
 		const vector = new Flow.LabelElement( 'Numbers' ).setIcon( 'ti ti-palette' ).setHeight( 50 )
 			.add( new Flow.NumberInput( 1 ) )
@@ -79,16 +82,23 @@ flow {
 		const canvas = new Flow.Canvas();
 		canvas.add( node );
 		canvas.add( node2 );
+		canvas.add( node1 );
 
 		// context-menu
 
 		const context = new Flow.ContextMenu( document.body );
 		context.add( new Flow.ButtonInput( 'Float' ).setIcon( 'ti ti-box-multiple-1' ).onClick( () => {
 
+			const canvasRect = canvas.rect;
+
 			const node3 = new Flow.Node();
 			node3.setWidth( 350 );
-			node3.setPosition( canvas.relativeX - ( 350 / 2 ), canvas.relativeY - 20 );
-			node3.add( new Flow.TitleElement( 'Dynamic' ).addButton( new Flow.ButtonInput( '✖' ).onClick( () => {
+			//node3.setPosition( canvas.relativeClientX - ( 350 / 2 ), canvas.relativeClientY - 20 );
+			node3.setPosition( 
+				(canvas.relativeX + (canvasRect.width/2)) - ( 350 / 2 ), 
+				(canvas.relativeY + (canvasRect.height/2)) - 20
+			)
+			node3.add( new Flow.TitleElement( 'Dynamic' ).setStyle( 'green' ).addButton( new Flow.ButtonInput( '✖' ).onClick( () => {
 
 				canvas.remove( node3 );
 
@@ -100,6 +110,7 @@ flow {
 					 );
 
 			canvas.add( node3 );
+			
 			canvas.select( node3 );
 
 			context.hide();

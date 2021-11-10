@@ -8,7 +8,6 @@ export class Node extends Serializer {
 		super();
 
 		const dom = document.createElement( 'f-node' );
-		//dom.className = 'rounded';
 
 		const onDown = () => {
 

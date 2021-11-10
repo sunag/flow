@@ -118,6 +118,24 @@ f-node {
 	transition: filter 0.2s ease;
 }
 
+@keyframes f-open {
+
+	0% { 
+		transform: scale(.5);
+		filter: blur(30px);
+	}
+	
+	100% { 
+		transform: scale(1);
+		filter: unset
+	}
+
+}
+
+f-node {
+	animation: .2s f-open 1 alternate ease-out;
+}
+
 f-menu,
 f-menu button,
 f-element,
@@ -438,6 +456,18 @@ f-element.title {
 
 f-element.blue {
 	background-color: #014fc5;
+}
+
+f-element.red {
+	background-color: #bd0b0b;
+}
+
+f-element.green {
+	background-color: #148d05;
+}
+
+f-element.yellow {
+	background-color: #d6b100;
 }
 
 f-element.title.left {

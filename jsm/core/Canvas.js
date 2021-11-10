@@ -40,8 +40,8 @@ export class Canvas extends Serializer {
 		this.clientX = 0;
 		this.clientY = 0;
 
-		this.relativeX = 0;
-		this.relativeY = 0;
+		this.relativeClientX = 0;
+		this.relativeClientY = 0;
 
 		this.zoom = 1;
 
@@ -168,14 +168,13 @@ export class Canvas extends Serializer {
 		this._onMoveEvent = ( e ) => {
 
 			const event = e.touches ? e.touches[ 0 ] : e;
-			const zoom = this.zoom;
-			const rect = dom.getBoundingClientRect();
+			const { zoom, rect } = this;
 
 			this.clientX = event.clientX;
 			this.clientY = event.clientY;
 
-			this.relativeX = ( ( ( dom.scrollLeft - this.centerX ) + event.clientX ) - rect.left ) / zoom;
-			this.relativeY = ( ( ( dom.scrollTop - this.centerY ) + event.clientY ) - rect.top ) / zoom;
+			this.relativeClientX = ( ( ( dom.scrollLeft - this.centerX ) + event.clientX ) - rect.left ) / zoom;
+			this.relativeClientY = ( ( ( dom.scrollTop - this.centerY ) + event.clientY ) - rect.top ) / zoom;
 
 		};
 
@@ -193,6 +192,24 @@ export class Canvas extends Serializer {
 
 		this.start();
 
+	}
+
+	get rect() {
+		
+		return this.dom.getBoundingClientRect();
+		
+	}
+
+	get relativeX() {
+		
+		return this.dom.scrollLeft - this.centerX;
+		
+	}
+	
+	get relativeY() {
+		
+		return this.dom.scrollTop - this.centerY;
+		
 	}
 
 	get centerX() {
@@ -334,7 +351,7 @@ export class Canvas extends Serializer {
 		const width = window.innerWidth;
 		const height = window.innerHeight;
 
-		const domRect = dom.getBoundingClientRect();
+		const domRect = this.rect;
 
 		if ( canvas.width !== width || canvas.height !== height ) {
 
