@@ -1,5 +1,5 @@
 import { Serializer } from './Serializer.js';
-import { toPX, draggableDOM } from './Utils.js';
+import { toPX, draggableDOM, dispatchEventList } from './Utils.js';
 import { Link } from './Link.js';
 
 let selected = null;
@@ -59,9 +59,15 @@ export class Element extends Serializer {
 		this.lioLength = 0;
 		this.rioLength = 0;
 
+		this.events = {
+			'connect': []
+		};
+
 		this.node = null;
 
 		this.style = '';
+
+		this.extra = null;
 
 		this.inputsDOM = dom;
 
@@ -73,6 +79,34 @@ export class Element extends Serializer {
 		this.dom.appendChild( this.lioDOM );
 		this.dom.appendChild( this.rioDOM );
 
+		this.addEventListener( 'connect', ( ) => {
+
+			dispatchEventList( this.events.connect, this );
+
+		} );
+
+	}
+
+	onConnect( callback ) {
+
+		this.events.connect.push( callback );
+
+		return this;
+
+	}
+
+	setExtra( value ) {
+		
+		this.extra = value;
+		
+		return this;
+		
+	}
+	
+	getExtra() {
+		
+		return this.extra;
+		
 	}
 
 	setStyle( style ) {
@@ -291,6 +325,12 @@ export class Element extends Serializer {
 
 		return this.links.length > 0 ? this.links[ 0 ].lioElement : null;
 
+	}
+	
+	get link() {
+		
+		return this.links[0];
+		
 	}
 
 	_createIO( type ) {
