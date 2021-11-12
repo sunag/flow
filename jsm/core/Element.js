@@ -171,7 +171,7 @@ export class Element extends Serializer {
 
 		if ( element !== null ) {
 
-			const link = new Link( element, this );
+			const link = new Link( this, element );
 
 			this.links.push( link );
 
@@ -316,7 +316,7 @@ export class Element extends Serializer {
 			ioDOM.classList.add( 'connect' );
 			dom.classList.add( 'select' );
 
-			const link = type === 'lio' ? new Link( this ) : new Link( null, this );
+			const link = type === 'lio' ? new Link( null, this ) : new Link( this );
 
 			this.links.push( link );
 

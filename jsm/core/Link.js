@@ -1,9 +1,9 @@
 export class Link {
 
-	constructor( outputElement = null, inputElement = null ) {
+	constructor( inputElement = null, outputElement = null ) {
 
-		this.outputElement = outputElement;
 		this.inputElement = inputElement;
+		this.outputElement = outputElement;
 
 	}
 
