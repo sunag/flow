@@ -323,7 +323,7 @@ export class Element extends Serializer {
 
 	get linkedElement() {
 
-		return this.links.length > 0 ? this.links[ 0 ].lioElement : null;
+		return this.links.length > 0 ? this.links[ 0 ].outputElement : null;
 
 	}
 	
