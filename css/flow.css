@@ -191,7 +191,7 @@ f-element input {
 	box-shadow: inset 0px 1px 1px rgb(0 0 0 / 20%), 0px 1px 0px rgb(255 255 255 / 5%);
 	margin-left: 2px;
 	margin-right: 2px;
-	width: inherit;
+	width: 100%;
 	padding-left: 4px;
 	padding-right: 4px;
 }
@@ -267,7 +267,7 @@ f-element input[type='checkbox'].toggle {
 	display: inline-block;
 	position: relative;
 	margin: 0;
-	margin-top: 3px;
+	margin-top: 2px;
 	background: linear-gradient( 0deg, #292929 0%, #0a0a0ac2 100% );
 	transition: all 0.2s ease;
 }
@@ -406,7 +406,13 @@ f-element f-subinputs {
 }
 
 f-element f-inputs {
-    padding-left: 30px;
+	left: 100px;
+	top: 50%;
+	transform: translateY(-50%);
+	position: absolute;
+	width: calc( 100% - 106px );
+	height: calc( 100% - 4px );
+	z-index: 1;
 }
 
 f-element f-label,
@@ -417,17 +423,21 @@ f-element span {
 
 f-element f-label {	
 	padding-left: 4px;
+	white-space: nowrap;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: calc( 100% - 20px );
 }
 
-f-element f-label {
-	white-space: nowrap;
-	width: 130px;
+f-element.right f-label {
+	text-align: right;
 }
 
 f-element f-label i {
 	float: left;
-	font-size: 16px;
-	margin-right: 4px;
+	font-size: 18px;
+	margin-right: 6px;
 }
 
 f-element f-label.center {
