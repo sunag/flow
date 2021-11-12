@@ -41,7 +41,7 @@ flow {
 				.add( new Flow.NumberInput( 1 ) )
 				.add( new Flow.NumberInput( 2 ) )
 				.add( new Flow.NumberInput( 3 ) )
-				.setOutput( 1 )
+				.setInput( 1 )
 		);
 
 		const slider = new Flow.LabelElement( 'Numbers' ).setStyle( 'blue' )
@@ -64,20 +64,29 @@ flow {
 			.add( new Flow.NumberInput( 3 ) );
 
 		node2.add( vector );
-		node2.add( new Flow.LabelElement( 'Numbers' ).add( new Flow.ButtonInput( 'Test' ) ) );
+		node2.add( new Flow.LabelElement( 'Numbers' ).add( new Flow.ButtonInput( 'Test' ) ).setOutput( 3 ) );
 		node2.add( new Flow.LabelElement( 'Numbers' ).add( new Flow.SliderInput( .5, 0, 1 ) ) );
 
-		node2.add( new Flow.Element().add( new Flow.SelectInput( [ 'Test A', 'Test B' ] ).setValue( 1 ) ) );
+		node2.add( new Flow.Element().add( new Flow.SelectInput( [ 'Test A', 'Test B' ] ) ) );
 		node2.add( new Flow.Element().add( new Flow.ColorInput( 0x0066FF ) ) );
 		node2.add( new Flow.Element().add( new Flow.StringInput( 'Test' ) ) );
 		node2.add( new Flow.Element().add( new Flow.TextInput( 'Test' ) ) );
 		node2.add( new Flow.LabelElement( 'Boolean' ).add( new Flow.ToggleInput( true ) ) );
 
-		vector.setInput( 1 );
-		vector.setOutput( 3 );
+		node2.add( new Flow.LabelElement( 'TEST' ).setStyle( 'right' ) );
+
+		vector.setOutput( 1 );
 		slider.setInput( 3 );
-		slider.setOutput( 3 );
-		vector.link( slider );
+		
+		slider.onConnect( () => { 
+		
+			//console.log( slider.link.inputElement === slider );
+			console.log( slider.link.outputElement === vector );
+		
+		} );
+		
+		slider.connect( vector );
+		
 
 		const canvas = new Flow.Canvas();
 		canvas.add( node );
@@ -103,7 +112,7 @@ flow {
 				canvas.remove( node3 );
 
 			} ) ) );
-			node3.add( new Flow.LabelElement( 'Numbers' ).add( new Flow.SliderInput( .5, 0, 1 ) ).setInput( 1 ).setOutput( 1 ) );
+			node3.add( new Flow.LabelElement( 'Numbers' ).add( new Flow.SliderInput( .5, 0, 1 ) ).setLIO( 1 ).setRIO( 1 ) );
 			node3.add( new Flow.LabelElement( 'Menu' )
 					  .add( new Flow.ButtonInput( 'Remove' ) )
 					  .add( new Flow.ButtonInput( 'Add' ) )
@@ -157,10 +166,10 @@ flow {
 		dom.appendChild( menu.dom );
 
 		const json = canvas.toJSON();
-		//console.log( JSON.stringify( json ) );
+		console.log( JSON.stringify( json ) );
 
-		const loader = new Flow.Loader();
-		const jsonCanvas = loader.parse( json );
+		//const loader = new Flow.Loader();
+		//const jsonCanvas = loader.parse( json );
 
 		//dom.appendChild( jsonCanvas.dom );
 		dom.appendChild( canvas.dom );
