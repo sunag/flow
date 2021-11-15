@@ -8,15 +8,34 @@ export class Link {
 	}
 
 	get lioElement() {
-		
-		return this.inputElement;
-		
+
+		if ( Link.InputDirection === 'left' ) {
+
+			return this.outputElement;
+
+		} else {
+
+			return this.inputElement;
+
+		}
+
 	}
-	
+
 	get rioElement() {
-		
-		return this.outputElement;
-		
+
+		if ( Link.InputDirection === 'left' ) {
+
+			return this.inputElement;
+
+		} else {
+
+			return this.outputElement;
+
+		}
+
 	}
 
 }
+
+//Link.InputDirection = 'right';
+Link.InputDirection = 'left';

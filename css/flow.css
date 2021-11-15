@@ -329,14 +329,17 @@ f-element select {
 
 f-element f-toolbar {
 	position: absolute;
-    display: flex;
-    float: right;
-    right: 7px;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    justify-content: end;
+	display: flex;
+	top: 0;
+	width: 100%;
+	height: 100%;
 	align-content: space-around;
+}
+
+f-element.output-right f-toolbar {
+	right: 7px;
+	float: right;
+	justify-content: end;
 }
 
 f-element f-toolbar {
@@ -496,10 +499,15 @@ f-element.title span {
 f-element.title i {
 	font-size: 18px;
 	position: absolute;
-	left: 10px;
+	right: 10px;
 	top: 50%;
 	transform: translateY(-50%);
 	opacity: .5;
+}
+
+f-element.output-right.title i {
+	left: 10px;
+	right: unset;
 }
 
 f-element.title.left span {
@@ -541,13 +549,18 @@ f-element f-io.rio {
 
 f-element f-disconnect {
 	position: absolute;
-	right: -35px;
+	left: -35px;
 	top: 50%;
 	font-size: 22px;
 	transform: translateY( -50% );
 	filter: drop-shadow(0 0 5px #000);
 	text-shadow: 0px 0px 5px black;
 	cursor: pointer;
+}
+
+f-element.output-right f-disconnect {
+	right: -35px;
+	left: unset;
 }
 
 f-element f-disconnect:hover {

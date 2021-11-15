@@ -77,6 +77,8 @@ export class Element extends Serializer {
 		this.lioDOM = this._createIO( 'lio' );
 		this.rioDOM = this._createIO( 'rio' );
 
+		this.dom.classList.add( `output-${ Link.InputDirection }` );
+
 		this.dom.appendChild( this.lioDOM );
 		this.dom.appendChild( this.rioDOM );
 
@@ -138,25 +140,57 @@ export class Element extends Serializer {
 
 	setInput( length ) {
 
-		return this.setRIO( length );
+		if ( Link.InputDirection === 'left' ) {
+
+			return this.setLIO( length );
+
+		} else {
+
+			return this.setRIO( length );
+
+		}
 
 	}
 
 	setOutput( length ) {
 
-		return this.setLIO( length );
+		if ( Link.InputDirection === 'left' ) {
+
+			return this.setRIO( length );
+
+		} else {
+
+			return this.setLIO( length );
+
+		}
 
 	}
 
 	get inputLength() {
 
-		return this.rioLength;
+		if ( Link.InputDirection === 'left' ) {
+
+			return this.lioLength;
+
+		} else {
+
+			return this.rioLength;
+
+		}
 
 	}
 
 	get outputLength() {
 
-		return this.lioLength;
+		if ( Link.InputDirection === 'left' ) {
+
+			return this.rioLength;
+
+		} else {
+
+			return this.lioLength;
+
+		}
 
 	}
 
@@ -434,7 +468,9 @@ export class Element extends Serializer {
 			ioDOM.classList.add( 'connect' );
 			dom.classList.add( 'select' );
 
-			const link = type === 'lio' ? new Link( null, this ) : new Link( this );
+			const defaultOutput = Link.InputDirection === 'left' ? 'lio' : 'rio';
+
+			const link = type === defaultOutput ? new Link( this ) : new Link( null, this );
 
 			this.links.push( link );
 
@@ -451,13 +487,13 @@ export class Element extends Serializer {
 
 					if ( selected !== null ) {
 
-						if ( type === 'lio' ) {
+						if ( type === defaultOutput ) {
 
-							link.inputElement = selected;
+							link.outputElement = selected;
 
 						} else {
 
-							link.outputElement = selected;
+							link.inputElement = selected;
 
 						}
 
