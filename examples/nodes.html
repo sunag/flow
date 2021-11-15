@@ -81,7 +81,7 @@ flow {
 		slider.onConnect( () => { 
 		
 			//console.log( slider.link.inputElement === slider );
-			console.log( slider.link.outputElement === vector );
+			console.log( slider.link ? slider.link.outputElement === vector : null );
 		
 		} );
 		
@@ -107,12 +107,12 @@ flow {
 				(canvas.relativeX + (canvasRect.width/2)) - ( 350 / 2 ), 
 				(canvas.relativeY + (canvasRect.height/2)) - 20
 			)
-			node3.add( new Flow.TitleElement( 'Dynamic' ).setStyle( 'green' ).addButton( new Flow.ButtonInput( '✖' ).onClick( () => {
+			node3.add( new Flow.TitleElement( 'Dynamic' ).setStyle( 'green' ).setOutput( 1 ).setInput( 1 ).addButton( new Flow.ButtonInput( '✖' ).onClick( () => {
 
 				canvas.remove( node3 );
 
 			} ) ) );
-			node3.add( new Flow.LabelElement( 'Numbers' ).add( new Flow.SliderInput( .5, 0, 1 ) ).setLIO( 1 ).setRIO( 1 ) );
+			node3.add( new Flow.LabelElement( 'Numbers' ).add( new Flow.SliderInput( .5, 0, 1 ) ).setOutput( 1 ).setInput( 1 ) );
 			node3.add( new Flow.LabelElement( 'Menu' )
 					  .add( new Flow.ButtonInput( 'Remove' ) )
 					  .add( new Flow.ButtonInput( 'Add' ) )
@@ -168,8 +168,7 @@ flow {
 		const json = canvas.toJSON();
 		console.log( JSON.stringify( json ) );
 
-		//const loader = new Flow.Loader();
-		//const jsonCanvas = loader.parse( json );
+		//const jsonCanvas = Flow.Loader.parse( json );
 
 		//dom.appendChild( jsonCanvas.dom );
 		dom.appendChild( canvas.dom );
