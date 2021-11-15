@@ -24,6 +24,38 @@ export class Node extends Serializer {
 		dom.addEventListener( 'mousedown', onDown, true );
 		dom.addEventListener( 'touchstart', onDown, true );
 
+		this._onConnect = ( e ) => {
+
+			const { target } = e;
+
+			for ( const element of this.elements ) {
+
+				if ( element !== target ) {
+
+					element.dispatchEvent( new Event( 'nodeConnect' ) );
+
+				}
+
+			}
+
+		};
+
+		this._onConnectChildren = ( e ) => {
+
+			const { target } = e;
+
+			for ( const element of this.elements ) {
+
+				if ( element !== target ) {
+
+					element.dispatchEvent( new Event( 'nodeConnectChildren' ) );
+
+				}
+
+			}
+
+		};
+
 		this.dom = dom;
 
 		this.style = '';
@@ -91,10 +123,42 @@ export class Node extends Serializer {
 		this.elements.push( element );
 
 		element.node = this;
+		element.addEventListener( 'connect', this._onConnect );
+		element.addEventListener( 'connectChildren', this._onConnectChildren );
 
 		this.dom.appendChild( element.dom );
 
 		return this;
+
+	}
+
+	remove( element ) {
+
+		this.elements.splice( this.elements.indexOf( element ), 1 );
+
+		element.node = null;
+		element.removeEventListener( 'connect', this._onConnect );
+		element.removeEventListener( 'connectChildren', this._onConnectChildren );
+
+		this.dom.removeChild( element.dom );
+
+		return this;
+
+	}
+
+	dispose() {
+
+		const canvas = this.canvas;
+
+		if ( canvas !== null ) canvas.remove( this );
+
+		for ( const element of this.elements ) {
+
+			element.dispose();
+
+		}
+
+		this.dispatchEvent( new Event( 'dispose' ) );
 
 	}
 
@@ -162,18 +226,36 @@ export class Node extends Serializer {
 		this.setPosition( data.x, data.y );
 		this.setWidth( data.width );
 
-		for ( const id of data.elements ) {
-
-			this.add( data.objects[ id ] );
-
-		}
-
 		if ( data.style !== undefined ) {
 
 			this.setStyle( data.style );
 
 		}
 
+		const elements = this.elements;
+
+		if ( elements.length > 0 ) {
+
+			let index = 0;
+
+			for ( const id of data.elements ) {
+
+				data.objects[ id ] = elements[ index ++ ];
+
+			}
+
+		} else {
+
+			for ( const id of data.elements ) {
+
+				this.add( data.objects[ id ] );
+
+			}
+
+		}
+
 	}
 
 }
+
+Node.prototype.isNode = true;

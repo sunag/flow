@@ -195,21 +195,21 @@ export class Canvas extends Serializer {
 	}
 
 	get rect() {
-		
+
 		return this.dom.getBoundingClientRect();
-		
+
 	}
 
 	get relativeX() {
-		
+
 		return this.dom.scrollLeft - this.centerX;
-		
+
 	}
-	
+
 	get relativeY() {
-		
+
 		return this.dom.scrollTop - this.centerY;
-		
+
 	}
 
 	get centerX() {
@@ -272,6 +272,12 @@ export class Canvas extends Serializer {
 
 	remove( node ) {
 
+		if ( node === this.selected ) {
+
+			this.select();
+
+		}
+
 		this.unlink( node );
 
 		const nodes = this.nodes;
@@ -282,6 +288,22 @@ export class Canvas extends Serializer {
 
 		this.contentDOM.removeChild( node.dom );
 
+		return this;
+
+	}
+
+	clear() {
+
+		const nodes = this.nodes;
+
+		while ( nodes.length > 0 ) {
+
+			this.remove( nodes[ 0 ] );
+
+		}
+
+		return this;
+
 	}
 
 	unlink( node ) {
@@ -290,9 +312,9 @@ export class Canvas extends Serializer {
 
 		for ( const link of links ) {
 
-			if ( link.lioElement && link.lioElement.node === node ) {
+			if ( link.outputElement && link.outputElement.node === node ) {
 
-				link.rioElement.link();
+				link.inputElement.connect();
 
 			}
 

@@ -17,6 +17,8 @@ export class ToggleInput extends Input {
 
 		this.dom.checked = val;
 
+		this.dispatchEvent( new Event( 'change' ) );
+
 		return this;
 
 	}

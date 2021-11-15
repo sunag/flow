@@ -60,7 +60,8 @@ export class Element extends Serializer {
 		this.rioLength = 0;
 
 		this.events = {
-			'connect': []
+			'connect': [],
+			'connectChildren': []
 		};
 
 		this.node = null;
@@ -85,28 +86,40 @@ export class Element extends Serializer {
 
 		} );
 
+		this.addEventListener( 'connectChildren', ( ) => {
+
+			dispatchEventList( this.events.connectChildren, this );
+
+		} );
+
 	}
 
-	onConnect( callback ) {
+	onConnect( callback, childrens = false ) {
 
 		this.events.connect.push( callback );
+
+		if ( childrens ) {
+
+			this.events.connectChildren.push( callback );
+
+		}
 
 		return this;
 
 	}
 
 	setExtra( value ) {
-		
+
 		this.extra = value;
-		
+
 		return this;
-		
+
 	}
-	
+
 	getExtra() {
-		
+
 		return this.extra;
-		
+
 	}
 
 	setStyle( style ) {
@@ -124,27 +137,27 @@ export class Element extends Serializer {
 	}
 
 	setInput( length ) {
-		
+
 		return this.setRIO( length );
-		
+
 	}
-	
+
 	setOutput( length ) {
-		
+
 		return this.setLIO( length );
-		
+
 	}
 
 	get inputLength() {
-		
+
 		return this.rioLength;
-		
+
 	}
-	
+
 	get outputLength() {
-		
+
 		return this.lioLength;
-		
+
 	}
 
 	setLIO( length ) {
@@ -199,7 +212,7 @@ export class Element extends Serializer {
 
 			// remove the current input
 
-			this.disconnectDOM.dispatchEvent( new Event( 'mousedown' ) );
+			this.disconnectDOM.dispatchEvent( new Event( 'disconnect' ) );
 
 		}
 
@@ -215,19 +228,52 @@ export class Element extends Serializer {
 				this.disconnectDOM.innerText = '✖';
 				this.dom.appendChild( this.disconnectDOM );
 
-				const onClick = ( e ) => {
-
-					e.stopPropagation();
+				const onDisconnect = () => {
 
 					this.links = [];
 					this.dom.removeChild( this.disconnectDOM );
+
+					this.disconnectDOM.removeEventListener( 'mousedown', onClick, true );
+					this.disconnectDOM.removeEventListener( 'touchstart', onClick, true );
+					this.disconnectDOM.removeEventListener( 'disconnect', onDisconnect, true );
+					element.removeEventListener( 'connect', onConnect );
+					element.removeEventListener( 'connectChildren', onConnect );
+					element.removeEventListener( 'nodeConnect', onConnect );
+					element.removeEventListener( 'nodeConnectChildren', onConnect );
+					element.removeEventListener( 'dispose', onDispose );
 
 					this.disconnectDOM = null;
 
 				};
 
+				const onConnect = ( e ) => {
+
+					this.dispatchEvent( new Event( 'connectChildren' ) );
+
+				};
+
+				const onDispose = () => {
+
+					this.connect();
+
+				};
+
+				const onClick = ( e ) => {
+
+					e.stopPropagation();
+
+					this.connect();
+
+				};
+
 				this.disconnectDOM.addEventListener( 'mousedown', onClick, true );
 				this.disconnectDOM.addEventListener( 'touchstart', onClick, true );
+				this.disconnectDOM.addEventListener( 'disconnect', onDisconnect, true );
+				element.addEventListener( 'connect', onConnect );
+				element.addEventListener( 'connectChildren', onConnect );
+				element.addEventListener( 'nodeConnect', onConnect );
+				element.addEventListener( 'nodeConnectChildren', onConnect );
+				element.addEventListener( 'dispose', onDispose );
 
 			}
 
@@ -236,6 +282,12 @@ export class Element extends Serializer {
 		this.dispatchEvent( new Event( 'connect' ) );
 
 		return this;
+
+	}
+
+	dispose() {
+
+		this.dispatchEvent( new Event( 'dispose' ) );
 
 	}
 
@@ -284,14 +336,30 @@ export class Element extends Serializer {
 
 	deserialize( data ) {
 
-		if ( data.inputLength !== undefined ) this.setInput( data.rioLength );
-		if ( data.outputLength !== undefined ) this.setOutput( data.lioLength );
+		if ( data.inputLength !== undefined ) this.setInput( data.inputLength );
+		if ( data.outputLength !== undefined ) this.setOutput( data.outputLength );
 
 		if ( data.inputs !== undefined ) {
 
-			for ( const id of data.inputs ) {
+			const inputs = this.inputs;
 
-				this.add( data.objects[ id ] );
+			if ( inputs.length > 0 ) {
+
+				let index = 0;
+
+				for ( const id of data.inputs ) {
+
+					data.objects[ id ] = inputs[ index ++ ];
+
+				}
+
+			} else {
+
+				for ( const id of data.inputs ) {
+
+					this.add( data.objects[ id ] );
+
+				}
 
 			}
 
@@ -301,7 +369,7 @@ export class Element extends Serializer {
 
 			for ( const id of data.links ) {
 
-				this.link( data.objects[ id ] );
+				this.connect( data.objects[ id ] );
 
 			}
 
@@ -321,16 +389,26 @@ export class Element extends Serializer {
 
 	}
 
-	get linkedElement() {
+	get linkedExtra() {
 
-		return this.links.length > 0 ? this.links[ 0 ].outputElement : null;
+		const linkedElement = this.linkedElement;
+
+		return linkedElement ? linkedElement.getExtra() : null;
 
 	}
-	
+
+	get linkedElement() {
+
+		const link = this.link;
+
+		return link ? link.outputElement : null;
+
+	}
+
 	get link() {
-		
-		return this.links[0];
-		
+
+		return this.links[ 0 ];
+
 	}
 
 	_createIO( type ) {

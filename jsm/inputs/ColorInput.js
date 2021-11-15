@@ -11,6 +11,24 @@ export class ColorInput extends Input {
 		dom.type = 'color';
 		dom.value = toHex( value );
 
+		dom.oninput = () => {
+
+			this.dispatchEvent( new Event( 'change' ) );
+
+		};
+
+	}
+
+	setValue( value ) {
+
+		return super.setValue( toHex( value ) );
+
+	}
+
+	getValue() {
+
+		return parseInt( super.getValue().substr( 1 ), 16 );
+
 	}
 
 }

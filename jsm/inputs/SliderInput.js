@@ -97,6 +97,8 @@ export class SliderInput extends Input {
 		this.field.setValue( val );
 		this.rangeDOM.value = val;
 
+		this.dispatchEvent( new Event( 'change' ) );
+
 		return this;
 
 	}

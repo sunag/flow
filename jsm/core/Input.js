@@ -61,6 +61,8 @@ export class Input extends Serializer {
 
 		this.dom.value = value;
 
+		this.dispatchEvent( new Event( 'change' ) );
+
 		return this;
 
 	}
@@ -84,3 +86,5 @@ export class Input extends Serializer {
 	}
 
 }
+
+Input.prototype.isInput = true;

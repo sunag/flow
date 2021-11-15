@@ -97,9 +97,7 @@ export class NumberInput extends Input {
 
 	setValue( val ) {
 
-		this.dom.value = this._getString( val );
-
-		return this;
+		return super.setValue( this._getString( val ) );
 
 	}
 
