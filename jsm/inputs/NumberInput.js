@@ -110,9 +110,9 @@ export class NumberInput extends Input {
 
 	}
 
-	setValue( val ) {
+	setValue( val, dispatch = true ) {
 
-		return super.setValue( this._getString( val ) );
+		return super.setValue( this._getString( val ), dispatch );
 
 	}
 

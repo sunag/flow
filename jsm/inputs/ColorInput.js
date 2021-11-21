@@ -19,9 +19,9 @@ export class ColorInput extends Input {
 
 	}
 
-	setValue( value ) {
+	setValue( value, dispatch = true ) {
 
-		return super.setValue( toHex( value ) );
+		return super.setValue( toHex( value ), dispatch );
 
 	}
 

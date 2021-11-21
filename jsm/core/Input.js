@@ -73,11 +73,11 @@ export class Input extends Serializer {
 
 	}
 
-	setValue( value ) {
+	setValue( value, dispatch = true ) {
 
 		this.dom.value = value;
 
-		this.dispatchEvent( new Event( 'change' ) );
+		if ( dispatch ) this.dispatchEvent( new Event( 'change' ) );
 
 		return this;
 
