@@ -26,7 +26,7 @@ export class StringInput extends Input {
 
 		};
 
-		dom.onkeydown = ( e ) => {
+		dom.onkeyup = ( e ) => {
 
 			if ( e.keyCode === ENTER_KEY ) {
 
@@ -35,6 +35,8 @@ export class StringInput extends Input {
 			}
 
 			e.stopPropagation();
+
+			this.dispatchEvent( new Event( 'change' ) );
 
 		};
 
