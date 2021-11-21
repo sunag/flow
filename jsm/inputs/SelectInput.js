@@ -63,7 +63,13 @@ export class SelectInput extends Input {
 
 	deserialize( data ) {
 
-		this.setOptions( data.options );
+		const currentOptions = this.options;
+
+		if ( currentOptions.length > 0 ) {
+
+			this.setOptions( data.options );
+
+		}
 
 		super.deserialize( data );
 
