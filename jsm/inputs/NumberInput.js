@@ -22,21 +22,39 @@ export class NumberInput extends Input {
 		dom.spellcheck = false;
 		dom.autocomplete = 'off';
 
+		dom.ondragstart = dom.oncontextmenu = ( e ) => {
+
+			e.preventDefault();
+
+			e.stopPropagation();
+
+		};
+
+		dom.onfocus = dom.onclick = () => {
+
+			dom.select();
+
+		};
+
 		dom.onblur = () => {
 
 			this.dispatchEvent( new Event( 'blur' ) );
 
 		};
 
+		dom.onchange = () => {
+
+			this.dispatchEvent( new Event( 'change' ) );
+
+		};
+
 		dom.onkeydown = ( e ) => {
 
-			if ( e.key.length === 1 && /\d|\/./.test( e.key ) !== true ) {
+			if ( e.key.length === 1 && /\d|\./.test( e.key ) !== true ) {
 
 				return false;
 
 			}
-
-			this.dispatchEvent( new Event( 'change' ) );
 
 			if ( e.keyCode === ENTER_KEY ) {
 
@@ -76,12 +94,9 @@ export class NumberInput extends Input {
 		this.max = max;
 		this.step = step;
 
-		this.dom.value = this._getString( this.value );
-
 		this.dispatchEvent( new Event( 'range' ) );
-		this.dispatchEvent( new Event( 'change' ) );
 
-		return this;
+		return this.setValue( this.getValue() );
 
 	}
 
