@@ -8,6 +8,7 @@ export { Serializer } from './core/Serializer.js';
 export { Loader } from './core/Loader.js';
 export * as Utils from './core/Utils.js';
 
+export { ObjectNode } from './nodes/ObjectNode.js';
 export { PanelNode } from './nodes/PanelNode.js';
 
 export { Menu } from './menus/Menu.js';
