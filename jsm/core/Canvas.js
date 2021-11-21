@@ -1,5 +1,5 @@
 import { Serializer } from './Serializer.js';
-import { draggableDOM, toPX } from './Utils.js';
+import { draggableDOM, dispatchEventList, toPX } from './Utils.js';
 import { drawLine } from './CanvasUtils.js';
 
 const colors = [
@@ -346,9 +346,17 @@ export class Canvas extends Serializer {
 
 	select( node = null ) {
 
-		if ( this.selected !== null ) {
+		if ( node === this.selected ) return;
 
-			this.selected.dom.classList.remove( 'selected' );
+		const previousNode = this.selected;
+
+		if ( previousNode !== null ) {
+
+			previousNode.dom.classList.remove( 'selected' );
+
+			this.selected = null;
+
+			dispatchEventList( previousNode.events.blur, previousNode );
 
 		}
 
@@ -356,9 +364,11 @@ export class Canvas extends Serializer {
 
 			node.dom.classList.add( 'selected' );
 
-		}
+			this.selected = node;
 
-		this.selected = node;
+			dispatchEventList( node.events.focus, node );
+
+		}
 
 	}
 
