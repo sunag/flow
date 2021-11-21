@@ -70,6 +70,8 @@ export class Element extends Serializer {
 
 		this.extra = null;
 
+		this.visible = true;
+
 		this.inputsDOM = dom;
 
 		this.disconnectDOM = null;
@@ -121,6 +123,22 @@ export class Element extends Serializer {
 	getExtra() {
 
 		return this.extra;
+
+	}
+
+	setVisible( value ) {
+
+		this.visible = value;
+
+		this.dom.style.display = value ? '' : 'none';
+
+		return this;
+
+	}
+
+	getVisible() {
+
+		return this.visible;
 
 	}
 
