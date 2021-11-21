@@ -602,6 +602,25 @@ f-tooltip {
 	pointer-events: none;
 }
 
+f-tooltip {
+	position: absolute;
+	left: 0;
+	top: 0;	
+	background: rgba(0,0,0,.8);
+	backdrop-filter: blur(4px);
+	font-size: 14px;
+	padding: 7px;
+	border-radius: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+	visibility: hidden;
+	pointer-events: none;
+	opacity: 0;
+	transition: all 0.3s ease;
+	z-index: 150;
+	white-space: nowrap;
+}
+
 f-menu.context {
 	position: absolute;
 	width: 170px;
@@ -682,6 +701,10 @@ f-menu.context f-item button:active {
 	outline: solid 1px rgba( 0, 80, 200, 0.98 );
 }
 
+f-menu.context f-item f-tooltip {
+	margin-left: 120px;
+}
+
 /* circle */
 
 f-menu.circle {
@@ -712,31 +735,7 @@ f-menu.circle f-item button {
 }
 
 f-menu.circle f-item f-tooltip {
-	position: absolute;
-	left: 0;
-	top: 0;	
 	margin-left: 50px;
-	background: rgba(0,0,0,.8);
-	backdrop-filter: blur(4px);
-	font-size: 14px;
-	padding: 7px;
-	border-radius: 10px;
-	top: 50%;
-	transform: translateY(-50%);
-	visibility: hidden;
-	pointer-events: none;
-	opacity: 0;
-	transition: all 0.3s ease;
-}
-
-f-menu.circle f-item button:hover {
-	background-color: #2a2a2a;
-}
-
-f-menu.circle f-item button:hover > f-tooltip {
-	visibility: visible;
-	transform: translate(10px, -50%);
-	opacity: 1;
 }
 
 /* rounded */
@@ -772,6 +771,22 @@ f-menu.circle f-item button:hover > f-tooltip {
 	f-element f-io:hover {
 		border: 2px solid #0177fb;
 		zoom: 1.4;
+	}
+	
+	f-menu.circle f-item button:hover {
+		background-color: #2a2a2a;
+	}
+
+	f-menu.circle f-item button:hover > f-tooltip,
+	f-menu.context f-item button:hover > f-tooltip {
+		visibility: visible;
+		transform: translate(10px, -50%);
+		opacity: 1;
+	}
+
+	f-menu.circle f-item button:focus > f-tooltip,
+	f-menu.context f-item button:focus > f-tooltip {
+		visibility: hidden;
 	}
 
 }
