@@ -11,6 +11,8 @@ export class Input extends Serializer {
 
 		this.element = null;
 
+		this.extra = null;
+
 		this.events = {
 			'change': [],
 			'click': []
@@ -27,6 +29,20 @@ export class Input extends Serializer {
 			dispatchEventList( this.events.click, this );
 
 		} );
+
+	}
+
+	setExtra( value ) {
+
+		this.extra = value;
+
+		return this;
+
+	}
+
+	getExtra() {
+
+		return this.extra;
 
 	}
 
