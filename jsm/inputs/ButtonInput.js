@@ -19,7 +19,11 @@ export class ButtonInput extends Input {
 
 		spanDOM.innerText = innterText;
 
-		dom.onclick = () => {
+		dom.onclick = dom.ontouchstart = ( e ) => {
+
+			e.preventDefault();
+
+			e.stopPropagation();
 
 			this.dispatchEvent( new Event( 'click' ) );
 
