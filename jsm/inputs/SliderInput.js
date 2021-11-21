@@ -48,10 +48,6 @@ export class SliderInput extends Input {
 		dom.appendChild( rangeDOM );
 		dom.appendChild( field.dom );
 
-		this.min = min;
-		this.max = max;
-		this.step = step;
-
 		this.rangeDOM = rangeDOM;
 		this.field = field;
 
@@ -78,6 +74,24 @@ export class SliderInput extends Input {
 			this.dispatchEvent( new Event( 'change' ) );
 
 		}, '' );
+
+	}
+
+	get min() {
+
+		return this.field.min;
+
+	}
+
+	get max() {
+
+		return this.field.max;
+
+	}
+
+	get step() {
+
+		return this.field.step;
 
 	}
 
