@@ -64,7 +64,28 @@ export class Node extends Serializer {
 
 		this.elements = [];
 
+		this.events = {
+			'focus': [],
+			'blur': []
+		};
+
 		this.setPosition( 0, 0 );
+
+	}
+
+	onFocus( callback ) {
+
+		this.events.focus.push( callback );
+
+		return this;
+
+	}
+
+	onBlur( callback ) {
+
+		this.events.blur.push( callback );
+
+		return this;
 
 	}
 
