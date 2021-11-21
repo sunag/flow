@@ -77,7 +77,7 @@ export const draggableDOM = ( dom, callback = null, className = 'dragging' ) => 
 
 		} else {
 
-			if ( Math.abs( delta.x ) > 1 || Math.abs( delta.y ) > 1 ) {
+			if ( Math.abs( delta.x ) > 2 || Math.abs( delta.y ) > 2 ) {
 
 				dragData.dragging = true;
 
