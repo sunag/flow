@@ -1,8 +1,11 @@
 import { toPX } from '../core/Utils.js';
+import { dispatchEventList } from '../core/Utils.js';
 
-export class Menu {
+export class Menu extends EventTarget {
 
 	constructor( className, target = null ) {
+
+		super();
 
 		const dom = document.createElement( 'f-menu' );
 		dom.className = className + ' hidden';
@@ -11,7 +14,25 @@ export class Menu {
 
 		this.visible = false;
 
+		this.events = {
+			'context': []
+		};
+
+		this.addEventListener( 'context', ( ) => {
+
+			dispatchEventList( this.events.context, this );
+
+		} );
+
 		this.setTarget( target );
+
+	}
+
+	onContext( callback ) {
+
+		this.events.context.push( callback );
+
+		return this;
 
 	}
 
@@ -23,6 +44,8 @@ export class Menu {
 
 		this.visible = true;
 
+		this.dispatchEvent( new Event( 'show' ) );
+
 		return this;
 
 	}
@@ -30,6 +53,8 @@ export class Menu {
 	hide() {
 
 		this.dom.classList.add( 'hidden' );
+
+		this.dispatchEvent( new Event( 'hide' ) );
 
 		this.visible = false;
 
@@ -43,9 +68,13 @@ export class Menu {
 
 				e.preventDefault();
 
+				if ( e.pointerType !== 'mouse' || ( e.pageX === 0 && e.pageY === 0 ) ) return;
+
 				const rect = this.target.getBoundingClientRect();
 
-				this.show( e.pageX  - rect.left, e.pageY - rect.top );
+				this.dispatchEvent( new Event( 'context' ) );
+
+				this.show( e.pageX - rect.left, e.pageY - rect.top );
 
 			};
 
@@ -65,6 +94,8 @@ export class Menu {
 			target.addEventListener( 'touchstart', onDown, true );
 
 			target.addEventListener( 'contextmenu', onContextMenu, false );
+
+			target.appendChild( this.dom );
 
 		}
 
