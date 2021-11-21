@@ -8,11 +8,27 @@ export class Serializer extends EventTarget {
 
 		this._id = _id ++;
 
+		this._serializable = true;
+
 	}
 
 	get id() {
 
 		return this._id;
+
+	}
+
+	setSerializable( value ) {
+
+		this._serializable = value;
+
+		return this;
+
+	}
+
+	getSerializable() {
+
+		return this._serializable;
 
 	}
 
