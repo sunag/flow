@@ -1,20 +1,53 @@
 import * as Flow from '../Flow.js';
+import { dispatchEventList } from './Utils.js';
 
 export class Loader extends EventTarget {
 
-	constructor() {
+	constructor( parseType = Loader.DEFAULT ) {
 
 		super();
 
+		this.parseType = parseType;
+
+		this.events = {
+			'load': []
+		};
+
 	}
 
-	async load( url ) {
+	setParseType( type ) {
+
+		this.parseType = type;
+
+		return this;
+
+	}
+
+	getParseType() {
+
+		return this.parseType;
+
+	}
+
+	onLoad( callback ) {
+
+		this.events.load.push( callback );
+
+		return this;
+
+	}
+
+	async load( url, lib = null ) {
 
 		return await fetch( url )
 			.then( response => response.json() )
 			.then( result => {
 
-				return this.parse( result );
+				this.data = this.parse( result, lib );
+
+				dispatchEventList( this.events.load, this );
+
+				return this.data;
 
 			} )
 			.catch( err => {
@@ -25,18 +58,33 @@ export class Loader extends EventTarget {
 
 	}
 
-	static parse( json, lib = null ) {
+	parse( json, lib = null ) {
 
-		json = Loader.parseObjects( json, lib );
+		json = this._parseObjects( json, lib );
 
-		const flowObj = new Flow[ json.type ]();
-		flowObj.deserialize( json );
+		const parseType = this.parseType;
 
-		return flowObj;
+		if ( parseType === Loader.DEFAULT ) {
+
+			const flowObj = new Flow[ json.type ]();
+
+			if ( flowObj.getSerializable() ) {
+
+				flowObj.deserialize( json );
+
+			}
+
+			return flowObj;
+
+		} else if ( parseType === Loader.OBJECTS ) {
+
+			return json;
+
+		}
 
 	}
 
-	static parseObjects( json, lib = null ) {
+	_parseObjects( json, lib = null ) {
 
 		json = { ...json };
 
@@ -66,7 +114,11 @@ export class Loader extends EventTarget {
 
 					ref.set( newObject, true );
 
-					newObject.deserialize( json.objects[ id ] );
+					if ( newObject.getSerializable() ) {
+
+						newObject.deserialize( json.objects[ id ] );
+
+					}
 
 				}
 
@@ -86,3 +138,6 @@ export class Loader extends EventTarget {
 	}
 
 }
+
+Loader.DEFAULT = 'default';
+Loader.OBJECTS = 'objects';
