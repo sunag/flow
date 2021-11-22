@@ -693,7 +693,8 @@ f-menu.context f-item button span {
 	margin-left: 6px;
 }
 
-f-menu.context f-item:hover > button {
+f-menu.context f-item:hover > button,
+f-menu.context f-item.active > button {
 	color: #fff;
 	background: #313136;
 }
