@@ -633,7 +633,8 @@ f-menu.context {
 	backdrop-filter: blur(6px);
 	border: 1px solid #7e7e7e45;
 	box-shadow: 3px 3px 6px rgba(0,0,0,.2);
-	transition: all 0.2s ease;
+	transition: opacity 0.2s ease;
+	transition: transform 0.1s ease;
 }
 
 f-menu.context.hidden {
