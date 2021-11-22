@@ -633,10 +633,13 @@ f-menu.context {
 	backdrop-filter: blur(6px);
 	border: 1px solid #7e7e7e45;
 	box-shadow: 3px 3px 6px rgba(0,0,0,.2);
+	transition: all 0.2s ease;
 }
 
 f-menu.context.hidden {
 	visibility: hidden;
+	transform: translateX(-10px);
+	opacity: 0;
 }
 
 f-menu.context f-item {
@@ -661,6 +664,8 @@ f-menu.context f-item.submenu::after {
 f-menu.context f-item:hover > f-menu,
 f-menu.context f-item.active > f-menu {
 	visibility: unset;
+	transform: unset;
+	opacity: unset;
 }
 
 f-menu.context f-menu {
@@ -789,6 +794,7 @@ f-menu.circle f-item f-tooltip {
 	f-menu.circle f-item button:focus > f-tooltip,
 	f-menu.context f-item button:focus > f-tooltip {
 		visibility: hidden;
+		opacity: 0;
 	}
 
 }
