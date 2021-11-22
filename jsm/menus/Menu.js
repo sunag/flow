@@ -14,7 +14,8 @@ export class Menu extends EventTarget {
 
 		this.visible = false;
 
-		this.submenus = new WeakMap();
+		this.subMenus = new WeakMap();
+		this.domButtons = new WeakMap();
 
 		this.events = {
 			'context': []
@@ -30,7 +31,7 @@ export class Menu extends EventTarget {
 
 		this._onButtonClick = ( e = null ) => {
 
-			const target = e ? e.target : null;
+			const button = e ? e.target : null;
 
 			if ( this._lastButtonClick ) {
 
@@ -38,17 +39,29 @@ export class Menu extends EventTarget {
 
 			}
 
-			this._lastButtonClick = target;
+			this._lastButtonClick = button;
 
-			if ( target ) {
+			if ( button ) {
 
-				if ( this.submenus.has( target ) ) {
+				if ( this.subMenus.has( button ) ) {
 
-					this.submenus.get( target )._onButtonClick();
+					this.subMenus.get( button )._onButtonClick();
 
 				}
 
-				target.dom.parentElement.classList.add( 'active' );
+				button.dom.parentElement.classList.add( 'active' );
+
+			}
+
+		};
+
+		this._onButtonMouseOver = ( e ) => {
+
+			const button = e.target;
+
+			if ( this.subMenus.has( button ) && this._lastButtonClick !== button ) {
+
+				this._onButtonClick();
 
 			}
 
@@ -149,15 +162,18 @@ export class Menu extends EventTarget {
 
 			liDOM.appendChild( submenu.dom );
 
-			this.submenus.set( button, submenu );
+			this.subMenus.set( button, submenu );
 
 		}
 
 		liDOM.appendChild( button.dom );
 
 		button.addEventListener( 'click', this._onButtonClick );
+		button.addEventListener( 'mouseover', this._onButtonMouseOver );
 
 		this.dom.appendChild( liDOM );
+
+		this.domButtons.set( liDOM, button );
 
 		return this;
 

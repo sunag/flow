@@ -19,6 +19,12 @@ export class ButtonInput extends Input {
 
 		spanDOM.innerText = innterText;
 
+		dom.onmouseover = () => {
+
+			this.dispatchEvent( new Event( 'mouseover' ) );
+
+		};
+
 		dom.onclick = dom.ontouchstart = ( e ) => {
 
 			e.preventDefault();
