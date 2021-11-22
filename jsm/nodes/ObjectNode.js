@@ -4,9 +4,11 @@ import { TitleElement } from '../elements/TitleElement.js';
 
 export class ObjectNode extends Node {
 
-	constructor( name, inputLength, extra = null ) {
+	constructor( name, inputLength, extra = null, width = 300 ) {
 
 		super();
+
+		this.setWidth( width );
 
 		const title = new TitleElement( name )
 			.setExtra( extra )
