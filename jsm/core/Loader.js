@@ -1,4 +1,4 @@
-import * as Flow from '../Flow.js';
+import * as Flow from '../FlowObjects.js';
 import { dispatchEventList } from './Utils.js';
 
 export class Loader extends EventTarget {
