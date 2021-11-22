@@ -14,6 +14,8 @@ export class Menu extends EventTarget {
 
 		this.visible = false;
 
+		this.submenus = new WeakMap();
+
 		this.events = {
 			'context': []
 		};
@@ -23,6 +25,34 @@ export class Menu extends EventTarget {
 			dispatchEventList( this.events.context, this );
 
 		} );
+
+		this._lastButtonClick = null;
+
+		this._onButtonClick = ( e = null ) => {
+
+			const target = e ? e.target : null;
+
+			if ( this._lastButtonClick ) {
+
+				this._lastButtonClick.dom.parentElement.classList.remove( 'active' );
+
+			}
+
+			this._lastButtonClick = target;
+
+			if ( target ) {
+
+				if ( this.submenus.has( target ) ) {
+
+					this.submenus.get( target )._onButtonClick();
+
+				}
+
+				target.dom.parentElement.classList.add( 'active' );
+
+			}
+
+		};
 
 		this.setTarget( target );
 
@@ -36,9 +66,15 @@ export class Menu extends EventTarget {
 
 	}
 
-	show( x, y ) {
+	show( x = null, y = null ) {
 
-		this.setPosition( x, y );
+		this._onButtonClick();
+
+		if ( x !== null && y !== null ) {
+
+			this.setPosition( x, y );
+
+		}
 
 		this.dom.classList.remove( 'hidden' );
 
@@ -113,9 +149,13 @@ export class Menu extends EventTarget {
 
 			liDOM.appendChild( submenu.dom );
 
+			this.submenus.set( button, submenu );
+
 		}
 
 		liDOM.appendChild( button.dom );
+
+		button.addEventListener( 'click', this._onButtonClick );
 
 		this.dom.appendChild( liDOM );
 

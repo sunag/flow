@@ -658,7 +658,8 @@ f-menu.context f-item.submenu::after {
 	border-left-color: #808080;
 }
 
-f-menu.context f-item:hover > f-menu {
+f-menu.context f-item:hover > f-menu,
+f-menu.context f-item.active > f-menu {
 	visibility: unset;
 }
 
