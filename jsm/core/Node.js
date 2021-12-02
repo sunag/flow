@@ -69,7 +69,7 @@ export class Node extends Serializer {
 			'blur': []
 		};
 
-		this.setPosition( 0, 0 );
+		this.setWidth( 300 ).setPosition( 0, 0 );
 
 	}
 
@@ -135,7 +135,7 @@ export class Node extends Serializer {
 
 	getWidth() {
 
-		return this.dom.style.width;
+		return parseInt( this.dom.style.width );
 
 	}
 
