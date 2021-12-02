@@ -1,4 +1,6 @@
 import { Serializer } from './Serializer.js';
+import { Node } from './Node.js';
+import { TitleElement } from '../elements/TitleElement.js';
 import { draggableDOM, dispatchEventList, toPX } from './Utils.js';
 import { drawLine } from './CanvasUtils.js';
 
@@ -7,6 +9,8 @@ const colors = [
 	'#44ff44',
 	'#4444ff'
 ];
+
+const dropNode = new Node().add( new TitleElement( 'File' ) ).setWidth( 250 );
 
 export class Canvas extends Serializer {
 
@@ -17,6 +21,8 @@ export class Canvas extends Serializer {
 		const dom = document.createElement( 'f-canvas' );
 		const contentDOM = document.createElement( 'f-content' );
 		const areaDOM = document.createElement( 'f-area' );
+		const dropDOM = document.createElement( 'f-drop' );
+
 		const canvas = document.createElement( 'canvas' );
 		const frontCanvas = document.createElement( 'canvas' );
 
@@ -27,6 +33,7 @@ export class Canvas extends Serializer {
 
 		this.contentDOM = contentDOM;
 		this.areaDOM = areaDOM;
+		this.dropDOM = dropDOM;
 
 		this.canvas = canvas;
 		this.frontCanvas = frontCanvas;
@@ -51,6 +58,12 @@ export class Canvas extends Serializer {
 
 		this.updating = false;
 
+		this.droppedItems = [];
+
+		this.events = {
+			'drop': []
+		};
+
 		frontCanvas.className = 'front';
 
 		contentDOM.style.left = toPX( this.centerX );
@@ -59,6 +72,9 @@ export class Canvas extends Serializer {
 		areaDOM.style.width = `calc( 100% + ${ this.width }px )`;
 		areaDOM.style.height = `calc( 100% + ${ this.height }px )`;
 
+		dropDOM.innerHTML = '<span>drop your file</span>';
+
+		dom.appendChild( dropDOM );
 		dom.appendChild( canvas );
 		dom.appendChild( frontCanvas );
 		dom.appendChild( contentDOM );
@@ -134,6 +150,68 @@ export class Canvas extends Serializer {
 		dom.addEventListener( 'wheel', onZoom );
 		dom.addEventListener( 'touchmove', onZoom );
 		//dom.addEventListener( 'touchstart', onZoomStart );
+
+		let dropEnterCount = 0;
+
+		const dragState = ( enter ) => {
+
+			if ( enter ) {
+
+				if ( dropEnterCount ++ === 0 ) {
+
+					this.droppedItems = [];
+
+					dropDOM.classList.add( 'visible' );
+
+					this.add( dropNode );
+
+				}
+
+			} else if ( -- dropEnterCount === 0 ) {
+
+				dropDOM.classList.remove( 'visible' );
+
+				this.remove( dropNode );
+
+			}
+
+		};
+
+		dom.addEventListener( 'dragenter', () => {
+
+ 			dragState( true );
+
+		} );
+
+		dom.addEventListener( 'dragleave', () => {
+
+			dragState( false );
+
+		} );
+
+		dom.addEventListener( 'dragover', ( e ) => {
+
+			e.preventDefault();
+
+			const { relativeClientX, relativeClientY } = this;
+
+			const centerNodeX = dropNode.getWidth() / 2;
+
+			dropNode.setPosition( relativeClientX - centerNodeX, relativeClientY - 20 );
+
+		} );
+
+		dom.addEventListener( 'drop', ( e ) => {
+
+			e.preventDefault();
+
+			dragState( false );
+
+			this.droppedItems = e.dataTransfer.items;
+
+			dispatchEventList( this.events.drop, this );
+
+		} );
 
 		draggableDOM( dom, ( data ) => {
 
@@ -224,6 +302,14 @@ export class Canvas extends Serializer {
 
 	}
 
+	onDrop( callback ) {
+
+		this.events.drop.push( callback );
+
+		return this;
+
+	}
+
 	start() {
 
 		this.updating = true;
@@ -235,6 +321,8 @@ export class Canvas extends Serializer {
 
 		document.addEventListener( 'mousemove', this._onMoveEvent, true );
 		document.addEventListener( 'touchmove', this._onMoveEvent, true );
+
+		document.addEventListener( 'dragover', this._onMoveEvent, true );
 
 		document.addEventListener( 'DOMContentLoaded', this._onContentLoaded );
 
@@ -253,6 +341,8 @@ export class Canvas extends Serializer {
 
 		document.removeEventListener( 'mousemove', this._onMoveEvent, true );
 		document.removeEventListener( 'touchmove', this._onMoveEvent, true );
+
+		document.removeEventListener( 'dragover', this._onMoveEvent, true );
 
 		document.removeEventListener( 'DOMContentLoaded', this._onContentLoaded );
 

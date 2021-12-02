@@ -1,3 +1,17 @@
+@keyframes f-animation-open {
+
+	0% { 
+		transform: scale(.5);
+		filter: blur(30px);
+	}
+	
+	100% { 
+		transform: scale(1);
+		filter: unset;
+	}
+
+}
+
 f-canvas,
 f-canvas canvas {
 	position: absolute;
@@ -118,24 +132,11 @@ f-node {
 	transition: filter 0.2s ease;
 }
 
-@keyframes f-open {
-
-	0% { 
-		transform: scale(.5);
-		filter: blur(30px);
-	}
-	
-	100% { 
-		transform: scale(1);
-		filter: unset
-	}
-
-}
-
 f-node {
-	animation: .2s f-open 1 alternate ease-out;
+	animation: .2s f-animation-open 1 alternate ease-out;
 }
 
+f-drop,
 f-menu,
 f-menu button,
 f-element,
@@ -594,6 +595,39 @@ f-element.large {
 body.connecting f-node:not(.io-connect) f-element:hover,
 f-element.select {
 	background-color: rgba(61, 70, 82, 0.98);
+}
+
+/* drop */
+
+f-drop {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	left: 0;
+	top: 0;
+	background: #02358417;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	box-shadow: inset 0 0 20px 10px #464ace17;
+	pointer-events: none;
+	transition: all .07s;
+	opacity: 0;
+	visibility: hidden;
+}
+
+f-drop.visible {
+	visibility: unset;
+	opacity: unset;
+	transition: all .23s;
+}
+
+f-drop span {
+	opacity: .5;
+	font-size: 40px;
+	text-shadow: 0px 0px 5px #000;
+	font-weight: bold;
 }
 
 /* menu */
