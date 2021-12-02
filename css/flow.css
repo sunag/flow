@@ -602,7 +602,7 @@ f-element.select {
 f-drop {
 	width: 100%;
 	height: 100%;
-	position: fixed;
+	position: sticky;
 	left: 0;
 	top: 0;
 	background: #02358417;
