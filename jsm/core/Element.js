@@ -1,3 +1,4 @@
+import { Styles } from './Styles.js';
 import { Serializer } from './Serializer.js';
 import { toPX, draggableDOM, dispatchEventList } from './Utils.js';
 import { Link } from './Link.js';
@@ -277,7 +278,8 @@ export class Element extends Serializer {
 			if ( this.disconnectDOM === null ) {
 
 				this.disconnectDOM = document.createElement( 'f-disconnect' );
-				this.disconnectDOM.innerText = '✖';
+				this.disconnectDOM.innerHTML = Styles.icons.unlink ? `<i class='${ Styles.icons.unlink }'></i>` : '✖';
+
 				this.dom.appendChild( this.disconnectDOM );
 
 				const onDisconnect = () => {
@@ -288,6 +290,7 @@ export class Element extends Serializer {
 					this.disconnectDOM.removeEventListener( 'mousedown', onClick, true );
 					this.disconnectDOM.removeEventListener( 'touchstart', onClick, true );
 					this.disconnectDOM.removeEventListener( 'disconnect', onDisconnect, true );
+
 					element.removeEventListener( 'connect', onConnect );
 					element.removeEventListener( 'connectChildren', onConnect );
 					element.removeEventListener( 'nodeConnect', onConnect );

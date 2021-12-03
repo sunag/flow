@@ -1,4 +1,5 @@
 import { Node } from '../core/Node.js';
+import { Styles } from '../core/Styles.js';
 import { ButtonInput } from '../inputs/ButtonInput.js';
 import { TitleElement } from '../elements/TitleElement.js';
 
@@ -14,11 +15,11 @@ export class ObjectNode extends Node {
 			.setExtra( extra )
 			.setOutput( inputLength );
 
-		const closeButton = new ButtonInput( '✖' ).onClick( () => {
+		const closeButton = new ButtonInput( Styles.icons.close || '✕' ).onClick( () => {
 
 			this.dispose();
 
-		} );
+		} ).setIcon( Styles.icons.close );
 
 		title.addButton( closeButton );
 

@@ -3,6 +3,7 @@ export { Input } from './core/Input.js';
 export { Node } from './core/Node.js';
 export { Canvas } from './core/Canvas.js';
 export { Serializer } from './core/Serializer.js';
+export { Styles } from './core/Styles.js';
 
 export { ObjectNode } from './nodes/ObjectNode.js';
 export { PanelNode } from './nodes/PanelNode.js';
