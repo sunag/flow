@@ -809,6 +809,21 @@ f-menu.circle f-item f-tooltip {
 
 @media (hover: hover) and (pointer: fine) {
 
+	f-node:not(.selected):hover {
+		filter: drop-shadow(0 0 6px #66666630);
+	}
+
+	f-element f-toolbar {
+		visibility: hidden;
+		opacity: 0;
+		transition: opacity 0.2s ease;
+	}
+
+	f-node:hover > f-element f-toolbar {
+		visibility: visible;
+		opacity: 1;
+	}
+
 	f-element f-io:hover {
 		border: 2px solid #0177fb;
 		zoom: 1.4;
