@@ -419,6 +419,15 @@ f-element f-inputs {
 	z-index: 1;
 }
 
+f-element.inputs-disable f-inputs {
+	filter: grayscale(100%);
+    opacity: .5;
+}
+
+f-element.inputs-disable f-inputs input {
+	pointer-events: none;
+}
+
 f-element f-label,
 f-element span {
 	margin: auto;

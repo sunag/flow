@@ -71,6 +71,8 @@ export class Element extends Serializer {
 
 		this.extra = null;
 
+		this.enabledInputs = true;
+
 		this.visible = true;
 
 		this.inputsDOM = dom;
@@ -140,6 +142,26 @@ export class Element extends Serializer {
 	getVisible() {
 
 		return this.visible;
+
+	}
+
+	setEnabledInputs( value ) {
+
+		const dom = this.dom;
+
+		if ( !this.enabledInputs ) dom.classList.remove( 'inputs-disable');
+
+		if ( !value ) dom.classList.add( 'inputs-disable' );
+
+		this.enabledInputs = value;
+
+		return this;
+
+	}
+
+	getEnabledInputs() {
+
+		return this.enabledInputs;
 
 	}
 
