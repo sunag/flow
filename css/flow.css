@@ -34,11 +34,6 @@ f-canvas canvas.front {
 	z-index: 10;
 }
 
-body.dragging f-canvas,
-body.connecting f-canvas {
-	overflow: hidden !important;
-}
-
 body.dragging *:not(.drag) {
 	pointer-events: none !important;
 }
@@ -337,7 +332,7 @@ f-element f-toolbar {
 	align-content: space-around;
 }
 
-f-element.output-right f-toolbar {
+f-element.input-right f-toolbar {
 	right: 7px;
 	float: right;
 	justify-content: end;
@@ -447,6 +442,10 @@ f-element.right f-label {
 	text-align: right;
 }
 
+f-element.center f-label {
+	text-align: center;
+}
+
 f-element f-label i {
 	float: left;
 	font-size: 18px;
@@ -515,7 +514,13 @@ f-element.title i {
 	opacity: .5;
 }
 
-f-element.output-right.title i {
+f-element.title f-toolbar i {
+	font-size: 20px;
+	right: unset;
+	left: 0px;
+}
+
+f-element.input-right.title i {
 	left: 10px;
 	right: unset;
 }
@@ -568,7 +573,7 @@ f-element f-disconnect {
 	cursor: pointer;
 }
 
-f-element.output-right f-disconnect {
+f-element.input-right f-disconnect {
 	right: -35px;
 	left: unset;
 }
@@ -814,7 +819,7 @@ f-menu.circle f-item f-tooltip {
 	border-radius: 20px 10px;
 }
 
-/* hover desktop */
+/* desktop */
 
 @media (hover: hover) and (pointer: fine) {
 
@@ -857,7 +862,18 @@ f-menu.circle f-item f-tooltip {
 
 }
 
-/* optimize */
+/* mobile */
+
+@media (hover: none) and (pointer: coarse) {
+
+	body.dragging f-canvas,
+	body.connecting f-canvas {
+		overflow: hidden !important;
+	}
+
+}
+
+/* optimizations */
 
 f-canvas {
 	will-change: top, left;

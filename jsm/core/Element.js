@@ -82,7 +82,7 @@ export class Element extends Serializer {
 		this.lioDOM = this._createIO( 'lio' );
 		this.rioDOM = this._createIO( 'rio' );
 
-		this.dom.classList.add( `output-${ Link.InputDirection }` );
+		this.dom.classList.add( `input-${ Link.InputDirection }` );
 
 		this.dom.appendChild( this.lioDOM );
 		this.dom.appendChild( this.rioDOM );
