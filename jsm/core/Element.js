@@ -101,6 +101,14 @@ export class Element extends Serializer {
 
 	}
 
+	setAttribute( name, value ) {
+		
+		this.dom.setAttribute( name, value );
+		
+		return this;
+		
+	}
+
 	onConnect( callback, childrens = false ) {
 
 		this.events.connect.push( callback );

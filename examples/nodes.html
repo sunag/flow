@@ -67,11 +67,16 @@ flow {
 		node2.add( new Flow.LabelElement( 'Numbers' ).add( new Flow.ButtonInput( 'Test' ) ).setOutput( 3 ) );
 		node2.add( new Flow.LabelElement( 'Numbers' ).add( new Flow.SliderInput( .5, 0, 1 ) ) );
 
+		let abcElement;
+
 		node2.add( new Flow.Element().add( new Flow.SelectInput( [ 'Test A', 'Test B' ] ) ) );
 		node2.add( new Flow.Element().add( new Flow.ColorInput( 0x0066FF ) ) );
-		node2.add( new Flow.Element().add( new Flow.StringInput( 'Test' ) ) );
+		node2.add( abcElement = new Flow.Element().add( new Flow.StringInput( 'abc 123' ) ) );
 		node2.add( new Flow.Element().add( new Flow.TextInput( 'Test' ) ) );
 		node2.add( new Flow.LabelElement( 'Boolean' ).add( new Flow.ToggleInput( true ) ) );
+
+		abcElement.setAttribute( 'tooltip', 'Abc a asdfasdf asdasdfasdf asdfasdf fasdfasdf asdf asdf asdfasdf bc' );
+		abcElement.setAttribute( 'error', true );
 
 		node2.add( new Flow.LabelElement( 'TEST' ).setStyle( 'right' ) );
 

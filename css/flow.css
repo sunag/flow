@@ -153,6 +153,11 @@ f-element textarea {
 	transition: background 0.2s ease;
 }
 
+f-element input,
+f-element textarea {
+    text-transform: initial;
+}
+
 f-element input {
 	transition: background 0.1s ease;
 }
@@ -161,7 +166,7 @@ f-element input,
 f-element select,
 f-element button,
 f-element textarea {
-	background-color: #242427;
+	background-color: #232324d1;
 }
 
 f-element {
@@ -175,6 +180,67 @@ f-element {
 	padding-right: 7px;
 	padding-top: 2px;
 	padding-bottom: 2px;
+}
+
+f-element:after,
+f-element:before {
+	transition: opacity .17s;
+	opacity: 0;
+	content: '';
+}
+
+f-element[tooltip]:hover:after,
+f-element[tooltip]:focus-within:after {
+	font-size: 14px !important;
+	display: flex;
+	justify-content: center;
+	position: fixed;
+	margin-left: -7px;
+	width: calc( 100% );
+	background: #1d1d1de8;
+	border: 1px solid #444444a1;
+	border-radius: 6px;
+	color: #dadada;
+	content: attr( tooltip );
+	margin-top: -41px;
+	font-size: 16px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	z-index: 10;
+	opacity: 1;
+	backdrop-filter: blur(4px);
+	white-space: nowrap;
+	overflow: hidden;
+	text-shadow: 1px 1px 0px #0007;
+}
+
+f-element[tooltip]:hover:before,
+f-element[tooltip]:focus-within:before {
+	border: solid;
+	border-color: #1d1d1de8 transparent;
+	border-width: 12px 6px 0 6px;
+	left: calc( 50% - 6px );
+	bottom: 30px;
+	position: absolute;
+	opacity: 1;
+	z-index: 11;
+}
+
+f-element[error] {
+	background-color: #ff0000;
+}
+
+f-element[error]:hover:after,
+f-element[error]:focus-within:after {
+	border: none;
+	background-color: #ff0000bb;
+	filter: drop-shadow( 2px 2px 5px #000 );
+	color: #fff;
+}
+
+f-element[error]:hover:before,
+f-element[error]:focus-within:before {
+	border-color: #ff0000bb transparent;
 }
 
 f-element/*.default*/ {
@@ -210,7 +276,7 @@ f-element input[type='color'] {
 	margin-right: 2px;
 	height: calc( 100% - 4px );
 	margin-top: 2px;
-	border: none;	
+	border: none;
 }
 
 f-element input[type='color']::-webkit-color-swatch-wrapper {
@@ -882,4 +948,3 @@ f-canvas {
 f-node {
 	will-change: transform !important;
 }
-
