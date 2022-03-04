@@ -1,73 +1,28 @@
-import { toPX } from '../core/Utils.js';
-import { dispatchEventList } from '../core/Utils.js';
 
 export class Menu extends EventTarget {
 
-	constructor( className, target = null ) {
+	constructor( className ) {
 
 		super();
 
 		const dom = document.createElement( 'f-menu' );
 		dom.className = className + ' hidden';
 
+		const listDOM = document.createElement( 'f-list' );
+
+		dom.append( listDOM );
+
 		this.dom = dom;
+		this.listDOM = listDOM;
 
 		this.visible = false;
 
 		this.subMenus = new WeakMap();
 		this.domButtons = new WeakMap();
 
-		this.events = {
-			'context': []
-		};
+		this.buttons = [];
 
-		this.addEventListener( 'context', ( ) => {
-
-			dispatchEventList( this.events.context, this );
-
-		} );
-
-		this._lastButtonClick = null;
-
-		this._onButtonClick = ( e = null ) => {
-
-			const button = e ? e.target : null;
-
-			if ( this._lastButtonClick ) {
-
-				this._lastButtonClick.dom.parentElement.classList.remove( 'active' );
-
-			}
-
-			this._lastButtonClick = button;
-
-			if ( button ) {
-
-				if ( this.subMenus.has( button ) ) {
-
-					this.subMenus.get( button )._onButtonClick();
-
-				}
-
-				button.dom.parentElement.classList.add( 'active' );
-
-			}
-
-		};
-
-		this._onButtonMouseOver = ( e ) => {
-
-			const button = e.target;
-
-			if ( this.subMenus.has( button ) && this._lastButtonClick !== button ) {
-
-				this._onButtonClick();
-
-			}
-
-		};
-
-		this.setTarget( target );
+		this.events = {};
 
 	}
 
@@ -79,15 +34,7 @@ export class Menu extends EventTarget {
 
 	}
 
-	show( x = null, y = null ) {
-
-		this._onButtonClick();
-
-		if ( x !== null && y !== null ) {
-
-			this.setPosition( x, y );
-
-		}
+	show() {
 
 		this.dom.classList.remove( 'hidden' );
 
@@ -109,49 +56,6 @@ export class Menu extends EventTarget {
 
 	}
 
-	setTarget( target = null ) {
-
-		if ( target !== null ) {
-
-			const onContextMenu = ( e ) => {
-
-				e.preventDefault();
-
-				if ( e.pointerType !== 'mouse' || ( e.pageX === 0 && e.pageY === 0 ) ) return;
-
-				const rect = this.target.getBoundingClientRect();
-
-				this.dispatchEvent( new Event( 'context' ) );
-
-				this.show( e.pageX - rect.left, e.pageY - rect.top );
-
-			};
-
-			const onDown = ( e ) => {
-
-				if ( this.visible === true && e.target.closest( 'f-menu' ) === null ) {
-
-					this.hide();
-
-				}
-
-			};
-
-			this.target = target;
-
-			target.addEventListener( 'mousedown', onDown, true );
-			target.addEventListener( 'touchstart', onDown, true );
-
-			target.addEventListener( 'contextmenu', onContextMenu, false );
-
-			target.appendChild( this.dom );
-
-		}
-
-		return this;
-
-	}
-
 	add( button, submenu = null ) {
 
 		const liDOM = document.createElement( 'f-item' );
@@ -160,33 +64,39 @@ export class Menu extends EventTarget {
 
 			liDOM.classList.add( 'submenu' );
 
-			liDOM.appendChild( submenu.dom );
+			liDOM.append( submenu.dom );
 
 			this.subMenus.set( button, submenu );
 
+			button.dom.addEventListener( 'mouseover', () => submenu.show() );
+			button.dom.addEventListener( 'mouseout', () => submenu.hide() );
+
 		}
 
-		liDOM.appendChild( button.dom );
+		liDOM.append( button.dom );
 
-		button.addEventListener( 'click', this._onButtonClick );
-		button.addEventListener( 'mouseover', this._onButtonMouseOver );
+		this.buttons.push( button );
 
-		this.dom.appendChild( liDOM );
+		this.listDOM.append( liDOM );
 
-		this.domButtons.set( liDOM, button );
+		this.domButtons.set( button, liDOM );
 
 		return this;
 
 	}
 
-	setPosition( x, y ) {
+	clear() {
 
-		const dom = this.dom;
+		this.buttons = [];
 
-		dom.style.left = toPX( x );
-		dom.style.top = toPX( y );
+		this.subMenus = new WeakMap();
+		this.domButtons = new WeakMap();
 
-		return this;
+		while ( this.listDOM.firstChild ) {
+
+			this.listDOM.firstChild.remove();
+
+		}
 
 	}
 

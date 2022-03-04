@@ -1,3 +1,5 @@
+/*box-sizing: border-box;*/
+
 @keyframes f-animation-open {
 
 	0% { 
@@ -131,8 +133,10 @@ f-node {
 	animation: .2s f-animation-open 1 alternate ease-out;
 }
 
+f-tips,
 f-drop,
 f-menu,
+f-menu input,
 f-menu button,
 f-element,
 f-element input,
@@ -144,13 +148,17 @@ f-element textarea {
 	text-transform: capitalize;
 	color: #eeeeee;
 	outline: solid 0px #000;
-	letter-spacing: .2px;
+	/*letter-spacing: .2px;*/
 	margin: 0;
 	padding: 0;
 	border: 0;
 	user-select: none;
 	-webkit-tap-highlight-color: transparent;
-	transition: background 0.2s ease;
+	transition: background 0.2s ease, filter 0.2s ease;
+}
+
+f-element input:read-only {
+	color: #666;
 }
 
 f-element input,
@@ -384,7 +392,7 @@ f-element select {
 	margin-bottom: 2px;
 	margin-left: 2px;
 	margin-right: 2px;
-	padding-left: 5px;
+	/*padding-left: 5px;*/
 	cursor: pointer;
 	box-shadow: inset 0px 1px 1px rgb(0 0 0 / 20%), 0px 1px 0px rgb(255 255 255 / 5%);
 }
@@ -467,6 +475,7 @@ f-element button:active {
 f-element f-inputs,
 f-element f-subinputs {
 	display: flex;
+	justify-content: flex-end;
 	width: 100%;
 }
 
@@ -613,7 +622,6 @@ f-element f-io {
 f-element f-io.connect,
 f-canvas.dragging-rio f-element:hover f-io.lio,
 f-canvas.dragging-lio f-element:hover f-io.rio {
-	border: 2px solid #0177fb;
 	zoom: 1.4;
 }
 
@@ -637,6 +645,7 @@ f-element f-disconnect {
 	filter: drop-shadow(0 0 5px #000);
 	text-shadow: 0px 0px 5px black;
 	cursor: pointer;
+	transition: all .2s;
 }
 
 f-element.input-right f-disconnect {
@@ -675,6 +684,39 @@ f-element.large {
 body.connecting f-node:not(.io-connect) f-element:hover,
 f-element.select {
 	background-color: rgba(61, 70, 82, 0.98);
+}
+
+f-element.invalid > f-io {
+	zoom: 1 !important;
+}
+
+f-element.invalid::after {
+	font-size: 14px !important;
+	display: flex;
+	justify-content: center;
+	align-items:center;
+	margin: auto;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: #bd0b0b77;
+	vertical-align: middle;
+	color: #fff;
+	content: 'Not Compatible';
+	opacity: .95;
+	backdrop-filter: grayscale(100%);
+	white-space: nowrap;
+	overflow: hidden;
+	left: 0;
+	top: 0;
+	text-transform: initial;
+}
+
+f-element.invalid > f-inputs,
+f-element.invalid > f-label,
+f-element.invalid > input,
+f-element.invalid > select {
+	opacity: .1;
 }
 
 /* drop */
@@ -724,9 +766,9 @@ f-tooltip {
 	backdrop-filter: blur(4px);
 	font-size: 14px;
 	padding: 7px;
+	left: 50%;
 	border-radius: 10px;
-	top: 50%;
-	transform: translateY(-50%);
+	transform: translateX(-50%);
 	visibility: hidden;
 	pointer-events: none;
 	opacity: 0;
@@ -735,13 +777,28 @@ f-tooltip {
 	white-space: nowrap;
 }
 
-f-menu.context {
+f-menu.context,
+f-menu.search {
 	position: absolute;
+}
+
+f-menu.context {
 	width: 170px;
-	padding: 2px;
-	margin: 0;
-	background: #17171794;
 	z-index: 110;
+}
+
+f-menu.search {
+	bottom: 85px;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 10;
+	width: 300px;
+}
+
+f-menu.context f-list {
+	display: block;
+	margin: 0;
+	background: #171717e6;
 	font-size: 12px;
 	border-radius: 6px;
 	backdrop-filter: blur(6px);
@@ -750,18 +807,30 @@ f-menu.context {
 	transition: opacity 0.2s ease, transform 0.1s ease;
 }
 
+f-menu.search f-list {
+	margin: 0 6px 0 6px;
+	display: flex;
+    flex-direction: column-reverse;
+	margin-bottom: 5px;
+}
+
 f-menu.context.hidden {
 	visibility: hidden;
 	/*transform: translateX(-10px);*/
 	opacity: 0;
 }
 
-f-menu.context f-item {
+f-menu.context f-item,
+f-menu.search f-item {
 	display: block;
 	position: relative;
 	margin: 0;
 	padding: 0;
 	white-space: nowrap;
+}
+
+f-menu.search f-item {
+	opacity: 0;
 }
 
 f-menu.context f-item.submenu::after {
@@ -787,7 +856,8 @@ f-menu.context f-menu {
 	left: calc( 100% - 4px );
 }
 
-f-menu.context f-item button {
+f-menu.context f-item button,
+f-menu.search f-item button {
 	overflow: visible;
 	display: block;
 	width: calc( 100% - 6px );
@@ -796,26 +866,34 @@ f-menu.context f-item button {
 	white-space: nowrap;
 	padding: 6px 8px;
 	border-radius: 3px;
-	background: #2d2d32;
+	background: rgba(45, 45, 48, 0.95);
 	border: 0;
 	color: #ddd;
 	margin: 3px;
 	text-shadow: 1px 1px 0px #0007;
 }
 
-f-menu.context f-item button i {
+f-menu.context f-item button i,
+f-menu.search f-item button i {
 	float: left;
 	font-size: 16px;
 }
 
-f-menu.context f-item button span {
+f-menu.context f-item button span,
+f-menu.search f-item button span {
 	margin-left: 6px;
 }
 
 f-menu.context f-item:hover > button,
-f-menu.context f-item.active > button {
+f-menu.search f-item:hover > button,
+f-menu.search f-item.active > button {
 	color: #fff;
-	background: #313136;
+	background-color: rgba(61, 70, 82, 0.98);
+}
+
+f-menu.search f-item:hover,
+f-menu.search f-item.active {
+	opacity: 1 !important;
 }
 
 f-menu.context f-item button:active {
@@ -823,29 +901,125 @@ f-menu.context f-item button:active {
 }
 
 f-menu.context f-item f-tooltip {
-	margin-left: 120px;
+	margin-left: 85px;
+	top: -50px;
 }
 
-/* circle */
+f-menu.search f-item {
+	display: none;
+}
+
+f-menu.search f-item:nth-child(1) {
+	opacity: 1;
+	display: unset;
+}
+
+f-menu.search f-item:nth-child(2) {
+	opacity: .8;
+	display: unset;
+}
+
+f-menu.search f-item:nth-child(3) {
+	opacity: .6;
+	display: unset;
+}
+
+f-menu.search f-item:nth-child(4) {
+	opacity: .4;
+	display: unset;
+}
+
+f-menu.search f-item button {
+    border-radius: 14px;
+}
+
+/* tips */
+
+f-tips {
+	right: 10px;
+	top: 10px;
+    position: absolute;
+	z-index: 100;
+	pointer-events: none;
+	display: flex;
+    flex-direction: column/*-reverse*/;
+}
+
+f-tips f-tip {
+    width: 450px;
+    font-size: 13px;
+    border-radius: 6px;
+    text-align: center;
+    display: block;
+    height: auto;
+    color: #ffffffe0;
+	margin: 4px;
+	padding: 4px;
+    background: #17171794;
+    border: 1px solid #7e7e7e38;
+    line-height: 100%;
+	backdrop-filter: blur(6px);
+	transition: all 0.2s ease;
+	text-transform: initial;
+	opacity: 0;
+}
+
+f-tips f-tip:nth-child(1) {
+	opacity: 1;
+}
+
+f-tips f-tip:nth-child(2) {
+	opacity: .75;
+}
+
+f-tips f-tip:nth-child(3) {
+	opacity: .25;
+}
+
+f-tips f-tip:nth-child(4) {
+	opacity: .1;
+}
+
+f-tips f-tip.error {
+	background: #b900005e;
+}
+
+/* circle/search */
+
+f-menu.search input {
+	width: calc( 100% - 28px );
+	height: 41px;
+	position: absolute;
+	z-index: 10;
+	border-radius: 20px;
+	padding-left: 14px;
+	padding-right: 14px;
+	font-size: 15px;
+	background-color: #17171794;
+	border: 1px solid #7e7e7e45;
+	backdrop-filter: blur(6px);
+	box-shadow: 3px 3px 6px rgb(0 0 0 / 20%);
+	text-transform: initial;
+}
 
 f-menu.circle {
 	position: absolute;
-	left: 30px;
-	top: 30px;
+	left: 40px;
+	bottom: 40px;
 	z-index: 100;
 }
 
 f-menu.circle f-item {
-	display: flex;
-	justify-content: end;
+	/*display: flex;*/
+	/*justify-content: end;*/
     align-content: space-around;
-	margin-bottom: 12px;
+	margin-right: 20px;
 }
 
 f-menu.circle f-item button {
-	width: 50px;
-	height: 50px;
-	font-size: 26px;
+	width: 47px;
+	height: 47px;
+	font-size: 22px;
 	background: #17171794;
 	border-radius: 50%;
 	backdrop-filter: blur(6px);
@@ -856,7 +1030,7 @@ f-menu.circle f-item button {
 }
 
 f-menu.circle f-item f-tooltip {
-	margin-left: 50px;
+	margin-top: -60px;
 }
 
 /* rounded */
@@ -905,7 +1079,6 @@ f-menu.circle f-item f-tooltip {
 	}
 
 	f-element f-io:hover {
-		border: 2px solid #0177fb;
 		zoom: 1.4;
 	}
 	
@@ -913,11 +1086,29 @@ f-menu.circle f-item f-tooltip {
 		background-color: #2a2a2a;
 	}
 
+	f-menu.search input:hover,
+	f-menu.search input:focus {
+		background-color: #1a1a1a;
+		filter: drop-shadow(0 0 6px #66666630);
+	}
+
+	f-menu.search input:focus {
+		filter: drop-shadow(0 0 8px #4444dd);
+	}
+
 	f-menu.circle f-item button:hover > f-tooltip,
 	f-menu.context f-item button:hover > f-tooltip {
 		visibility: visible;
-		transform: translate(10px, -50%);
 		opacity: 1;
+	}
+
+	f-menu.circle f-item button:hover > f-tooltip {
+		margin-top: -50px;
+	}
+
+	f-menu.context f-item button:hover > f-tooltip {
+		/*margin-left: 120px;*/
+		top: -30px;
 	}
 
 	f-menu.circle f-item button:focus > f-tooltip,

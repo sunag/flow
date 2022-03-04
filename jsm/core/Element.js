@@ -1,6 +1,6 @@
 import { Styles } from './Styles.js';
 import { Serializer } from './Serializer.js';
-import { toPX, draggableDOM, dispatchEventList } from './Utils.js';
+import { toPX, toHex, draggableDOM, dispatchEventList } from './Utils.js';
 import { Link } from './Link.js';
 
 let selected = null;
@@ -34,7 +34,17 @@ export class Element extends Serializer {
 
 			}
 
-			selected = element;
+			const type = e.type;
+
+			if ( ( type === 'mouseout' ) && selected === element ) {
+
+				selected = null;
+
+			} else {
+
+				selected = element;
+
+			}
 
 		};
 
@@ -49,6 +59,9 @@ export class Element extends Serializer {
 		}
 
 		dom.addEventListener( 'mouseup', onSelect, true );
+		dom.addEventListener( 'mouseover', onSelect );
+		dom.addEventListener( 'mouseout', onSelect );
+		dom.addEventListener( 'touchmove', onSelect );
 		dom.addEventListener( 'touchend', onSelect );
 
 		this.inputs = [];
@@ -62,14 +75,16 @@ export class Element extends Serializer {
 
 		this.events = {
 			'connect': [],
-			'connectChildren': []
+			'connectChildren': [],
+			'valid': []
 		};
 
 		this.node = null;
 
 		this.style = '';
 
-		this.extra = null;
+		this.object = null;
+		this.objectCallback = null;
 
 		this.enabledInputs = true;
 
@@ -84,8 +99,8 @@ export class Element extends Serializer {
 
 		this.dom.classList.add( `input-${ Link.InputDirection }` );
 
-		this.dom.appendChild( this.lioDOM );
-		this.dom.appendChild( this.rioDOM );
+		this.dom.append( this.lioDOM );
+		this.dom.append( this.rioDOM );
 
 		this.addEventListener( 'connect', ( ) => {
 
@@ -102,11 +117,19 @@ export class Element extends Serializer {
 	}
 
 	setAttribute( name, value ) {
-		
+
 		this.dom.setAttribute( name, value );
-		
+
 		return this;
-		
+
+	}
+
+	onValid( callback ) {
+
+		this.events.valid.push( callback );
+
+		return this;
+
 	}
 
 	onConnect( callback, childrens = false ) {
@@ -123,17 +146,25 @@ export class Element extends Serializer {
 
 	}
 
-	setExtra( value ) {
+	setObjectCallback( callback ) {
 
-		this.extra = value;
+		this.objectCallback = callback;
 
 		return this;
 
 	}
 
-	getExtra() {
+	setObject( value ) {
 
-		return this.extra;
+		this.object = value;
+
+		return this;
+
+	}
+
+	getObject( output = null ) {
+
+		return this.objectCallback ? this.objectCallback( output ) : this.object;
 
 	}
 
@@ -157,9 +188,9 @@ export class Element extends Serializer {
 
 		const dom = this.dom;
 
-		if ( !this.enabledInputs ) dom.classList.remove( 'inputs-disable');
+		if ( ! this.enabledInputs ) dom.classList.remove( 'inputs-disable' );
 
-		if ( !value ) dom.classList.add( 'inputs-disable' );
+		if ( ! value ) dom.classList.add( 'inputs-disable' );
 
 		this.enabledInputs = value;
 
@@ -170,6 +201,14 @@ export class Element extends Serializer {
 	getEnabledInputs() {
 
 		return this.enabledInputs;
+
+	}
+
+	setColor( color ) {
+
+		this.dom.style[ 'background-color' ] = toHex( color );
+
+		return this;
 
 	}
 
@@ -201,6 +240,20 @@ export class Element extends Serializer {
 
 	}
 
+	setInputColor( color ) {
+
+		if ( Link.InputDirection === 'left' ) {
+
+			return this.setLIOColor( color );
+
+		} else {
+
+			return this.setRIOColor( color );
+
+		}
+
+	}
+
 	setOutput( length ) {
 
 		if ( Link.InputDirection === 'left' ) {
@@ -210,6 +263,20 @@ export class Element extends Serializer {
 		} else {
 
 			return this.setLIO( length );
+
+		}
+
+	}
+
+	setOutputColor( color ) {
+
+		if ( Link.InputDirection === 'left' ) {
+
+			return this.setRIOColor( color );
+
+		} else {
+
+			return this.setLIOColor( color );
 
 		}
 
@@ -243,6 +310,14 @@ export class Element extends Serializer {
 
 	}
 
+	setLIOColor( color ) {
+
+		this.lioDOM.style[ 'border-color' ] = toHex( color );
+
+		return this;
+
+	}
+
 	setLIO( length ) {
 
 		this.lioLength = length;
@@ -250,6 +325,26 @@ export class Element extends Serializer {
 		this.lioDOM.style.visibility = length > 0 ? '' : 'hidden';
 
 		return this;
+
+	}
+
+	getLIOColor() {
+
+		return this.lioDOM.style[ 'border-color' ];
+
+	}
+
+	setRIOColor( color ) {
+
+		this.rioDOM.style[ 'border-color' ] = toHex( color );
+
+		return this;
+
+	}
+
+	getRIOColor() {
+
+		return this.rioDOM.style[ 'border-color' ];
 
 	}
 
@@ -269,7 +364,7 @@ export class Element extends Serializer {
 
 		input.element = this;
 
-		this.inputsDOM.appendChild( input.dom );
+		this.inputsDOM.append( input.dom );
 
 		return this;
 
@@ -301,6 +396,12 @@ export class Element extends Serializer {
 
 		if ( element !== null ) {
 
+			if ( dispatchEventList( this.events.valid, this, element, 'connect' ) === false ) {
+
+				return false;
+
+			}
+
 			const link = new Link( this, element );
 
 			this.links.push( link );
@@ -310,7 +411,7 @@ export class Element extends Serializer {
 				this.disconnectDOM = document.createElement( 'f-disconnect' );
 				this.disconnectDOM.innerHTML = Styles.icons.unlink ? `<i class='${ Styles.icons.unlink }'></i>` : '✖';
 
-				this.dom.appendChild( this.disconnectDOM );
+				this.dom.append( this.disconnectDOM );
 
 				const onDisconnect = () => {
 
@@ -331,7 +432,7 @@ export class Element extends Serializer {
 
 				};
 
-				const onConnect = ( e ) => {
+				const onConnect = () => {
 
 					this.dispatchEvent( new Event( 'connectChildren' ) );
 
@@ -354,6 +455,7 @@ export class Element extends Serializer {
 				this.disconnectDOM.addEventListener( 'mousedown', onClick, true );
 				this.disconnectDOM.addEventListener( 'touchstart', onClick, true );
 				this.disconnectDOM.addEventListener( 'disconnect', onDisconnect, true );
+
 				element.addEventListener( 'connect', onConnect );
 				element.addEventListener( 'connectChildren', onConnect );
 				element.addEventListener( 'nodeConnect', onConnect );
@@ -366,7 +468,7 @@ export class Element extends Serializer {
 
 		this.dispatchEvent( new Event( 'connect' ) );
 
-		return this;
+		return true;
 
 	}
 
@@ -474,23 +576,23 @@ export class Element extends Serializer {
 
 	}
 
-	get linkedExtra() {
+	getLinkedObject( output = null ) {
 
-		const linkedElement = this.linkedElement;
+		const linkedElement = this.getLinkedElement();
 
-		return linkedElement ? linkedElement.getExtra() : null;
+		return linkedElement ? linkedElement.getObject( output ) : null;
 
 	}
 
-	get linkedElement() {
+	getLinkedElement() {
 
-		const link = this.link;
+		const link = this.getLink();
 
 		return link ? link.outputElement : null;
 
 	}
 
-	get link() {
+	getLink() {
 
 		return this.links[ 0 ];
 
@@ -522,12 +624,54 @@ export class Element extends Serializer {
 			const defaultOutput = Link.InputDirection === 'left' ? 'lio' : 'rio';
 
 			const link = type === defaultOutput ? new Link( this ) : new Link( null, this );
+			const previewLink = new Link( link.inputElement, link.outputElement );
 
 			this.links.push( link );
 
 			draggableDOM( e, ( data ) => {
 
-				if ( data.dragging === false ) {
+				if ( previewLink.outputElement )
+					previewLink.outputElement.dom.classList.remove( 'invalid' );
+
+				if ( previewLink.inputElement )
+					previewLink.inputElement.dom.classList.remove( 'invalid' );
+
+				previewLink.inputElement = link.inputElement;
+				previewLink.outputElement = link.outputElement;
+
+				if ( type === defaultOutput ) {
+
+					previewLink.outputElement = selected;
+
+				} else {
+
+					previewLink.inputElement = selected;
+
+				}
+
+				const isInvalid = previewLink.inputElement !== null && previewLink.outputElement !== null &&
+					previewLink.inputElement.inputLength > 0 && previewLink.outputElement.outputLength > 0 &&
+					dispatchEventList( previewLink.inputElement.events.valid, previewLink.inputElement, previewLink.outputElement, data.dragging ? 'dragging' : 'dragged' ) === false;
+
+				if ( data.dragging && isInvalid ) {
+
+					if ( type === defaultOutput ) {
+
+						if ( previewLink.outputElement )
+							previewLink.outputElement.dom.classList.add( 'invalid' );
+
+					} else {
+
+						if ( previewLink.inputElement )
+							previewLink.inputElement.dom.classList.add( 'invalid' );
+
+					}
+
+					return;
+
+				}
+
+				if ( ! data.dragging ) {
 
 					nodeDOM.classList.remove( 'io-connect' );
 
@@ -536,17 +680,10 @@ export class Element extends Serializer {
 
 					this.links.splice( this.links.indexOf( link ), 1 );
 
-					if ( selected !== null ) {
+					if ( selected !== null && ! isInvalid ) {
 
-						if ( type === defaultOutput ) {
-
-							link.outputElement = selected;
-
-						} else {
-
-							link.inputElement = selected;
-
-						}
+						link.inputElement = previewLink.inputElement;
+						link.outputElement = previewLink.outputElement;
 
 						// check if is an is circular link
 

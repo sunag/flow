@@ -11,6 +11,8 @@ export { PanelNode } from './nodes/PanelNode.js';
 export { Menu } from './menus/Menu.js';
 export { ContextMenu } from './menus/ContextMenu.js';
 export { CircleMenu } from './menus/CircleMenu.js';
+export { Tips } from './menus/Tips.js';
+export { Search } from './menus/Search.js';
 
 export { DraggableElement } from './elements/DraggableElement.js';
 export { LabelElement } from './elements/LabelElement.js';

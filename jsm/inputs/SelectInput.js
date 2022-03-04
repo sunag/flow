@@ -2,7 +2,7 @@ import { Input } from '../core/Input.js';
 
 export class SelectInput extends Input {
 
-	constructor( options = [] ) {
+	constructor( options = [], value = null ) {
 
 		const dom = document.createElement( 'select' );
 		super( dom );
@@ -13,16 +13,24 @@ export class SelectInput extends Input {
 
 		};
 
-		this.setOptions( options );
+		dom.onmousedown = dom.ontouchstart = () => {
+
+			this.dispatchEvent( new Event( 'click' ) );
+
+		};
+
+		this.setOptions( options, value );
 
 	}
 
-	setOptions( options ) {
+	setOptions( options, value = null ) {
 
 		const dom = this.dom;
+		const defaultValue = dom.value;
+
+		let containsDefaultValue = false;
 
 		this.options = options;
-
 		dom.innerHTML = '';
 
 		for ( let index = 0; index < options.length; index ++ ) {
@@ -39,9 +47,17 @@ export class SelectInput extends Input {
 			option.innerText = opt.name;
 			option.value = opt.value;
 
-			dom.appendChild( option );
+			if ( containsDefaultValue === false && defaultValue === opt.value ) {
+
+				containsDefaultValue = true;
+
+			}
+
+			dom.append( option );
 
 		}
+
+		dom.value = value !== null ? value : containsDefaultValue ? defaultValue : '';
 
 		return this;
 
@@ -65,7 +81,7 @@ export class SelectInput extends Input {
 
 		const currentOptions = this.options;
 
-		if ( currentOptions.length > 0 ) {
+		if ( currentOptions.length === 0 ) {
 
 			this.setOptions( data.options );
 

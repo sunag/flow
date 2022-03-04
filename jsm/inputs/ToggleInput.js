@@ -11,6 +11,9 @@ export class ToggleInput extends Input {
 		dom.className = 'toggle';
 		dom.checked = value;
 
+		dom.onclick = () => this.dispatchEvent( new Event( 'click' ) );
+		dom.onchange = () => this.dispatchEvent( new Event( 'change' ) );
+
 	}
 
 	setValue( val ) {
@@ -30,4 +33,3 @@ export class ToggleInput extends Input {
 	}
 
 }
-

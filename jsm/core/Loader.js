@@ -98,6 +98,12 @@ export class Loader extends EventTarget {
 
 			const Class = lib && lib[ obj.type ] ? lib[ obj.type ] : Flow[ obj.type ];
 
+			if ( ! Class ) {
+
+				console.error( `Class "${ obj.type }" not found!` );
+
+			}
+
 			objects[ id ] = new Class();
 
 		}

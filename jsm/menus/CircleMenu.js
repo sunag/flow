@@ -7,5 +7,5 @@ export class CircleMenu extends Menu {
 		super( 'circle', target );
 
 	}
-	
+
 }

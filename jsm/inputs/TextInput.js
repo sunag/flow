@@ -1,5 +1,7 @@
 import { Input } from '../core/Input.js';
 
+const ENTER_KEY = 13;
+
 export class TextInput extends Input {
 
 	constructor( innerText = '' ) {
@@ -9,19 +11,31 @@ export class TextInput extends Input {
 
 		dom.innerText = innerText;
 
-	}
+		dom.onblur = () => {
 
-	setValue( val ) {
+			this.dispatchEvent( new Event( 'blur' ) );
 
-		this.dom.innerText = val;
+		};
 
-		return this;
+		dom.onchange = () => {
 
-	}
+			this.dispatchEvent( new Event( 'change' ) );
 
-	getValue() {
+		};
 
-		return this.dom.innerText;
+		dom.onkeyup = ( e ) => {
+
+			if ( e.keyCode === ENTER_KEY ) {
+
+				e.target.blur();
+
+			}
+
+			e.stopPropagation();
+
+			this.dispatchEvent( new Event( 'change' ) );
+
+		};
 
 	}
 

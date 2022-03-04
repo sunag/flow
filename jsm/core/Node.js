@@ -147,7 +147,7 @@ export class Node extends Serializer {
 		element.addEventListener( 'connect', this._onConnect );
 		element.addEventListener( 'connectChildren', this._onConnectChildren );
 
-		this.dom.appendChild( element.dom );
+		this.dom.append( element.dom );
 
 		return this;
 
@@ -219,7 +219,7 @@ export class Node extends Serializer {
 
 	serialize( data ) {
 
-		const { x, y, style } = this.getPosition();
+		const { x, y } = this.getPosition();
 
 		const elements = [];
 
@@ -234,9 +234,9 @@ export class Node extends Serializer {
 		data.width = this.getWidth();
 		data.elements = elements;
 
-		if ( style !== '' ) {
+		if ( this.style !== '' ) {
 
-			data.style = style;
+			data.style = this.style;
 
 		}
 

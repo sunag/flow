@@ -5,14 +5,15 @@ import { TitleElement } from '../elements/TitleElement.js';
 
 export class ObjectNode extends Node {
 
-	constructor( name, inputLength, extra = null, width = 300 ) {
+	constructor( name, inputLength, callback = null, width = 300 ) {
 
 		super();
 
 		this.setWidth( width );
 
 		const title = new TitleElement( name )
-			.setExtra( extra )
+			.setObjectCallback( callback )
+			.setSerializable( false )
 			.setOutput( inputLength );
 
 		const closeButton = new ButtonInput( Styles.icons.close || '✕' ).onClick( () => {
@@ -30,17 +31,43 @@ export class ObjectNode extends Node {
 
 	}
 
-	setExtra( value ) {
+	setName( value ) {
 
-		this.title.setExtra( value );
+		this.title.setTitle( value );
 
 		return this;
 
 	}
 
-	getExtra( value ) {
+	getName() {
 
-		return this.title.getExtra();
+		return this.title.getTitle();
+
+	}
+
+	setObjectCallback( callback ) {
+
+		this.title.setObjectCallback( callback );
+
+		return this;
+
+	}
+
+	getObject( callback ) {
+
+		return this.title.getObject( callback );
+
+	}
+
+	setColor( color ) {
+
+		return this.title.setColor( color );
+
+	}
+
+	setOutputColor( color ) {
+
+		return this.title.setOutputColor( color );
 
 	}
 

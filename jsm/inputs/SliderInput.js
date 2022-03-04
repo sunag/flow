@@ -45,8 +45,8 @@ export class SliderInput extends Input {
 
 		} );
 
-		dom.appendChild( rangeDOM );
-		dom.appendChild( field.dom );
+		dom.append( rangeDOM );
+		dom.append( field.dom );
 
 		this.rangeDOM = rangeDOM;
 		this.field = field;

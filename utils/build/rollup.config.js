@@ -14,7 +14,7 @@ function __flow__addCSS( css ) {
 		style.innerHTML = css;
 		document.head.appendChild( style );
 
-	} catch( e ) {}
+	} catch ( e ) {}
 
 }
 `;

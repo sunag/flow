@@ -1,6 +1,8 @@
-export const drawLine = ( p1x, p1y, p2x, p2y, invert, size, color, ctx ) => {
+export const drawLine = ( p1x, p1y, p2x, p2y, invert, size, colorA, ctx, colorB = null ) => {
 
-	const offset = 100 * ( invert ? - 1 : 1 );
+	const dx = p2x - p1x;
+	const dy = p2y - p1y;
+	const offset = Math.sqrt( ( dx * dx ) + ( dy * dy ) ) * ( invert ? - .3 : .3 );
 
 	ctx.beginPath();
 
@@ -12,8 +14,21 @@ export const drawLine = ( p1x, p1y, p2x, p2y, invert, size, color, ctx ) => {
 		p2x, p2y
 	);
 
+	if ( colorB !== null && colorA !== colorB ) {
+
+		const gradient = ctx.createLinearGradient( p1x, p1y, p2x, p2y );
+		gradient.addColorStop( 0, colorA );
+		gradient.addColorStop( 1, colorB );
+
+		ctx.strokeStyle = gradient;
+
+	} else {
+
+		ctx.strokeStyle = colorA;
+
+	}
+
 	ctx.lineWidth = size;
-	ctx.strokeStyle = color;
 	ctx.stroke();
 
 };

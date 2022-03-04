@@ -23,9 +23,9 @@ export class TitleElement extends DraggableElement {
 		this.iconDOM = iconDOM;
 		this.toolbarDOM = toolbarDOM;
 
-		dom.appendChild( spanDOM );
-		dom.appendChild( iconDOM );
-		dom.appendChild( toolbarDOM );
+		dom.append( spanDOM );
+		dom.append( iconDOM );
+		dom.append( toolbarDOM );
 
 	}
 
@@ -61,7 +61,7 @@ export class TitleElement extends DraggableElement {
 
 		this.buttons.push( button );
 
-		this.toolbarDOM.appendChild( button.dom );
+		this.toolbarDOM.append( button.dom );
 
 		return this;
 

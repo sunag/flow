@@ -7,10 +7,10 @@ export class ButtonInput extends Input {
 		const dom = document.createElement( 'button' );
 
 		const spanDOM = document.createElement( 'span' );
-		dom.appendChild( spanDOM );
+		dom.append( spanDOM );
 
 		const iconDOM = document.createElement( 'i' );
-		dom.appendChild( iconDOM );
+		dom.append( iconDOM );
 
 		super( dom );
 

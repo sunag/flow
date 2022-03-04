@@ -74,11 +74,11 @@ export class Canvas extends Serializer {
 
 		dropDOM.innerHTML = '<span>drop your file</span>';
 
-		dom.appendChild( dropDOM );
-		dom.appendChild( canvas );
-		dom.appendChild( frontCanvas );
-		dom.appendChild( contentDOM );
-		dom.appendChild( areaDOM );
+		dom.append( dropDOM );
+		dom.append( canvas );
+		dom.append( frontCanvas );
+		dom.append( contentDOM );
+		dom.append( areaDOM );
 		/*
 		let zoomTouchData = null;
 
@@ -350,11 +350,13 @@ export class Canvas extends Serializer {
 
 	add( node ) {
 
+		if ( node.canvas === this ) return;
+
 		this.nodes.push( node );
 
 		node.canvas = this;
 
-		this.contentDOM.appendChild( node.dom );
+		this.contentDOM.append( node.dom );
 
 		return this;
 
@@ -377,6 +379,8 @@ export class Canvas extends Serializer {
 		node.canvas = null;
 
 		this.contentDOM.removeChild( node.dom );
+
+		node.dispatchEvent( new Event( 'remove' ) );
 
 		return this;
 
@@ -402,9 +406,17 @@ export class Canvas extends Serializer {
 
 		for ( const link of links ) {
 
-			if ( link.outputElement && link.outputElement.node === node ) {
+			if ( link.inputElement && link.outputElement ) {
 
-				link.inputElement.connect();
+				if ( link.inputElement.node === node ) {
+
+					link.inputElement.connect();
+
+				} else if ( link.outputElement.node === node ) {
+
+					link.inputElement.connect();
+
+				}
 
 			}
 
@@ -549,7 +561,12 @@ export class Canvas extends Serializer {
 
 			if ( draggingLink || length === 1 ) {
 
+				let colorA = null,
+					colorB = null;
+
 				if ( draggingLink === 'rio' ) {
+
+					colorA = colorB = lioElement.getRIOColor();
 
 					aPos.x += offsetIORadius;
 					bPos.x /= zoom;
@@ -557,16 +574,23 @@ export class Canvas extends Serializer {
 
 				} else if ( draggingLink === 'lio' ) {
 
+					colorA = colorB = rioElement.getLIOColor();
+
 					bPos.x -= offsetIORadius;
 					aPos.x /= zoom;
 					aPos.y /= zoom;
+
+				} else {
+
+					colorA = lioElement.getRIOColor();
+					colorB = rioElement.getLIOColor();
 
 				}
 
 				drawLine(
 					aPos.x * zoom, aPos.y * zoom,
 					bPos.x * zoom, bPos.y * zoom,
-					false, 2, '#ffffff', drawContext
+					false, 2, colorA || '#ffffff', drawContext, colorB || '#ffffff'
 				);
 
 			} else {
@@ -582,19 +606,22 @@ export class Canvas extends Serializer {
 					const rioLength = Math.min( lioElement.rioLength, length );
 					const lioLength = Math.min( rioElement.lioLength, length );
 
+					const colorA = lioElement.getRIOColor() || color;
+					const colorB = rioElement.getLIOColor() || color;
+
 					const aCenterY = ( ( rioLength * marginY ) * .5 ) - ( marginY / 2 );
 					const bCenterY = ( ( lioLength * marginY ) * .5 ) - ( marginY / 2 );
 
 					const aIndex = Math.min( i, rioLength - 1 );
 					const bIndex = Math.min( i, lioLength - 1 );
 
-					const aPosY = aIndex * marginY;
-					const bPosY = bIndex * marginY;
+					const aPosY = ( aIndex * marginY ) - 1;
+					const bPosY = ( bIndex * marginY ) - 1;
 
 					drawLine(
 						aPos.x * zoom, ( ( aPos.y + aPosY ) - aCenterY ) * zoom,
 						bPos.x * zoom, ( ( bPos.y + bPosY ) - bCenterY ) * zoom,
-						false, 2, color, drawContext
+						false, 2, colorA, drawContext, colorB
 					);
 
 				}

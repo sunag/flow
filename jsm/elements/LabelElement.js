@@ -15,11 +15,13 @@ export class LabelElement extends Element {
 		this.spanDOM = spanDOM;
 		this.iconDOM = iconDOM;
 
-		this.labelDOM.appendChild( this.spanDOM );
-		this.labelDOM.appendChild( this.iconDOM );
+		this.labelDOM.append( this.spanDOM );
+		this.labelDOM.append( this.iconDOM );
 
-		this.dom.appendChild( this.labelDOM );
-		this.dom.appendChild( this.inputsDOM );
+		this.dom.append( this.labelDOM );
+		this.dom.append( this.inputsDOM );
+
+		this.serializeLabel = false;
 
 		this.setLabel( label );
 		this.setAlign( align );
@@ -62,14 +64,18 @@ export class LabelElement extends Element {
 
 		super.serialize( data );
 
-		const label = this.getLabel();
-		const icon = this.getIcon();
+		if ( this.serializeLabel ) {
 
-		data.label = label;
+			const label = this.getLabel();
+			const icon = this.getIcon();
 
-		if ( icon !== '' ) {
+			data.label = label;
 
-			data.icon = icon;
+			if ( icon !== '' ) {
+
+				data.icon = icon;
+
+			}
 
 		}
 
@@ -79,11 +85,15 @@ export class LabelElement extends Element {
 
 		super.deserialize( data );
 
-		this.setLabel( data.label );
+		if ( this.serializeLabel ) {
 
-		if ( data.icon !== undefined ) {
+			this.setLabel( data.label );
 
-			this.setIcon( data.icon );
+			if ( data.icon !== undefined ) {
+
+				this.setIcon( data.icon );
+
+			}
 
 		}
 

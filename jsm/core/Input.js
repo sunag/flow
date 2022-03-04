@@ -13,6 +13,8 @@ export class Input extends Serializer {
 
 		this.extra = null;
 
+		this.tagColor = null;
+
 		this.events = {
 			'change': [],
 			'click': []
@@ -46,12 +48,28 @@ export class Input extends Serializer {
 
 	}
 
+	setTagColor( color ) {
+
+		this.tagColor = color;
+
+		this.dom.style[ 'border-left' ] = `2px solid ${color}`;
+
+		return this;
+
+	}
+
+	getTagColor() {
+
+		return this.tagColor;
+
+	}
+
 	setToolTip( text ) {
 
 		const div = document.createElement( 'f-tooltip' );
 		div.innerText = text;
 
-		this.dom.appendChild( div );
+		this.dom.append( div );
 
 		return this;
 
@@ -70,6 +88,20 @@ export class Input extends Serializer {
 		this.events.click.push( callback );
 
 		return this;
+
+	}
+
+	setReadOnly( value ) {
+
+		this.dom.readOnly = value;
+
+		return this;
+
+	}
+
+	getReadOnly() {
+
+		return this.dom.readOnly;
 
 	}
 

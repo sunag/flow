@@ -38,6 +38,8 @@ export class NumberInput extends Input {
 
 		dom.onblur = () => {
 
+			this.dom.value = this._getString( this.dom.value );
+
 			this.dispatchEvent( new Event( 'blur' ) );
 
 		};
@@ -70,6 +72,8 @@ export class NumberInput extends Input {
 
 			const { delta } = data;
 
+			if ( dom.readOnly === true ) return;
+
 			if ( data.value === undefined ) {
 
 				data.value = this.getValue();
@@ -80,11 +84,19 @@ export class NumberInput extends Input {
 
 			const value = data.value + ( diff * this.step );
 
-			this.dom.value = this._getString( value.toFixed( this.precision ) );
+			dom.value = this._getString( value.toFixed( this.precision ) );
 
 			this.dispatchEvent( new Event( 'change' ) );
 
 		} );
+
+	}
+
+	setStep( step ) {
+
+		this.step = step;
+
+		return this;
 
 	}
 
@@ -154,7 +166,7 @@ export class NumberInput extends Input {
 
 	_getString( value ) {
 
-		let num = Math.min( Math.max( Number( value ), this.min ), this.max );
+		const num = Math.min( Math.max( Number( value ), this.min ), this.max );
 
 		if ( this.integer === true ) {
 
