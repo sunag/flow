@@ -1,5 +1,92 @@
 import flowSheet from "../css/flow.css" assert { type: "css" };
 import { Canvas } from "./core/Canvas.js";
+import { toPX } from "./core/Utils.js";
+
+export class Component {
+    constructor() {
+
+        this.default = {
+            node: { className: "Node", path: "./core/Node.js" },
+            element: { className: "Element", path: "./core/Element.js" },
+            input: { className: "Input", path: "./core/Input.js" }
+        };
+        this.cache = {
+            node: new Map( [
+                [ "object", { className: "ObjectNode", path: "./nodes/ObjectNode.js" } ],
+                [ "panel", { className: "PanelNode", path: "./nodes/PanelNode.js" } ]
+            ] ),
+            element: new Map( [
+                [ "draggable", { className: "DraggableElement", path: "./elements/DraggableElement.js" } ],
+                [ "label", { className: "LabelElement", path: "./elements/LabelElement.js" } ],
+                [ "title", { className: "TitleElement", path: "./elements/TitleElement.js" } ]
+            ] ),
+            input: new Map( [
+                [ "button", { className: "ButtonInput", path: "./inputs/ButtonInput.js" } ],
+                [ "color", { className: "ColorInput", path: "./inputs/ColorInput.js" } ],
+                [ "number", { className: "NumberInput", path: "./inputs/NumberInput.js" } ],
+                [ "select", { className: "SelectInputs", path: "./inputs/SelectInputs.js" } ],
+                [ "slider", { className: "SliderInputs", path: "./inputs/SliderInputs.js" } ],
+                [ "string", { className: "StringInput", path: "./inputs/StringInput.js" } ],
+                [ "Text", { className: "TextInput", path: "./inputs/TextInput.js" } ],
+                [ "Toggle", { className: "ToggleInput", path: "./inputs/ToggleInput.js" } ]
+            ] )
+        };
+
+    }
+
+    add(type, name, desc) {
+
+        this.cache[type].set(name, desc);
+
+    }
+
+    get(type, name) {
+
+        return this.cache[type].has(name) ? this.cache[type].get(name) : this.default[type];
+
+    }
+
+    remove(type, name) {
+
+        this.cache[type].delete(name);
+
+    }
+}
+
+const optionsBuilder = params => {
+
+    let options = { components: new Component() };
+
+    const { width, height, components } = params;
+
+    if ( typeof width === "number" )
+        options.width = toPX( width );
+
+    if ( typeof height === "number" )
+        options.height = toPX( height );
+
+    if ( components ) {
+
+        if ( Array.isArray(components) ) {
+
+            components.forEach( ( { type, name, desc } ) => {
+
+                options.components.add( type, name, desc );
+
+            } );
+
+        } else if ( typeof components === "object") {
+
+            const { type, name, desc } = components;
+            options.components.add( type, name, desc );
+
+        }
+
+    }
+
+    return options;
+
+}
 
 export default class FlowElement extends HTMLElement {
 
@@ -7,7 +94,7 @@ export default class FlowElement extends HTMLElement {
 
         super();
 
-        this.options = options;
+        this.options = optionsBuilder( options );
 
         this.attachShadow({ mode: "open" });
 
@@ -15,8 +102,8 @@ export default class FlowElement extends HTMLElement {
         holderSheet.replace( `
             :host {
                 position: absolute;
-                width: ${ options.width };
-                height: ${ options.height };
+                width: ${ this.options.width };
+                height: ${ this.options.height };
             }
         ` );
 
@@ -123,28 +210,13 @@ export default class FlowElement extends HTMLElement {
 
             const { elements, ...nodeSettings } = node;
 
-            let nodeData;
+            const { className, path } = this.options.components.get( "node", nodeSettings.type );
 
-            switch ( nodeSettings.type ) {
-
-                case "object":
-                    const { ObjectNode } = await import( "./nodes/ObjectNode.js" );
-                    nodeData = new ObjectNode( nodeSettings.params );
-                    break;
-                case "panel":
-                    const { PanelNode } = await import("./nodes/PanelNode.js" );
-                    nodeData = new PanelNode( nodeSettings.params );
-                    break;
-                default:
-                    const { Node } = await import("./core/Node.js");
-                    nodeData = new Node();
-                    break;
-
-            }
+            const nodeData = new ( ( await import( path ) )[className] )( nodeSettings.params );
 
             if ( nodeSettings.handle ) nodeSettings.handle.call( nodeData, nodeData );
 
-            console.log(nodeSettings, nodeData);
+            //console.log(nodeSettings, nodeData);
 
             for (const element of elements) {
 
@@ -152,32 +224,13 @@ export default class FlowElement extends HTMLElement {
 
                 const { inputs, ...elementSettings } = element;
 
-                let elementData;
+                const { className, path } = this.options.components.get( "element", elementSettings.type )
 
-                switch ( elementSettings.type ) {
-
-                    case "draggable":
-                        const { DraggableElement } = await import( "./elements/DraggableElement.js" );
-                        elementData = new DraggableElement(elementSettings.params);
-                        break;
-                    case "label":
-                        const { LabelElement } = await import( "./elements/LabelElement.js" );
-                        elementData = new LabelElement(elementSettings.params);
-                        break;
-                    case "title":
-                        const { TitleElement } = await import( "./elements/TitleElement.js" );
-                        elementData = new TitleElement(elementSettings.params);
-                        break;
-                    default:
-                        const { Element } = await import( "./core/Element.js" );
-                        elementData = new Element(elementSettings.params);
-                        break;
-
-                }
+                const elementData = new ( ( await import( path ) )[className] )( elementSettings.params );
 
                 if ( elementSettings.handle ) elementSettings.handle.call( elementData, elementData );
 
-                console.log(elementSettings, elementData);
+                //console.log(elementSettings, elementData);
 
                 for (const input of inputs) {
 
@@ -185,39 +238,13 @@ export default class FlowElement extends HTMLElement {
 
                     const inputSettings = input;
 
-                    let inputData;
+                    const { className, path } = this.options.components.get( "input", inputSettings.type );
 
-                    switch ( inputSettings.type ) {
-
-                        case "button":
-                            const { ButtonInput } = await import( "./inputs/ButtonInput.js" );
-                            inputData = new ButtonInput(inputSettings.params);
-                            break;
-                        case "color":
-                            const { ColorInput } = await import( "./inputs/ColorInput.js" );
-                            inputData = new ColorInput(inputSettings.params);
-                            break;
-                        case "number":
-                            const { NumberInput } = await import( "./inputs/NumberInput.js" );
-                            inputData = new NumberInput(inputSettings.params);
-                            break;
-                        case "select":
-                            break;
-                        case "slider":
-                            break;
-                        case "string":
-                            const { StringInput } = await import( "./inputs/StringInput.js" );
-                            inputData = new StringInput(inputSettings.params);
-                            break;
-                        default:
-                            const { Input } = await import( "./core/Input.js" );
-                            inputData = new Input(inputSettings.params);
-                            break;
-                    }
+                    const inputData = new ( ( await import( path ) )[className] )( inputSettings.params );
 
                     if ( inputSettings.handle ) inputSettings.handle.call( inputData, inputData );
 
-                    console.log(inputSettings, inputData);
+                    //console.log(inputSettings, inputData);
 
                     elementData.add( inputData );
 
