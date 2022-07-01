@@ -22,44 +22,30 @@
             {
                 type: "label",
                 params: "Numbers",
-                inputs: [
-                    {
-                        type: "number",
-                        params: 1
-                    }, {
-                        type: "number",
-                        params: 2
-                    }, {
-                        type: "number",
-                        params: 3
-                    }
-                ]
+                inputs: [ { type: "number", params: 1 }, { type: "number", params: 2 }, { type: "number", params: 3 } ]
             }, {
                 type: "label",
                 params: "Color",
-                inputs: [
-                    {
-                        type: "color",
-                        params: "0xFF9900"
-                    }
-                ]
+                inputs: [ { type: "color", params: "0xFF9900" } ]
             }, {
                 type: "label",
                 params: "String",
-                inputs: [
-                    {
-                        type: "string",
-                        params: "Hello World!"
-                    }
-                ]
+                inputs: [ { type: "string", params: "Hello World!" } ]
+            }, {
+                type: "label",
+                params: "Slider",
+                inputs: [ { type: "slider", params: 50 } ]
+            }, {
+                type: "label",
+                params: "Toggle",
+                inputs: [ { type: "toggle", params: false } ]
+            }, {
+                type: "label",
+                handle: element => element.setHeight( 100 ),
+                inputs: [ { type: "text", params: "Text Area" } ]
             }, {
                 handle: element => element.setHeight( 35 ),
-                inputs: [
-                    {
-                        type: "button",
-                        params: "OK!"
-                    }
-                ]
+                inputs: [ { type: "button", params: "OK!" } ]
             }
         ]
     } );

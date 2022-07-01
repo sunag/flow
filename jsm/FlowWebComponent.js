@@ -24,11 +24,11 @@ export class Component {
                 [ "button", { className: "ButtonInput", path: "./inputs/ButtonInput.js" } ],
                 [ "color", { className: "ColorInput", path: "./inputs/ColorInput.js" } ],
                 [ "number", { className: "NumberInput", path: "./inputs/NumberInput.js" } ],
-                [ "select", { className: "SelectInputs", path: "./inputs/SelectInputs.js" } ],
-                [ "slider", { className: "SliderInputs", path: "./inputs/SliderInputs.js" } ],
+                [ "select", { className: "SelectInput", path: "./inputs/SelectInput.js" } ],
+                [ "slider", { className: "SliderInput", path: "./inputs/SliderInput.js" } ],
                 [ "string", { className: "StringInput", path: "./inputs/StringInput.js" } ],
-                [ "Text", { className: "TextInput", path: "./inputs/TextInput.js" } ],
-                [ "Toggle", { className: "ToggleInput", path: "./inputs/ToggleInput.js" } ]
+                [ "text", { className: "TextInput", path: "./inputs/TextInput.js" } ],
+                [ "toggle", { className: "ToggleInput", path: "./inputs/ToggleInput.js" } ]
             ] )
         };
 
