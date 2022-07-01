@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../fonts/open-sans/open-sans.css" type="text/css"/>
+    <link rel="stylesheet" href="../fonts/tabler-icons/tabler-icons.css" type="text/css"/>
+</head>
+<body>
+<div class="flow-container" style="margin: auto"></div>
+<script type="module">
+    import FlowElement from "../jsm/FlowWebComponent.js";
+
+    const container = document.querySelector( ".flow-container" );
+
+    const root = new FlowElement( { width: "500px", height: "500px"} );
+
+    root.add( {
+        type: "panel",
+        handle: node => node.setWidth( 350 ).setAlign( "center" ),
+        elements: [
+            {
+                type: "label",
+                params: "Numbers",
+                inputs: [
+                    {
+                        type: "number",
+                        params: 1
+                    }, {
+                        type: "number",
+                        params: 2
+                    }, {
+                        type: "number",
+                        params: 3
+                    }
+                ]
+            }, {
+                type: "label",
+                params: "Color",
+                inputs: [
+                    {
+                        type: "color",
+                        params: "0xFF9900"
+                    }
+                ]
+            }, {
+                type: "label",
+                params: "String",
+                inputs: [
+                    {
+                        type: "string",
+                        params: "Hello World!"
+                    }
+                ]
+            }, {
+                handle: element => element.setHeight( 35 ),
+                inputs: [
+                    {
+                        type: "button",
+                        params: "OK!"
+                    }
+                ]
+            }
+        ]
+    } );
+
+    container.append( root );
+
+</script>
+</body>
+</html>
