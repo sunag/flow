@@ -1,3 +1,6 @@
+/**
+ * https://github.com/sunag/flow
+ */
 const sheet = new CSSStyleSheet();sheet.replaceSync(`/*box-sizing: border-box;*/
 
 @keyframes f-animation-open {

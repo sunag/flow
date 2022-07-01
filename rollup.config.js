@@ -1,8 +1,9 @@
-import fs from "fs";
+import fs from 'fs';
 import babel from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import { importAssertionsPlugin } from 'rollup-plugin-import-assert';
 import { importAssertions } from 'acorn-import-assertions';
+import multiInput from 'rollup-plugin-multi-input';
 
 const appendCSSFunctionCode = `
 function __flow__addCSS( css ) {
@@ -65,11 +66,6 @@ ${ code }`;
 
 const compile = ( input, output, plugins, others ) => {
 
-	console.log(
-		{ input: input, plugins: plugins, output: [{ ...output, file: `${output.file}.js` }], ...others },
-		{ input: input, plugins: [ ...plugins, terser() ], output: [{ ...output, file: `${output.file}.min.js` }], ...others }
-	)
-
 	return [
 		{ input: input, plugins: plugins, output: [{ ...output, file: `${output.file}.js` }], ...others },
 		{ input: input, plugins: [ ...plugins, terser() ], output: [{ ...output, file: `${output.file}.min.js` }], ...others }
@@ -92,9 +88,17 @@ const builds = [
 	...compile(
 		'jsm/FlowWebComponent.js',
 		{ format: 'esm', file: 'build/component/flow' },
-		[ importAssertionsPlugin() ],
+		[ importAssertionsPlugin(), header() ],
 		{ acornInjectPlugins: [ importAssertions ] }
-	)
+	),
+	{
+		input: [
+			'jsm/core/Node.js', 'jsm/core/Element.js', 'jsm/core/Input.js',
+			'jsm/nodes/*.js', 'jsm/elements/*.js', 'jsm/inputs/*.js'
+		],
+		output: { format: 'esm', dir: 'build/component' },
+		plugins: [ terser(), multiInput( { relative: 'jsm/'} ) ],
+	}
 
 ];
 
