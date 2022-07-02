@@ -51,7 +51,7 @@ export const draggableDOM = ( dom, callback = null, className = 'dragging' ) => 
 
 		let zoomDOM = dom;
 
-		while ( zoomDOM && zoomDOM !== document ) {
+		while ( zoomDOM && ! ( zoomDOM instanceof Document || zoomDOM instanceof ShadowRoot ) ) {
 
 			const zoom = zoomDOM.style.zoom;
 

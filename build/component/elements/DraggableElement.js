@@ -1,0 +1,1 @@
+import{Element as t}from"../core/Element.js";import{b as e}from"../Utils-eb9561bf.js";class s extends t{constructor(t=!0){super(!0),this.draggable=t;const s=t=>{t.preventDefault(),!0===this.draggable&&e(this.node.dom)},{dom:o}=this;o.addEventListener("mousedown",s,!0),o.addEventListener("touchstart",s,!0)}}export{s as DraggableElement};
