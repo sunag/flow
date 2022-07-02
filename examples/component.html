@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../fonts/open-sans/open-sans.css" type="text/css"/>
+    <link rel="stylesheet" href="../fonts/tabler-icons/tabler-icons.css" type="text/css"/>
+</head>
+<body>
+<div class="flow-container" style="margin: auto"></div>
+<script type="module">
+    import FlowElement from "../jsm/FlowWebComponent.js";
+
+    const a = document.querySelector(".test-a");
+    const b = document.querySelector(".test-b");
+    const c = document.querySelector(".test-c");
+    const d = document.querySelector(".test-d");
+
+    const flowA = new FlowElement( { width: "50vw", height: "50vh" } );
+    flowA.add( {
+        type: "panel",
+        handle: node => node.setWidth( 350 ).setAlign( "center" ),
+        elements: [
+            {
+                type: "label",
+                params: "Numbers",
+                inputs: [ { type: "number", params: 1 }, { type: "number", params: 2 }, { type: "number", params: 3 } ]
+            }, {
+                type: "label",
+                params: "Color",
+                inputs: [ { type: "color", params: "0xFF9900" } ]
+            }, {
+                type: "label",
+                params: "String",
+                inputs: [ { type: "string", params: "Hello World!" } ]
+            }, {
+                type: "label",
+                params: "Slider",
+                inputs: [ { type: "slider", params: 50 } ]
+            }, {
+                type: "label",
+                params: "Toggle",
+                inputs: [ { type: "toggle", params: false } ]
+            }, {
+                type: "label",
+                handle: element => element.setHeight( 100 ),
+                inputs: [ { type: "text", params: "Text Area" } ]
+            }, {
+                handle: element => element.setHeight( 35 ),
+                inputs: [ { type: "button", params: "OK!" } ]
+            }
+        ]
+    } );
+    a.append( flowA );
+
+    const flowB = new FlowElement( { width: "50vw", height: "50vh" } );
+    flowB.add( {
+        type: "panel",
+        handle: node => node.setWidth( 350 ).setAlign( "center" ),
+        elements: [
+            {
+                type: "label",
+                handle: element => element.setHeight( 100 ),
+                inputs: [ { type: "text", params: "Text Area" } ]
+            }, {
+                handle: element => element.setHeight( 35 ),
+                inputs: [ { type: "button", params: "OK!" } ]
+            }
+        ]
+    } );
+    b.append( flowB );
+
+    const flowC = new FlowElement( { width: "50vw", height: "50vh" } );
+    flowC.add( {
+        type: "panel",
+        handle: node => node.setWidth( 350 ).setAlign( "center" ),
+        elements: [
+            {
+                type: "label",
+                params: "Numbers",
+                inputs: [ { type: "number", params: 1 }, { type: "number", params: 2 }, { type: "number", params: 3 } ]
+            },
+            {
+                type: "label",
+                params: "Color",
+                inputs: [ { type: "color", params: "0xFF9900" } ]
+            }
+        ]
+    } );
+    c.append( flowC );
+
+    const flowD = new FlowElement( { width: 200, height: 200 } );
+    flowD.add( {
+        type: "panel",
+        handle: node => node.setWidth( 350 ).setAlign( "center" ),
+        elements: [
+            {
+                type: "label",
+                params: "String",
+                inputs: [ { type: "string", params: "Hello World!" } ]
+            }, {
+                type: "label",
+                params: "Slider",
+                inputs: [ { type: "slider", params: 50 } ]
+            }, {
+                type: "label",
+                params: "Toggle",
+                inputs: [ { type: "toggle", params: false } ]
+            }
+        ]
+    } );
+    d.append( flowD );
+
+</script>
+<style>
+    body {
+        overflow: hidden;
+    }
+
+    .test-container {
+        table-layout: fixed;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .test-container td {
+        vertical-align: top;
+    }
+</style>
+<table class="test-container">
+    <tr>
+        <td class="test-a"></td>
+        <td class="test-b"></td>
+    </tr>
+    <tr>
+        <td class="test-c"></td>
+        <td class="test-d"></td>
+    </tr>
+</table>
+</body>
+</html>

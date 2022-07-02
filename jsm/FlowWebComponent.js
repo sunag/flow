@@ -3,6 +3,7 @@ import { Canvas } from "./core/Canvas.js";
 import { toPX } from "./core/Utils.js";
 
 export class Component {
+
     constructor() {
 
         this.default = {
@@ -51,37 +52,47 @@ export class Component {
         this.cache[type].delete(name);
 
     }
+
 }
 
 const optionsBuilder = params => {
 
-    let options = { components: new Component() };
+    let options = { width: "100%", height: "100%", components: new Component() };
 
-    const { width, height, components } = params;
+    if ( params ) {
 
-    if ( typeof width === "number" )
-        options.width = toPX( width );
+        const { width, height, components } = params;
 
-    if ( typeof height === "number" )
-        options.height = toPX( height );
+        if ( width ) {
 
-    if ( components ) {
-
-        if ( Array.isArray(components) ) {
-
-            components.forEach( ( { type, name, desc } ) => {
-
-                options.components.add( type, name, desc );
-
-            } );
-
-        } else if ( typeof components === "object") {
-
-            const { type, name, desc } = components;
-            options.components.add( type, name, desc );
+            options.width = typeof width === "number" ? toPX( width ) : width;
 
         }
 
+        if ( height ) {
+
+            options.height = typeof height === "number" ? toPX( height ) : height;
+
+        }
+
+        if ( components ) {
+
+            if ( Array.isArray( components ) ) {
+
+                components.forEach( ( { type, name, desc } ) => {
+
+                    options.components.add(type, name, desc);
+
+                } );
+
+            } else if ( typeof components === "object" ) {
+
+                const { type, name, desc } = components;
+                options.components.add( type, name, desc );
+
+            }
+
+        }
     }
 
     return options;
@@ -117,7 +128,7 @@ export default class FlowElement extends HTMLElement {
 
         this.shadowRoot.append( this.canvas.dom );
 
-        FlowElement.onDrop = this.canvas.onDrop.bind( this.ondrop );
+        FlowElement.onDrop = this.canvas.onDrop.bind( this.canvas );
 
         FlowElement.start = this.canvas.start.bind( this.canvas );
 
