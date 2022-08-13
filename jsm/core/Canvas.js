@@ -41,9 +41,6 @@ export class Canvas extends Serializer {
 		this.context = context;
 		this.frontContext = frontContext;
 
-		this.width = 10000;
-		this.height = 10000;
-
 		this.clientX = 0;
 		this.clientY = 0;
 
@@ -64,13 +61,14 @@ export class Canvas extends Serializer {
 			'drop': []
 		};
 
+		this._scrollLeft = 0;
+		this._scrollTop = 0;
+		this._zoom = 1;
+
 		frontCanvas.className = 'front';
 
-		contentDOM.style.left = toPX( this.centerX );
-		contentDOM.style.top = toPX( this.centerY );
-
-		areaDOM.style.width = `calc( 100% + ${ this.width }px )`;
-		areaDOM.style.height = `calc( 100% + ${ this.height }px )`;
+		//areaDOM.style.width = `calc( 100% + ${ this.width }px )`;
+		//areaDOM.style.height = `calc( 100% + ${ this.height }px )`;
 
 		dropDOM.innerHTML = '<span>drop your file</span>';
 
@@ -79,7 +77,7 @@ export class Canvas extends Serializer {
 		dom.append( frontCanvas );
 		dom.append( contentDOM );
 		dom.append( areaDOM );
-		/*
+		
 		let zoomTouchData = null;
 
 		const onZoomStart = () => {
@@ -87,7 +85,7 @@ export class Canvas extends Serializer {
 			zoomTouchData = null;
 
 		};
-*/
+
 		const onZoom = ( e ) => {
 
 			if ( e.touches ) {
@@ -97,7 +95,7 @@ export class Canvas extends Serializer {
 					e.preventDefault();
 
 					e.stopImmediatePropagation();
-					/*
+					
 					const clientX = ( e.touches[ 0 ].clientX + e.touches[ 1 ].clientX ) / 2;
 					const clientY = ( e.touches[ 0 ].clientY + e.touches[ 1 ].clientY ) / 2;
 
@@ -122,10 +120,9 @@ export class Canvas extends Serializer {
 					if ( zoom < .52 ) zoom = .5;
 					else if ( zoom > .98 ) zoom = 1;
 
-					contentDOM.style.left = toPX( this.centerX / zoom );
-					contentDOM.style.top = toPX( this.centerY / zoom );
+					//contentDOM.style.left = toPX( this.centerX / zoom );
+					//contentDOM.style.top = toPX( this.centerY / zoom );
 					contentDOM.style.zoom = this.zoom = zoom;
-*/
 
 				}
 
@@ -134,14 +131,19 @@ export class Canvas extends Serializer {
 				e.preventDefault();
 
 				e.stopImmediatePropagation();
-				/*
+				
 				const delta = e.deltaY / 100;
 				const zoom = Math.min( Math.max( this.zoom - delta * .1, .5 ), 1 );
 
-				contentDOM.style.left = toPX( this.centerX / zoom );
-				contentDOM.style.top = toPX( this.centerY / zoom );
-				contentDOM.style.zoom = this.zoom = zoom;
-*/
+				const rect = this.getRect();
+				const centerX = rect.x + rect.width;
+
+				this.scrollLeft -= ( this.clientX / this.zoom ) - ( this.clientX / zoom );
+				this.scrollTop -= ( this.clientY / this.zoom ) - ( this.clientY / zoom );
+				//this.scrollLeft += toPX( centerX / zoom );
+				//contentDOM.style.top = toPX( this.centerY / zoom );
+				this.zoom = zoom;
+
 
 			}
 
@@ -149,7 +151,7 @@ export class Canvas extends Serializer {
 
 		dom.addEventListener( 'wheel', onZoom );
 		dom.addEventListener( 'touchmove', onZoom );
-		//dom.addEventListener( 'touchstart', onZoomStart );
+		dom.addEventListener( 'touchstart', onZoomStart );
 
 		let dropEnterCount = 0;
 
@@ -221,13 +223,13 @@ export class Canvas extends Serializer {
 
 				if ( data.scrollTop === undefined ) {
 
-					data.scrollLeft = dom.scrollLeft;
-					data.scrollTop = dom.scrollTop;
+					data.scrollLeft = this.scrollLeft;
+					data.scrollTop = this.scrollTop;
 
 				}
 
-				dom.scrollLeft = data.scrollLeft - delta.x;
-				dom.scrollTop = data.scrollTop - delta.y;
+				this.scrollLeft = data.scrollLeft + delta.x;
+				this.scrollTop = data.scrollTop + delta.y;
 
 			}
 
@@ -251,7 +253,7 @@ export class Canvas extends Serializer {
 			this.clientX = event.clientX;
 			this.clientY = event.clientY;
 
-			this.relativeClientX = ( ( ( dom.scrollLeft - this.centerX ) + event.clientX ) - rect.left ) / zoom;
+			//this.relativeClientX = ( ( ( dom.scrollLeft - this.centerX ) + event.clientX ) - rect.left ) / zoom;
 			this.relativeClientY = ( ( ( dom.scrollTop - this.centerY ) + event.clientY ) - rect.top ) / zoom;
 
 		};
@@ -272,21 +274,34 @@ export class Canvas extends Serializer {
 
 	}
 
+
+	getRect() {
+
+		const rect = { x: Infinity, y: Infinity, width: -Infinity, height: -Infinity };
+
+		for( const node of this.nodes) {
+
+			const { x, y, width, height } = node.getRect();
+
+			rect.x = Math.min( rect.x, x );
+			rect.y = Math.min( rect.y, y );
+			rect.width = Math.max( rect.width, x + width );
+			rect.height = Math.max( rect.height, y + height );
+
+		}
+
+		rect.x = Math.round( rect.x );
+		rect.y = Math.round( rect.y );
+		rect.width = Math.round( rect.width );
+		rect.height = Math.round( rect.height );
+
+		return rect;
+
+	}
+
 	get rect() {
 
 		return this.dom.getBoundingClientRect();
-
-	}
-
-	get relativeX() {
-
-		return this.dom.scrollLeft - this.centerX;
-
-	}
-
-	get relativeY() {
-
-		return this.dom.scrollTop - this.centerY;
 
 	}
 
@@ -299,6 +314,46 @@ export class Canvas extends Serializer {
 	get centerY() {
 
 		return this.height / 2;
+
+	}
+
+	get zoom() {
+
+		return this._zoom;
+
+	}
+
+	set zoom( val ) {
+
+		this._zoom = val;
+		this.contentDOM.style.zoom = val;
+
+
+	}
+
+	set scrollLeft( val ) {
+
+		this._scrollLeft = val;
+		this.contentDOM.style.left = toPX( val );
+
+	}
+
+	get scrollLeft() {
+
+		return this._scrollLeft;
+
+	}
+
+	set scrollTop( val ) {
+
+		this._scrollTop = val;
+		this.contentDOM.style.top = toPX( val );
+
+	}
+
+	get scrollTop() {
+
+		return this._scrollTop;
 
 	}
 
@@ -440,7 +495,7 @@ export class Canvas extends Serializer {
 
 	centralize() {
 
-		this.dom.scroll( this.centerX, this.centerY );
+		//sthis.dom.scroll( this.centerX, this.centerY );
 
 		return this;
 

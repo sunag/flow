@@ -139,6 +139,22 @@ export class Node extends Serializer {
 
 	}
 
+	getHeight() {
+
+		return this.dom.offsetHeight;
+
+	}
+
+	getRect() {
+
+		const { x, y } = this.getPosition();
+		const width = this.getWidth();
+		const height = this.getHeight();
+
+		return { x, y, width, height };
+
+	}
+
 	add( element ) {
 
 		this.elements.push( element );

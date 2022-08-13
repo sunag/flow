@@ -28,7 +28,6 @@ f-canvas canvas {
 }
 
 f-canvas {
-	overflow: auto;
 	cursor: grab;
 }
 
@@ -68,6 +67,11 @@ f-canvas::-webkit-scrollbar-thumb {
 	background-color: #666666;
 	border-radius: 10px;
 	border: 0;
+}
+
+f-canvas f-content {
+	left: 0;
+	top: 0;
 }
 
 f-canvas f-content,
