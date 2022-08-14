@@ -1,5 +1,5 @@
 import { Serializer } from './Serializer.js';
-import { toPX } from './Utils.js';
+import { numberToPX } from './Utils.js';
 
 export class Node extends Serializer {
 
@@ -107,8 +107,8 @@ export class Node extends Serializer {
 
 		const dom = this.dom;
 
-		dom.style.left = toPX( x );
-		dom.style.top = toPX( y );
+		dom.style.left = numberToPX( x );
+		dom.style.top = numberToPX( y );
 
 		return this;
 
@@ -127,7 +127,7 @@ export class Node extends Serializer {
 
 	setWidth( val ) {
 
-		this.dom.style.width = toPX( val );
+		this.dom.style.width = numberToPX( val );
 
 		return this;
 
@@ -230,6 +230,12 @@ export class Node extends Serializer {
 		}
 
 		return links;
+
+	}
+
+	getColor() {
+
+		return this.elements[0]?.getColor();
 
 	}
 

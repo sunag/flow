@@ -1,5 +1,5 @@
 import { Input } from '../core/Input.js';
-import { toHex } from '../core/Utils.js';
+import { numberToHex } from '../core/Utils.js';
 
 export class ColorInput extends Input {
 
@@ -9,7 +9,7 @@ export class ColorInput extends Input {
 		super( dom );
 
 		dom.type = 'color';
-		dom.value = toHex( value );
+		dom.value = numberToHex( value );
 
 		dom.oninput = () => {
 
@@ -21,7 +21,7 @@ export class ColorInput extends Input {
 
 	setValue( value, dispatch = true ) {
 
-		return super.setValue( toHex( value ), dispatch );
+		return super.setValue( numberToHex( value ), dispatch );
 
 	}
 

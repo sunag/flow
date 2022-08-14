@@ -1,7 +1,7 @@
 import { Serializer } from './Serializer.js';
 import { Node } from './Node.js';
 import { TitleElement } from '../elements/TitleElement.js';
-import { draggableDOM, dispatchEventList, toPX } from './Utils.js';
+import { rgbaToArray, draggableDOM, dispatchEventList, numberToPX } from './Utils.js';
 import { drawLine } from './CanvasUtils.js';
 
 const colors = [
@@ -25,9 +25,11 @@ export class Canvas extends Serializer {
 
 		const canvas = document.createElement( 'canvas' );
 		const frontCanvas = document.createElement( 'canvas' );
+		const mapCanvas = document.createElement( 'canvas' );
 
 		const context = canvas.getContext( '2d' );
 		const frontContext = frontCanvas.getContext( '2d' );
+		const mapContext = mapCanvas.getContext( '2d' );
 
 		this.dom = dom;
 
@@ -37,17 +39,17 @@ export class Canvas extends Serializer {
 
 		this.canvas = canvas;
 		this.frontCanvas = frontCanvas;
+		this.mapCanvas = mapCanvas;
 
 		this.context = context;
 		this.frontContext = frontContext;
+		this.mapContext = mapContext;
 
 		this.clientX = 0;
 		this.clientY = 0;
 
 		this.relativeClientX = 0;
 		this.relativeClientY = 0;
-
-		this.zoom = 1;
 
 		this.nodes = [];
 
@@ -65,7 +67,9 @@ export class Canvas extends Serializer {
 		this._scrollTop = 0;
 		this._zoom = 1;
 
-		frontCanvas.className = 'front';
+		canvas.className = 'background';
+		frontCanvas.className = 'frontground';
+		mapCanvas.className = 'map';
 
 		//areaDOM.style.width = `calc( 100% + ${ this.width }px )`;
 		//areaDOM.style.height = `calc( 100% + ${ this.height }px )`;
@@ -77,6 +81,7 @@ export class Canvas extends Serializer {
 		dom.append( frontCanvas );
 		dom.append( contentDOM );
 		dom.append( areaDOM );
+		dom.append( mapCanvas );
 		
 		let zoomTouchData = null;
 
@@ -120,8 +125,8 @@ export class Canvas extends Serializer {
 					if ( zoom < .52 ) zoom = .5;
 					else if ( zoom > .98 ) zoom = 1;
 
-					//contentDOM.style.left = toPX( this.centerX / zoom );
-					//contentDOM.style.top = toPX( this.centerY / zoom );
+					//contentDOM.style.left = numberToPX( this.centerX / zoom );
+					//contentDOM.style.top = numberToPX( this.centerY / zoom );
 					contentDOM.style.zoom = this.zoom = zoom;
 
 				}
@@ -140,8 +145,8 @@ export class Canvas extends Serializer {
 
 				this.scrollLeft -= ( this.clientX / this.zoom ) - ( this.clientX / zoom );
 				this.scrollTop -= ( this.clientY / this.zoom ) - ( this.clientY / zoom );
-				//this.scrollLeft += toPX( centerX / zoom );
-				//contentDOM.style.top = toPX( this.centerY / zoom );
+				//this.scrollLeft += numberToPX( centerX / zoom );
+				//contentDOM.style.top = numberToPX( this.centerY / zoom );
 				this.zoom = zoom;
 
 
@@ -274,7 +279,6 @@ export class Canvas extends Serializer {
 
 	}
 
-
 	getRect() {
 
 		const rect = { x: Infinity, y: Infinity, width: -Infinity, height: -Infinity };
@@ -296,6 +300,18 @@ export class Canvas extends Serializer {
 		rect.height = Math.round( rect.height );
 
 		return rect;
+
+	}
+
+	get width() {
+
+		return window.innerWidth;
+
+	}
+
+	get height() {
+
+		return window.innerHeight;
 
 	}
 
@@ -334,7 +350,7 @@ export class Canvas extends Serializer {
 	set scrollLeft( val ) {
 
 		this._scrollLeft = val;
-		this.contentDOM.style.left = toPX( val );
+		this.contentDOM.style.left = numberToPX( val );
 
 	}
 
@@ -347,7 +363,7 @@ export class Canvas extends Serializer {
 	set scrollTop( val ) {
 
 		this._scrollTop = val;
-		this.contentDOM.style.top = toPX( val );
+		this.contentDOM.style.top = numberToPX( val );
 
 	}
 
@@ -529,11 +545,46 @@ export class Canvas extends Serializer {
 
 	}
 
-	update() {
+	updateMap() {
 
-		if ( this.updating === false ) return;
+		const { nodes, mapCanvas, mapContext, scrollLeft, scrollTop, width, height } = this;
 
-		requestAnimationFrame( this._onUpdate );
+		let aspectX = 1, aspectY = 1;
+
+		if ( width > height ) aspectY = height / width;
+		else aspectX = width / height;
+
+		mapCanvas.width  = 300 * aspectX;
+		mapCanvas.height = 300 * aspectY;
+
+		mapContext.clearRect( 0, 0, mapCanvas.width, mapCanvas.height );
+
+		mapContext.fillStyle = 'rgba( 0, 0, 0, 0 )';
+		mapContext.fillRect( 0, 0, mapCanvas.width, mapCanvas.height );
+
+		const mapScale = ( mapCanvas.width / width ) * this.zoom;
+
+		for ( const node of nodes ) {
+
+			const nodeRect = node.getRect();
+			const nodeColor = node.getColor();
+
+			nodeRect.x += scrollLeft;
+			nodeRect.y += scrollTop;
+
+			nodeRect.x *= mapScale;
+			nodeRect.y *= mapScale;
+			nodeRect.width *= mapScale;
+			nodeRect.height *= mapScale;
+
+			mapContext.fillStyle = nodeColor;
+			mapContext.fillRect( nodeRect.x, nodeRect.y, nodeRect.width, nodeRect.height );
+
+		}
+
+	}
+
+	updateLines() {
 
 		const { dom, zoom, canvas, frontCanvas, frontContext, context } = this;
 
@@ -699,6 +750,18 @@ export class Canvas extends Serializer {
 			dom.classList.remove( 'dragging-rio' );
 
 		}
+
+	}
+
+	
+	update() {
+
+		if ( this.updating === false ) return;
+
+		requestAnimationFrame( this._onUpdate );
+
+		this.updateLines();
+		this.updateMap();
 
 	}
 

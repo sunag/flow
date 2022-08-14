@@ -200,7 +200,7 @@ export const dispatchEventList = ( list, ...params ) => {
 
 };
 
-export const toPX = ( val ) => {
+export const numberToPX = ( val ) => {
 
 	if ( isNaN( val ) === false ) {
 
@@ -212,7 +212,7 @@ export const toPX = ( val ) => {
 
 };
 
-export const toHex = ( val ) => {
+export const numberToHex = ( val ) => {
 
 	if ( isNaN( val ) === false ) {
 
@@ -221,5 +221,15 @@ export const toHex = ( val ) => {
 	}
 
 	return val;
+
+};
+
+export const rgbaToArray = ( rgba ) => {
+
+	const values = rgba.substring( rgba.indexOf( '(' ) + 1, rgba.indexOf( ')' )  )
+		.split(',')
+		.map( num => parseInt( num.trim() ) );
+	
+	return values;
 
 };
