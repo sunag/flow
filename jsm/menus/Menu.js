@@ -17,6 +17,8 @@ export class Menu extends EventTarget {
 
 		this.visible = false;
 
+		this.align = '';
+
 		this.subMenus = new WeakMap();
 		this.domButtons = new WeakMap();
 
@@ -32,6 +34,25 @@ export class Menu extends EventTarget {
 
 		return this;
 
+	}
+
+	setAlign( align ) {
+		
+		const classList = this.dom.classList;
+		
+		classList.remove( this.align );
+		classList.add( align );
+		
+		this.align = align;
+		
+		return this;
+		
+	}
+	
+	getAlign() {
+		
+		return this.align;
+		
 	}
 
 	show() {

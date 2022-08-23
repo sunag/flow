@@ -71,9 +71,6 @@ export class Canvas extends Serializer {
 		frontCanvas.className = 'frontground';
 		mapCanvas.className = 'map';
 
-		//areaDOM.style.width = `calc( 100% + ${ this.width }px )`;
-		//areaDOM.style.height = `calc( 100% + ${ this.height }px )`;
-
 		dropDOM.innerHTML = '<span>drop your file</span>';
 
 		dom.append( dropDOM );
@@ -140,15 +137,13 @@ export class Canvas extends Serializer {
 				const delta = e.deltaY / 100;
 				const zoom = Math.min( Math.max( this.zoom - delta * .1, .5 ), 1 );
 
-				const rect = this.getRect();
-				const centerX = rect.x + rect.width;
+				const bounds = this.getBounds();
+				const centerX = bounds.x + bounds.width;
 
 				this.scrollLeft -= ( this.clientX / this.zoom ) - ( this.clientX / zoom );
 				this.scrollTop -= ( this.clientY / this.zoom ) - ( this.clientY / zoom );
-				//this.scrollLeft += numberToPX( centerX / zoom );
-				//contentDOM.style.top = numberToPX( this.centerY / zoom );
-				this.zoom = zoom;
 
+				this.zoom = zoom;
 
 			}
 
@@ -279,27 +274,27 @@ export class Canvas extends Serializer {
 
 	}
 
-	getRect() {
+	getBounds() {
 
-		const rect = { x: Infinity, y: Infinity, width: -Infinity, height: -Infinity };
+		const bounds = { x: Infinity, y: Infinity, width: -Infinity, height: -Infinity };
 
 		for( const node of this.nodes) {
 
-			const { x, y, width, height } = node.getRect();
+			const { x, y, width, height } = node.getBound();
 
-			rect.x = Math.min( rect.x, x );
-			rect.y = Math.min( rect.y, y );
-			rect.width = Math.max( rect.width, x + width );
-			rect.height = Math.max( rect.height, y + height );
+			bounds.x = Math.min( bounds.x, x );
+			bounds.y = Math.min( bounds.y, y );
+			bounds.width = Math.max( bounds.width, x + width );
+			bounds.height = Math.max( bounds.height, y + height );
 
 		}
 
-		rect.x = Math.round( rect.x );
-		rect.y = Math.round( rect.y );
-		rect.width = Math.round( rect.width );
-		rect.height = Math.round( rect.height );
+		bounds.x = Math.round( bounds.x );
+		bounds.y = Math.round( bounds.y );
+		bounds.width = Math.round( bounds.width );
+		bounds.height = Math.round( bounds.height );
 
-		return rect;
+		return bounds;
 
 	}
 
@@ -321,18 +316,6 @@ export class Canvas extends Serializer {
 
 	}
 
-	get centerX() {
-
-		return this.width / 2;
-
-	}
-
-	get centerY() {
-
-		return this.height / 2;
-
-	}
-
 	get zoom() {
 
 		return this._zoom;
@@ -343,7 +326,6 @@ export class Canvas extends Serializer {
 
 		this._zoom = val;
 		this.contentDOM.style.zoom = val;
-
 
 	}
 
@@ -547,12 +529,14 @@ export class Canvas extends Serializer {
 
 	updateMap() {
 
-		const { nodes, mapCanvas, mapContext, scrollLeft, scrollTop, width, height } = this;
+		const { nodes, mapCanvas, mapContext, scrollLeft, scrollTop, canvas } = this;
+
+		const rect = this.getBounds();
 
 		let aspectX = 1, aspectY = 1;
 
-		if ( width > height ) aspectY = height / width;
-		else aspectX = width / height;
+		if ( canvas.width > canvas.height ) aspectY = canvas.height / canvas.width;
+		else aspectX = canvas.width / canvas.height;
 
 		mapCanvas.width  = 300 * aspectX;
 		mapCanvas.height = 300 * aspectY;
@@ -562,23 +546,25 @@ export class Canvas extends Serializer {
 		mapContext.fillStyle = 'rgba( 0, 0, 0, 0 )';
 		mapContext.fillRect( 0, 0, mapCanvas.width, mapCanvas.height );
 
-		const mapScale = ( mapCanvas.width / width ) * this.zoom;
+		const mapScale = ( mapCanvas.width / canvas.width ) * this.zoom;
+		
+		console.log(  );
 
 		for ( const node of nodes ) {
 
-			const nodeRect = node.getRect();
+			const nodeBound = node.getBound();
 			const nodeColor = node.getColor();
 
-			nodeRect.x += scrollLeft;
-			nodeRect.y += scrollTop;
+			nodeBound.x += scrollLeft;
+			nodeBound.y += scrollTop;
 
-			nodeRect.x *= mapScale;
-			nodeRect.y *= mapScale;
-			nodeRect.width *= mapScale;
-			nodeRect.height *= mapScale;
+			nodeBound.x *= mapScale;
+			nodeBound.y *= mapScale;
+			nodeBound.width *= mapScale;
+			nodeBound.height *= mapScale;
 
 			mapContext.fillStyle = nodeColor;
-			mapContext.fillRect( nodeRect.x, nodeRect.y, nodeRect.width, nodeRect.height );
+			mapContext.fillRect( nodeBound.x, nodeBound.y, nodeBound.width, nodeBound.height );
 
 		}
 

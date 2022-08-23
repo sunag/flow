@@ -145,7 +145,7 @@ export class Node extends Serializer {
 
 	}
 
-	getRect() {
+	getBound() {
 
 		const { x, y } = this.getPosition();
 		const width = this.getWidth();
