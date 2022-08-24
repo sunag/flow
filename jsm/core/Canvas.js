@@ -531,7 +531,7 @@ export class Canvas extends Serializer {
 
 		const { nodes, mapCanvas, mapContext, scrollLeft, scrollTop, canvas } = this;
 
-		const rect = this.getBounds();
+		const bounds = this.getBounds();
 
 		let aspectX = 1, aspectY = 1;
 
@@ -546,9 +546,10 @@ export class Canvas extends Serializer {
 		mapContext.fillStyle = 'rgba( 0, 0, 0, 0 )';
 		mapContext.fillRect( 0, 0, mapCanvas.width, mapCanvas.height );
 
-		const mapScale = ( mapCanvas.width / canvas.width ) * this.zoom;
+		const boundsWidth = canvas.width / bounds.width;
+		const mapScale = ( ( mapCanvas.width / canvas.width ) * this.zoom ) * boundsWidth;
 		
-		console.log(  );
+		console.log( bounds.x );
 
 		for ( const node of nodes ) {
 
