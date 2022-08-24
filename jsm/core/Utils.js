@@ -229,7 +229,19 @@ export const rgbaToArray = ( rgba ) => {
 	const values = rgba.substring( rgba.indexOf( '(' ) + 1, rgba.indexOf( ')' )  )
 		.split(',')
 		.map( num => parseInt( num.trim() ) );
-	
+
 	return values;
+
+};
+
+export const removeDOMClass = ( dom, classList ) => {
+
+	if ( classList ) classList.split( ' ' ).forEach( alignClass => dom.classList.remove( alignClass ) );
+
+};
+
+export const addDOMClass = ( dom, classList ) => {
+
+	if ( classList ) classList.split( ' ' ).forEach( alignClass => dom.classList.add( alignClass ) );
 
 };

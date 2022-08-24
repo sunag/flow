@@ -1019,9 +1019,23 @@ f-menu.search input {
 
 f-menu.circle {
 	position: absolute;
-	left: 40px;
-	bottom: 40px;
 	z-index: 100;
+}
+
+f-menu.circle.top {
+	top: 40px;
+}
+
+f-menu.circle.left {
+	left: 40px;
+}
+
+f-menu.circle.bottom {
+	bottom: 40px;
+}
+
+f-menu.circle.right {
+	right: 40px;
 }
 
 f-menu.circle f-item {
@@ -1046,6 +1060,10 @@ f-menu.circle f-item button {
 
 f-menu.circle f-item f-tooltip {
 	margin-top: -60px;
+}
+
+f-menu.circle.top f-item f-tooltip {
+	margin-top: 50px;
 }
 
 /* rounded */
@@ -1119,6 +1137,10 @@ f-menu.circle f-item f-tooltip {
 
 	f-menu.circle f-item button:hover > f-tooltip {
 		margin-top: -50px;
+	}
+
+	f-menu.circle.top f-item button:hover > f-tooltip {
+		margin-top: 60px;
 	}
 
 	f-menu.context f-item button:hover > f-tooltip {

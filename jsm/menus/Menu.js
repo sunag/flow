@@ -1,3 +1,4 @@
+import { addDOMClass, removeDOMClass } from '../core/Utils.js';
 
 export class Menu extends EventTarget {
 
@@ -6,7 +7,7 @@ export class Menu extends EventTarget {
 		super();
 
 		const dom = document.createElement( 'f-menu' );
-		dom.className = className + ' hidden';
+		dom.className = className + ' bottom left hidden';
 
 		const listDOM = document.createElement( 'f-list' );
 
@@ -17,7 +18,7 @@ export class Menu extends EventTarget {
 
 		this.visible = false;
 
-		this.align = '';
+		this.align = 'bottom left';
 
 		this.subMenus = new WeakMap();
 		this.domButtons = new WeakMap();
@@ -37,22 +38,22 @@ export class Menu extends EventTarget {
 	}
 
 	setAlign( align ) {
-		
-		const classList = this.dom.classList;
-		
-		classList.remove( this.align );
-		classList.add( align );
-		
+
+		const dom = this.dom;
+
+		removeDOMClass( dom, this.align );
+		addDOMClass( dom, align );
+
 		this.align = align;
-		
+
 		return this;
-		
+
 	}
-	
+
 	getAlign() {
-		
+
 		return this.align;
-		
+
 	}
 
 	show() {
