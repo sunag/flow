@@ -53,9 +53,9 @@
           <input type="text" class="range-value" spellcheck="false" autocomplete="off" value="0.0"/>
         </f-inputs>
       </f-element>
-      <f-element>
-        <f-label>Group 1</f-label>
-      </f-element>
+        <f-group>
+          <input id="groupBox" type="checkbox" />
+        <f-elements>
           <f-element>
             <f-label for="color">Color</f-label>
             <f-inputs>
@@ -83,9 +83,14 @@
               <input type="text" class="range-value" spellcheck="false" autocomplete="off" value="0.0"/>
             </f-inputs>
           </f-element>
-          <f-element>
-            <f-label>Group 2</f-label>
-          </f-element>
+        </f-elements>
+        <f-info>
+          <f-label for="groupBox">Group 1</f-label>
+        </f-info>
+        </f-group>
+        <f-group>
+          <input id="groupBox" type="checkbox" />
+          <f-elements type="scroll">
           <f-element>
             <f-label>Options</f-label>
             <f-inputs>
@@ -135,6 +140,11 @@
               <input type="text" class="range-value" spellcheck="false" autocomplete="off" value="0.0"/>
             </f-inputs>
           </f-element>
+        </f-elements>
+        <f-info>
+          <f-label for="groupBox">Group 2</f-label>
+        </f-info>
+      </f-group>
       <f-element>
         <f-label>C. Range</f-label>
         <f-inputs>

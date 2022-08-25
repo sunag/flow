@@ -1,8 +1,8 @@
 html {
   overflow-y: auto;
   overflow-x: hidden;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   padding: 100px;
 }
 
@@ -14,6 +14,128 @@ body {
 f-node{
   margin-top: 100px;
 }
+
+f-group {
+  position: relative;
+  width: 100%;
+  background: rgba(45, 45, 48, 0.95);
+  pointer-events: auto;
+  border-bottom: 2px solid #232323;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+f-group input[type="checkbox"] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: calc(100% + 14px);
+  margin: 0 0 0 -15px;
+  height: 24px;
+  background: none;
+  box-shadow: none;
+  cursor: default;
+  z-index: 3;
+  opacity: 0;
+}
+
+input[type="checkbox" i] {
+  background-color: initial;
+  cursor: default;
+  appearance: auto;
+  box-sizing: border-box;
+  margin: 3px 3px 3px 4px;
+  padding: initial;
+  border: initial;
+}
+
+input {
+  writing-mode: horizontal-tb !important;
+  text-rendering: auto;
+  letter-spacing: normal;
+  word-spacing: normal;
+  line-height: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: start;
+  appearance: auto;
+  -webkit-rtl-ordering: logical;
+  cursor: text;
+  margin: 0em;
+  padding: 1px 2px;
+  border-width: 2px;
+  border-style: inset;
+  border-color: -internal-light-dark(
+    rgb(118, 118, 118),
+    rgb(133, 133, 133)
+  );
+  border-image: initial;
+}
+
+f-group input[type="checkbox"]:checked ~ f-elements {
+  max-height: 100vh;
+  width: 100%;
+  transition: all 500ms ease;
+  padding: 0;
+  margin: 0;
+}
+
+f-group f-elements {
+  position: relative;
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 100ms ease;
+}
+
+f-group f-info {
+  position: relative;
+  /* display: block; */
+  white-space: nowrap;
+  display: flex;
+  padding-left: 10px;
+  padding-right: 7px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  line-height: 24px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 13px;
+  text-transform: capitalize;
+  color: #eeeeee;
+ 
+}
+
+f-group input[type="checkbox"]:checked ~ f-info {
+  border-bottom: 2px solid #232323;
+}
+
+f-group input[type="checkbox"] ~ f-info::after {
+  position: absolute;
+  content: url(../../media/arrowDown.png);
+  top: -248px;
+  right: -246px;
+  transform: scale(0.02);
+}
+f-group input[type="checkbox"]:checked ~ f-info::after {
+  transform: rotate(180deg) scale(0.02);
+  color: #eeeeee;
+}
+
+#groupBox:hover {
+  cursor: pointer;
+}
+
+f-group f-element:nth-child(4) {
+  border-bottom: none;
+}
+
+f-group f-element:nth-child(7) {
+  border-bottom: none;
+}
+
+
 
 f-treeview {
   width: 100%;
