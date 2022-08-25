@@ -2,27 +2,13 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <meta
-      http-equiv="Content-Type"
-      content="text/html;charset=UTF-8"
-    />
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
     <title>flow - javascript ui</title>
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="shortcut icon" href="../favicon.ico" />
     <!-- <link rel="stylesheet" href="../fonts/open-sans/open-sans.css" type="text/css"/> -->
-    <link
-      rel="stylesheet"
-      href="../css/flow.css"
-      type="text/css"
-    />
-    <link
-      rel="stylesheet"
-      href="css/page.css"
-      type="text/css"
-    />
+    <link rel="stylesheet" href="../css/flow.css" type="text/css"/>
+    <link rel="stylesheet" href="css/page.css" type="text/css"/>
   </head>
   <body>
     <f-node class="center rounded">
@@ -37,158 +23,69 @@
         <f-io class="output"></f-io>
         <f-label>Node</f-label>
         <f-inputs>
-          <input
-            type="text"
-            spellcheck="false"
-            autocomplete="off"
-            value="Hello World!"
-          />
+          <input type="text" spellcheck="false" autocomplete="off" value="Hello World!"/>
         </f-inputs>
       </f-element>
       <f-element>
         <f-label>Color</f-label>
         <f-inputs>
-          <input type="color" value="#FF9900" />
+          <input type="color" value="#FF9900"/>
         </f-inputs>
       </f-element>
       <f-element>
         <f-label>Vector</f-label>
         <f-inputs>
-          <input
-            class="number"
-            type="text"
-            spellcheck="false"
-            autocomplete="off"
-            value="0.0"
-          />
-          <input
-            class="number"
-            type="text"
-            spellcheck="false"
-            autocomplete="off"
-            value="0.0"
-          />
-          <input
-            class="number"
-            type="text"
-            spellcheck="false"
-            autocomplete="off"
-            value="0.0"
-          />
+          <input class="number" type="text" spellcheck="false" autocomplete="off" value="0.0"/>
+          <input class="number" type="text" spellcheck="false" autocomplete="off" value="0.0"/>
+          <input class="number" type="text" spellcheck="false" autocomplete="off" value="0.0"/>
         </f-inputs>
       </f-element>
       <f-element>
         <f-label>Number</f-label>
         <f-inputs>
-          <input
-            class="number"
-            type="text"
-            spellcheck="false"
-            autocomplete="off"
-            value="0.0"
-          />
+          <input class="number" type="text" spellcheck="false" autocomplete="off" value="0.0"/>
         </f-inputs>
       </f-element>
       <f-element>
         <f-label>Range</f-label>
         <f-inputs>
-          <input
-            type="range"
-            min="0"
-            max="100"
-            step="1"
-            value="50"
-          />
-          <input
-            type="text"
-            class="range-value"
-            spellcheck="false"
-            autocomplete="off"
-            value="0.0"
-          />
+          <input type="range" min="0" max="100" step="1" value="50"/>
+          <input type="text" class="range-value" spellcheck="false" autocomplete="off" value="0.0"/>
         </f-inputs>
       </f-element>
-      <f-group>
-        <input id="groupBox" type="checkbox" />
-        <f-elements>
+      <f-element>
+        <f-label>Group 1</f-label>
+      </f-element>
           <f-element>
             <f-label for="color">Color</f-label>
             <f-inputs>
-              <input
-                id="color"
-                type="color"
-                value="#FF9900"
-              />
+              <input id="color" type="color" value="#FF9900"/>
             </f-inputs>
           </f-element>
           <f-element>
-            <f-label for="vector">Vector</f-label>
+            <f-label>Vector</f-label>
             <f-inputs>
-              <input
-                id="vector"
-                class="number"
-                type="text"
-                spellcheck="false"
-                autocomplete="off"
-                value="0.0"
-              />
-              <input
-                id="vector"
-                class="number"
-                type="text"
-                spellcheck="false"
-                autocomplete="off"
-                value="0.0"
-              />
-              <input
-                id="vector"
-                class="number"
-                type="text"
-                spellcheck="false"
-                autocomplete="off"
-                value="0.0"
-              />
+              <input class="number" type="text" spellcheck="false" autocomplete="off" value="0.0"/>
+              <input class="number" type="text" spellcheck="false" autocomplete="off" value="0.0"/>
+              <input class="number" type="text" spellcheck="false" autocomplete="off" value="0.0"/>
             </f-inputs>
           </f-element>
           <f-element>
             <f-label>Number</f-label>
             <f-inputs>
-              <input
-                class="number"
-                type="text"
-                spellcheck="false"
-                autocomplete="off"
-                value="0.0"
-              />
+              <input class="number" type="text" spellcheck="false" autocomplete="off" value="0.0"/>
             </f-inputs>
           </f-element>
           <f-element>
             <f-label>Range</f-label>
             <f-inputs>
-              <input
-                type="range"
-                min="0"
-                max="100"
-                step="1"
-                value="50"
-              />
-              <input
-                type="text"
-                class="range-value"
-                spellcheck="false"
-                autocomplete="off"
-                value="0.0"
-              />
+              <input type="range" min="0" max="100" step="1" value="50"/>
+              <input type="text" class="range-value" spellcheck="false" autocomplete="off" value="0.0"/>
             </f-inputs>
           </f-element>
-        </f-elements>
-        <f-info>
-          <f-label for="groupBox">Group</f-label>
-        </f-info>
-      </f-group>
-      <f-group>
-        <input id="groupBox" type="checkbox" />
-        <f-elements type="scroll">
+          <f-element>
+            <f-label>Group 2</f-label>
+          </f-element>
           <f-element>
             <f-label>Options</f-label>
             <f-inputs>
@@ -211,90 +108,37 @@
             </f-inputs>
           </f-element>
           <f-element>
-            <f-label for="color">Color</f-label>
+            <f-label>Color</f-label>
             <f-inputs>
-              <input
-                id="color"
-                type="color"
-                value="#FF9900"
+              <input type="color" value="#FF9900"
               />
             </f-inputs>
           </f-element>
           <f-element>
-            <f-label for="vector">Vector</f-label>
+            <f-label>Vector</f-label>
             <f-inputs>
-              <input
-                id="vector"
-                class="number"
-                type="text"
-                spellcheck="false"
-                autocomplete="off"
-                value="0.0"
-              />
-              <input
-                id="vector"
-                class="number"
-                type="text"
-                spellcheck="false"
-                autocomplete="off"
-                value="0.0"
-              />
-              <input
-                id="vector"
-                class="number"
-                type="text"
-                spellcheck="false"
-                autocomplete="off"
-                value="0.0"
-              />
+              <input class="number" type="text" spellcheck="false" autocomplete="off" value="0.0"/>
+              <input class="number" type="text" spellcheck="false" autocomplete="off" value="0.0"/>
+              <input class="number" type="text" spellcheck="false" autocomplete="off" value="0.0"/>
             </f-inputs>
           </f-element>
           <f-element>
             <f-label>Number</f-label>
             <f-inputs>
-              <input
-                class="number"
-                type="text"
-                spellcheck="false"
-                autocomplete="off"
-                value="0.0"
-              />
+              <input class="number" type="text" spellcheck="false" autocomplete="off" value="0.0"/>
             </f-inputs>
           </f-element>
           <f-element>
             <f-label>Range</f-label>
             <f-inputs>
-              <input
-                type="range"
-                min="0"
-                max="100"
-                step="1"
-                value="50"
-              />
-              <input
-                type="text"
-                class="range-value"
-                spellcheck="false"
-                autocomplete="off"
-                value="0.0"
-              />
+              <input type="range" min="0" max="100" step="1" value="50"/>
+              <input type="text" class="range-value" spellcheck="false" autocomplete="off" value="0.0"/>
             </f-inputs>
           </f-element>
-        </f-elements>
-        <f-info>
-          <f-label for="groupBox">Group - Bigger</f-label>
-        </f-info>
-      </f-group>
       <f-element>
         <f-label>C. Range</f-label>
         <f-inputs>
-          <input
-            type="range"
-            min="0"
-            max="100"
-            step="1"
-            value="50"
-          />
+          <input type="range" min="0" max="100" step="1" value="50"/>
         </f-inputs>
       </f-element>
       <f-element>
@@ -315,7 +159,7 @@
       <f-element>
         <f-label>Button</f-label>
         <f-inputs>
-          <button type="button">ok</button>
+          <button type="button">OK</button>
         </f-inputs>
       </f-element>
       <f-element class="auto-height">
