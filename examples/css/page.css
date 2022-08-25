@@ -95,7 +95,7 @@ f-group f-info {
   /* display: block; */
   white-space: nowrap;
   display: flex;
-  padding-left: 10px;
+  padding-left: 11px;
   padding-right: 7px;
   padding-top: 2px;
   padding-bottom: 2px;
@@ -114,8 +114,8 @@ f-group input[type="checkbox"]:checked ~ f-info {
 f-group input[type="checkbox"] ~ f-info::after {
   position: absolute;
   content: url(../../media/arrowDown.png);
-  top: -248px;
-  right: -246px;
+  top: -246px;
+  right: -238px;
   transform: scale(0.02);
 }
 f-group input[type="checkbox"]:checked ~ f-info::after {
@@ -134,8 +134,6 @@ f-group f-element:nth-child(4) {
 f-group f-element:nth-child(7) {
   border-bottom: none;
 }
-
-
 
 f-treeview {
   width: 100%;
