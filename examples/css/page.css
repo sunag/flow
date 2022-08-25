@@ -2,14 +2,77 @@ html {
   overflow-y: auto;
   overflow-x: hidden;
   width: 100vw;
-  min-height: 100vh;
-  max-height: 150vh;
-  padding: 1vw;
+  height: 100vh;
+  padding: 100px;
 }
 
 body {
   background-color: #262626;
   background-image: url(../../media/background.jpg);
 }
+
+f-node{
+  margin-top: 100px;
+}
+
+f-treeview {
+  width: 100%;
+  padding-top: 1px;
+  padding-bottom: 3px;
+  padding-left: 16px;
+  margin-top: 2px;
+  margin-left: 2px;
+  height: calc( 100% - 8px );
+  max-height: 300px;
+  border-radius: 2px;
+  resize: none;
+  box-shadow: inset 0px 1px 1px rgb(0 0 0 / 20%), 0px 1px 0px rgb(255 255 255 / 5%);
+  background-color: #232324d1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  position: relative;
+}
+
+f-treeview f-files {
+  position: relative;
+  display: block;
+}
+f-treeview * {
+  box-sizing: border-box;
+}
+
+f-treeview f-file {
+  position: relative;
+  display: block;
+  white-space: nowrap;
+  min-height: 32px;
+}
+
+f-treeview input[type='checkbox'] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: calc(100% + 14px);
+  margin: 0 0 0 -15px;
+  height: 32px;
+  background: none;
+  box-shadow: none;
+  cursor: default;
+  z-index: 3;
+  border: solid 1px rgba(43,153,255,0);
+  border-radius: 4px;
+  transition: all 0.5s ease;
+}
+
+f-element input[type='checkbox'] {
+  appearance: none;
+  cursor: pointer;
+}
+f-element input:read-only {
+  color: #666;
+}
+
+
 
 
