@@ -66,6 +66,8 @@ export class Canvas extends Serializer {
 		this._scrollLeft = 0;
 		this._scrollTop = 0;
 		this._zoom = 1;
+		this._width = 0;
+		this._height = 0;
 		this._mapInfo = {
 			scale: 1,
 			screen: {}
@@ -303,12 +305,6 @@ export class Canvas extends Serializer {
 
 		};
 
-		this._onContentLoaded = () => {
-
-			this.centralize();
-
-		};
-
 		this._onUpdate = () => {
 
 			this.update();
@@ -345,13 +341,13 @@ export class Canvas extends Serializer {
 
 	get width() {
 
-		return window.innerWidth;
+		return this._width;
 
 	}
 
 	get height() {
 
-		return window.innerHeight;
+		return this._height;
 
 	}
 
@@ -422,8 +418,6 @@ export class Canvas extends Serializer {
 
 		document.addEventListener( 'dragover', this._onMoveEvent, true );
 
-		document.addEventListener( 'DOMContentLoaded', this._onContentLoaded );
-
 		requestAnimationFrame( this._onUpdate );
 
 	}
@@ -441,8 +435,6 @@ export class Canvas extends Serializer {
 		document.removeEventListener( 'touchmove', this._onMoveEvent, true );
 
 		document.removeEventListener( 'dragover', this._onMoveEvent, true );
-
-		document.removeEventListener( 'DOMContentLoaded', this._onContentLoaded );
 
 	}
 
@@ -545,6 +537,17 @@ export class Canvas extends Serializer {
 
 		return this;
 
+	}
+	
+	setSize( width, height ) {
+		
+		this._width = width;
+		this._height = height;
+		
+		this.update();
+		
+		return this;
+		
 	}
 
 	select( node = null ) {
@@ -650,10 +653,7 @@ export class Canvas extends Serializer {
 
 	updateLines() {
 
-		const { dom, zoom, canvas, frontCanvas, frontContext, context } = this;
-
-		const width = window.innerWidth;
-		const height = window.innerHeight;
+		const { dom, zoom, canvas, frontCanvas, frontContext, context, width, height } = this;
 
 		const domRect = this.rect;
 
