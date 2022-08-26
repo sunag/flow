@@ -79,6 +79,7 @@ export const draggableDOM = ( dom, callback = null, className = 'dragging' ) => 
 			client: { x: event.clientX, y: event.clientY },
 			delta: { x: 0, y: 0 },
 			start: { x: dom.offsetLeft, y: dom.offsetTop },
+			frame: 0,
 			dragging: false,
 			isTouch: !! e.touches
 		};
@@ -110,6 +111,8 @@ export const draggableDOM = ( dom, callback = null, className = 'dragging' ) => 
 			if ( callback !== null ) {
 
 				callback( dragData );
+				
+				dragData.frame++;
 
 			} else {
 
@@ -163,6 +166,8 @@ export const draggableDOM = ( dom, callback = null, className = 'dragging' ) => 
 		if ( callback !== null ) {
 
 			callback( dragData );
+			
+			dragData.frame++;
 
 		}
 

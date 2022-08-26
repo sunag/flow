@@ -66,6 +66,10 @@ export class Canvas extends Serializer {
 		this._scrollLeft = 0;
 		this._scrollTop = 0;
 		this._zoom = 1;
+		this._mapInfo = {
+			scale: 1,
+			screen: {}
+		};
 
 		canvas.className = 'background';
 		frontCanvas.className = 'frontground';
@@ -135,7 +139,7 @@ export class Canvas extends Serializer {
 				e.stopImmediatePropagation();
 				
 				const delta = e.deltaY / 100;
-				const zoom = Math.min( Math.max( this.zoom - delta * .1, .5 ), 1 );
+				const zoom = Math.min( Math.max( this.zoom - delta * .1, .2 ), 1 );
 
 				const bounds = this.getBounds();
 				const centerX = bounds.x + bounds.width;
@@ -244,6 +248,47 @@ export class Canvas extends Serializer {
 			}
 
 		}, 'dragging-canvas' );
+		
+		
+		draggableDOM( mapCanvas, ( data ) => {
+			
+			const { scale, screen } = this._mapInfo;
+			
+			if ( data.scrollLeft === undefined ) {
+				
+				const rect = this.mapCanvas.getBoundingClientRect();
+			
+				const clientMapX = data.client.x - rect.left;
+				const clientMapY = data.client.y - rect.top;
+				
+				const overMapScreen = 
+					clientMapX > screen.x && clientMapY > screen.y &&
+					clientMapX < screen.x + screen.width && clientMapY < screen.y + screen.height;
+					
+				if ( overMapScreen === false ) {
+
+					const scaleX = this._mapInfo.width / this.mapCanvas.width;
+
+					let scrollLeft = -this._mapInfo.left - ( clientMapX * scaleX );
+					let scrollTop = -this._mapInfo.top - ( clientMapY * ( this._mapInfo.height / this.mapCanvas.height ) );
+
+					scrollLeft += ( screen.width / 2 ) / scale;
+					scrollTop += ( screen.height / 2 ) / scale;
+					
+					this.scrollLeft = scrollLeft;
+					this.scrollTop = scrollTop;
+
+				}
+				
+				data.scrollLeft = this.scrollLeft;
+				data.scrollTop = this.scrollTop;
+				
+			}
+			
+			this.scrollLeft = data.scrollLeft - ( data.delta.x / scale );
+			this.scrollTop = data.scrollTop - ( data.delta.y / scale );
+			
+		} );
 
 		this._onMoveEvent = ( e ) => {
 
@@ -493,7 +538,10 @@ export class Canvas extends Serializer {
 
 	centralize() {
 
-		//sthis.dom.scroll( this.centerX, this.centerY );
+		const bounds = this.getBounds();
+
+		this.scrollLeft = ( this.canvas.width / 2 ) - ( ( -bounds.x + bounds.width ) / 2 );
+		this.scrollTop = ( this.canvas.height / 2 ) - ( ( -bounds.y + bounds.height ) / 2 );
 
 		return this;
 
@@ -529,7 +577,7 @@ export class Canvas extends Serializer {
 
 	updateMap() {
 
-		const { nodes, mapCanvas, mapContext, scrollLeft, scrollTop, canvas } = this;
+		const { nodes, mapCanvas, mapContext, scrollLeft, scrollTop, canvas, zoom, _mapInfo } = this;
 
 		const bounds = this.getBounds();
 
@@ -538,36 +586,65 @@ export class Canvas extends Serializer {
 		if ( canvas.width > canvas.height ) aspectY = canvas.height / canvas.width;
 		else aspectX = canvas.width / canvas.height;
 
-		mapCanvas.width  = 300 * aspectX;
-		mapCanvas.height = 300 * aspectY;
+		mapCanvas.width = 300;
+		mapCanvas.height = 200;
 
 		mapContext.clearRect( 0, 0, mapCanvas.width, mapCanvas.height );
 
 		mapContext.fillStyle = 'rgba( 0, 0, 0, 0 )';
 		mapContext.fillRect( 0, 0, mapCanvas.width, mapCanvas.height );
 
-		const boundsWidth = canvas.width / bounds.width;
-		const mapScale = ( ( mapCanvas.width / canvas.width ) * this.zoom ) * boundsWidth;
+		const boundsWidth = -bounds.x + bounds.width;
+		const boundsHeight = -bounds.y + bounds.height;
+
+		const mapScale = Math.min( mapCanvas.width / boundsWidth, mapCanvas.height / boundsHeight ) * .5;
 		
-		console.log( bounds.x );
+		const boundsMapWidth = boundsWidth * mapScale;
+		const boundsMapHeight = boundsHeight * mapScale;
+		
+		const boundsOffsetX = ( mapCanvas.width / 2) - ( boundsMapWidth / 2 );
+		const boundsOffsetY = ( mapCanvas.height / 2) - ( boundsMapHeight / 2 );
 
 		for ( const node of nodes ) {
 
 			const nodeBound = node.getBound();
 			const nodeColor = node.getColor();
 
-			nodeBound.x += scrollLeft;
-			nodeBound.y += scrollTop;
+			nodeBound.x += -bounds.x;
+			nodeBound.y += -bounds.y;
 
 			nodeBound.x *= mapScale;
 			nodeBound.y *= mapScale;
 			nodeBound.width *= mapScale;
 			nodeBound.height *= mapScale;
+			
+			nodeBound.x += boundsOffsetX;
+			nodeBound.y += boundsOffsetY;
 
 			mapContext.fillStyle = nodeColor;
 			mapContext.fillRect( nodeBound.x, nodeBound.y, nodeBound.width, nodeBound.height );
 
 		}
+		
+		const screenMapX = ( -(scrollLeft + bounds.x) * mapScale ) + boundsOffsetX;
+		const screenMapY = ( -(scrollTop + bounds.y) * mapScale ) + boundsOffsetY;
+		const screenMapWidth = ( canvas.width * mapScale ) / zoom;
+		const screenMapHeight = ( canvas.height * mapScale ) / zoom;
+		
+		mapContext.fillStyle = 'rgba( 200, 200, 200, 0.1 )';
+		mapContext.fillRect( screenMapX, screenMapY, screenMapWidth, screenMapHeight );
+		
+		//
+		
+		_mapInfo.scale = mapScale;
+		_mapInfo.left = ( -boundsOffsetX / mapScale ) + bounds.x;
+		_mapInfo.top = ( -boundsOffsetY / mapScale ) + bounds.y;
+		_mapInfo.width = mapCanvas.width / mapScale;
+		_mapInfo.height = mapCanvas.height / mapScale;
+		_mapInfo.screen.x = screenMapX;
+		_mapInfo.screen.y = screenMapY;
+		_mapInfo.screen.width = screenMapWidth;
+		_mapInfo.screen.height = screenMapHeight;
 
 	}
 

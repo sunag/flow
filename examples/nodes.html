@@ -144,6 +144,8 @@ flow {
 
 
 		const canvas = new Flow.Canvas();
+		canvas.canvas.width = window.innerWidth;
+		canvas.canvas.height = window.innerHeight;
 		canvas.add( node );
 		canvas.add( node2 );
 		canvas.add( node1 );
