@@ -25,7 +25,7 @@ f-group {
   flex-direction: column-reverse;
 }
 
-f-group input[type="checkbox"] {
+input[type="checkbox"] {
   position: absolute;
   left: 0;
   top: 0;
@@ -35,18 +35,15 @@ f-group input[type="checkbox"] {
   background: none;
   box-shadow: none;
   cursor: default;
-  z-index: 3;
+  z-index: +1;
+}
+
+#groupBox {
   opacity: 0;
 }
 
-input[type="checkbox" i] {
-  background-color: initial;
-  cursor: default;
-  appearance: auto;
-  box-sizing: border-box;
-  margin: 3px 3px 3px 4px;
-  padding: initial;
-  border: initial;
+#groupBox:hover {
+  cursor: pointer;
 }
 
 input {
@@ -92,9 +89,12 @@ f-group f-elements {
 
 f-group f-info {
   position: relative;
-  /* display: block; */
+  display: block;
   white-space: nowrap;
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   padding-left: 11px;
   padding-right: 7px;
   padding-top: 2px;
@@ -104,7 +104,6 @@ f-group f-info {
   font-size: 13px;
   text-transform: capitalize;
   color: #eeeeee;
- 
 }
 
 f-group input[type="checkbox"]:checked ~ f-info {
@@ -115,23 +114,16 @@ f-group input[type="checkbox"] ~ f-info::after {
   position: absolute;
   content: url(../../media/arrowDown.png);
   top: -246px;
-  right: -238px;
+  right: -239px;
   transform: scale(0.02);
 }
+
 f-group input[type="checkbox"]:checked ~ f-info::after {
   transform: rotate(180deg) scale(0.02);
   color: #eeeeee;
 }
 
-#groupBox:hover {
-  cursor: pointer;
-}
-
-f-group f-element:nth-child(4) {
-  border-bottom: none;
-}
-
-f-group f-element:nth-child(7) {
+f-group f-element:nth-last-child(1) {
   border-bottom: none;
 }
 
