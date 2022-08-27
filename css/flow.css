@@ -102,6 +102,7 @@ f-node {
 	/*box-shadow: 0 0 8px 5px #00000061;*/
 	filter: drop-shadow(0 0 10px #00000061);
 	backdrop-filter: blur(4px);
+	/*transition: opacity 0.3s ease;*/
 }
 
 f-node.selected {
@@ -109,8 +110,7 @@ f-node.selected {
 }
 
 f-canvas.editing f-node:not(.selected) {
-	opacity: .0;
-	transition: opacity 0.3s ease;
+	display: none;
 }
 
 f-node.selected,

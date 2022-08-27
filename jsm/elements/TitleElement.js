@@ -12,7 +12,7 @@ export class TitleElement extends DraggableElement {
 
 		const dbClick = () => {
 			
-			this.node.canvas.dispatchEvent( new Event( 'change' ) );
+			this.node.canvas.focusSelected = !this.node.canvas.focusSelected;
 			
 		}
 		

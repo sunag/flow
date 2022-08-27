@@ -20,7 +20,7 @@ export class Input extends Serializer {
 			'click': []
 		};
 
-		this.addEventListener( 'change', ( e ) => {
+		this.addEventListener( 'change', ( ) => {
 
 			dispatchEventList( this.events.change, this );
 

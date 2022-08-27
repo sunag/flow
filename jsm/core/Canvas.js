@@ -185,18 +185,6 @@ export class Canvas extends Serializer {
 
 		};
 
-		this.addEventListener( 'change', () => {
-
-			this.dom.classList.add( 'editing' );
-
-		} );
-		
-		this.addEventListener( 'complete', () => {
-
- 			this.dom.classList.remove( 'editing' );
-
-		} );
-
 		dom.addEventListener( 'dragenter', () => {
 
  			dragState( true );
@@ -405,6 +393,30 @@ export class Canvas extends Serializer {
 	get scrollTop() {
 
 		return this._scrollTop;
+
+	}
+
+	set focusSelected( value ) {
+
+		const classList = this.dom.classList;
+
+		this._focusSelected = value;
+
+		if ( value ) {
+
+			classList.add( 'editing' );
+
+		} else {
+
+			classList.remove( 'editing' );
+
+		}
+
+	}
+
+	get focusSelected() {
+
+		return this._focusSelected;
 
 	}
 
@@ -681,6 +693,8 @@ export class Canvas extends Serializer {
 
 		context.clearRect( 0, 0, _width, _height );
 		frontContext.clearRect( 0, 0, _width, _height );
+
+		if ( this._focusSelected ) return;
 
 		context.globalCompositeOperation = 'lighter';
 		frontContext.globalCompositeOperation = 'source-over';
