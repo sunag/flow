@@ -108,6 +108,11 @@ f-node.selected {
 	z-index: 2;
 }
 
+f-canvas.editing f-node:not(.selected) {
+	opacity: .0;
+	transition: opacity 0.3s ease;
+}
+
 f-node.selected,
 f-canvas.dragging-rio f-node:hover,
 f-canvas.dragging-lio f-node:hover {

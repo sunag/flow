@@ -20,12 +20,26 @@ export class Input extends Serializer {
 			'click': []
 		};
 
-		this.addEventListener( 'change', ( ) => {
+		this.addEventListener( 'change', ( e ) => {
 
 			dispatchEventList( this.events.change, this );
 
 		} );
-
+/*
+		draggableDOM( dom, ( data ) => {
+			
+			if ( data.isDown || data.dragging ) {
+				
+				this.element.node.canvas.dispatchEvent( new Event( 'change' ) );
+				
+			} else {
+				
+				this.element.node.canvas.dispatchEvent( new Event( 'complete' ) );
+				
+			}
+			
+		}, { className: '', click: true, bypass: true } );
+*/
 		this.addEventListener( 'click', ( ) => {
 
 			dispatchEventList( this.events.click, this );

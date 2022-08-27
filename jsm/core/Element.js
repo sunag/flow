@@ -722,7 +722,7 @@ export class Element extends Serializer {
 
 				}
 
-			}, 'connecting' );
+			}, { className: 'connecting' } );
 
 		};
 

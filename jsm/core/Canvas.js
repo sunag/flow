@@ -185,6 +185,18 @@ export class Canvas extends Serializer {
 
 		};
 
+		this.addEventListener( 'change', () => {
+
+			this.dom.classList.add( 'editing' );
+
+		} );
+		
+		this.addEventListener( 'complete', () => {
+
+ 			this.dom.classList.remove( 'editing' );
+
+		} );
+
 		dom.addEventListener( 'dragenter', () => {
 
  			dragState( true );
@@ -249,7 +261,7 @@ export class Canvas extends Serializer {
 
 			}
 
-		}, 'dragging-canvas' );
+		}, { className: 'dragging-canvas' } );
 		
 		
 		draggableDOM( mapCanvas, ( data ) => {
@@ -339,13 +351,13 @@ export class Canvas extends Serializer {
 
 	}
 
-	get width() {
+	getWidth() {
 
 		return this._width;
 
 	}
 
-	get height() {
+	getHeight() {
 
 		return this._height;
 
@@ -653,22 +665,22 @@ export class Canvas extends Serializer {
 
 	updateLines() {
 
-		const { dom, zoom, canvas, frontCanvas, frontContext, context, width, height } = this;
+		const { dom, zoom, canvas, frontCanvas, frontContext, context, _width, _height } = this;
 
 		const domRect = this.rect;
 
-		if ( canvas.width !== width || canvas.height !== height ) {
+		if ( canvas.width !== _width || canvas.height !== _height ) {
 
-			canvas.width = width;
-			canvas.height = height;
+			canvas.width = _width;
+			canvas.height = _height;
 
-			frontCanvas.width = width;
-			frontCanvas.height = height;
+			frontCanvas.width = _width;
+			frontCanvas.height = _height;
 
 		}
 
-		context.clearRect( 0, 0, width, height );
-		frontContext.clearRect( 0, 0, width, height );
+		context.clearRect( 0, 0, _width, _height );
+		frontContext.clearRect( 0, 0, _width, _height );
 
 		context.globalCompositeOperation = 'lighter';
 		frontContext.globalCompositeOperation = 'source-over';

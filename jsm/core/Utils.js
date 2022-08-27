@@ -43,9 +43,11 @@ class PointerMonitor {
 
 export const pointer = new PointerMonitor().start();
 
-export const draggableDOM = ( dom, callback = null, className = 'dragging' ) => {
+export const draggableDOM = ( dom, callback = null, settings = { className: 'dragging', click: false, bypass: false } ) => {
 
 	let dragData = null;
+	
+	const { className, click, bypass } = settings;
 
 	const getZoom = () => {
 
@@ -73,16 +75,25 @@ export const draggableDOM = ( dom, callback = null, className = 'dragging' ) => 
 
 		const event = e.touches ? e.touches[ 0 ] : e;
 
-		e.stopImmediatePropagation();
+		if ( bypass === false ) e.stopImmediatePropagation();
 
 		dragData = {
 			client: { x: event.clientX, y: event.clientY },
 			delta: { x: 0, y: 0 },
 			start: { x: dom.offsetLeft, y: dom.offsetTop },
 			frame: 0,
+			isDown: true,
 			dragging: false,
 			isTouch: !! e.touches
 		};
+
+		if ( click === true ) {
+			
+			callback( dragData );
+			
+			dragData.frame++;
+			
+		}
 
 		window.addEventListener( 'mousemove', onGlobalMouseMove );
 		window.addEventListener( 'mouseup', onGlobalMouseUp );
@@ -120,7 +131,7 @@ export const draggableDOM = ( dom, callback = null, className = 'dragging' ) => 
 
 			}
 
-			e.stopImmediatePropagation();
+			if ( bypass === false ) e.stopImmediatePropagation();
 
 		} else {
 
@@ -132,7 +143,7 @@ export const draggableDOM = ( dom, callback = null, className = 'dragging' ) => 
 
 				if ( className ) document.body.classList.add( className );
 
-				e.stopImmediatePropagation();
+				if ( bypass === false ) e.stopImmediatePropagation();
 
 			}
 
@@ -142,7 +153,7 @@ export const draggableDOM = ( dom, callback = null, className = 'dragging' ) => 
 
 	const onGlobalMouseUp = ( e ) => {
 
-		e.stopImmediatePropagation();
+		if ( bypass === false ) e.stopImmediatePropagation();
 
 		dom.classList.remove( 'drag' );
 
@@ -162,6 +173,7 @@ export const draggableDOM = ( dom, callback = null, className = 'dragging' ) => 
 		}
 
 		dragData.dragging = false;
+		dragData.isDown = false;
 
 		if ( callback !== null ) {
 
