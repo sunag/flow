@@ -632,6 +632,8 @@ export class Canvas extends Serializer {
 		const boundsOffsetX = ( mapCanvas.width / 2) - ( boundsMapWidth / 2 );
 		const boundsOffsetY = ( mapCanvas.height / 2) - ( boundsMapHeight / 2 );
 
+		let selectedNode = null;
+
 		for ( const node of nodes ) {
 
 			const nodeBound = node.getBound();
@@ -648,9 +650,29 @@ export class Canvas extends Serializer {
 			nodeBound.x += boundsOffsetX;
 			nodeBound.y += boundsOffsetY;
 
+			if ( node !== this.selected ) {
+
+				mapContext.fillStyle = nodeColor;
+				mapContext.fillRect( nodeBound.x, nodeBound.y, nodeBound.width, nodeBound.height );
+				
+			} else {
+				
+				selectedNode = {
+					nodeBound,
+					nodeColor
+				};
+				
+			}
+
+		}
+		
+		if ( selectedNode !== null ) {
+			
+			const { nodeBound, nodeColor } = selectedNode;
+			
 			mapContext.fillStyle = nodeColor;
 			mapContext.fillRect( nodeBound.x, nodeBound.y, nodeBound.width, nodeBound.height );
-
+			
 		}
 		
 		const screenMapX = ( -(scrollLeft + bounds.x) * mapScale ) + boundsOffsetX;

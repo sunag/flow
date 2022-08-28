@@ -108,7 +108,8 @@ f-node.selected {
 	z-index: 2;
 }
 
-f-canvas.editing f-node:not(.selected) {
+f-canvas.editing f-node:not(.selected),
+f-canvas.editing f-element f-disconnect:not(.selected) {
 	opacity: 0;
 	pointer-events: none;
 }
@@ -146,7 +147,7 @@ f-node.top-left {
 }
 
 f-node {
-	transition: filter 0.2s ease, opacity 0.2s ease;
+	transition: filter 0.2s ease, opacity 0.12s ease;
 }
 
 f-node {
