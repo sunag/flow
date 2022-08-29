@@ -221,6 +221,25 @@ f-treeview f-file f-files {
   padding-left: 25px;
 }
 
+f-treeview f-file f-files:before {
+    content: '';
+    width: 1px;
+    height: calc(100% - 40px);
+    background: rgba(255,255,255,0.1);
+    position: absolute;
+    top: 25px;
+    left: 27px;
+}
+f-treeview f-file f-files f-file:after {
+  content: '';
+  width: 14px;
+  height: 1px;
+  background: rgba(255,255,255,0.1);
+  position: absolute;
+  top: 16px;
+  left: 3px;
+}
+
 f-treeview f-file f-files:not(:empty) + f-info f-icon {
   width: 14px;
   height: 14px;
@@ -233,6 +252,18 @@ f-treeview f-file f-files:not(:empty) + f-info f-icon {
   background: #242426;
   z-index: 2;
 }
+
+f-treeview f-file f-info f-icon p{
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: -9px;
+  padding-left: 2px;
+  color: rgba(255,255,255,0.1);
+}
+
+
+
 
 
 
