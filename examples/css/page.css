@@ -185,14 +185,6 @@ f-treeview input[type='checkbox']:hover {
 border: 1px solid #1e90ff;
 }
 
-f-element input[type='checkbox'] {
-  appearance: none;
-  cursor: pointer;
-}
-f-element input:read-only {
-  color: #666;
-}
-
 f-treeview input[type='checkbox']:checked ~ f-files {
   display: block;
 }
