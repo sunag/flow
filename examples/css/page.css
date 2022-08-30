@@ -111,17 +111,17 @@ f-group input[type="checkbox"]:checked ~ f-info {
 }
 
 f-group input[type="checkbox"] ~ f-info::after {
-  content: url(../../media/arrowDown.png);
-  transform: scale(0.02);
+  content: url(../../media/arrowDown.svg);
+  transform: scale(0.015);
   height: 24px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: -11px;
+  margin-left: -96.5px;
 }
 
 f-group input[type="checkbox"]:checked ~ f-info::after {
-  transform: rotate(180deg) scale(0.02);
+  transform: rotate(180deg) scale(0.015);
   color: #eeeeee;
 }
 
