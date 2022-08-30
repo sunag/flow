@@ -277,7 +277,12 @@ f-treeview f-file f-info f-icon p{
 
 .gallery-image:hover{
   transform: scale(1.2);
-  transition: all 200ms ease;
+  transition: all 200ms ease-in-out;
+  cursor: pointer;
+}
+
+.btnX{
+  margin-left:93%;
 }
 
 
