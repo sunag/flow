@@ -49,6 +49,9 @@ f-canvas canvas.background,
 f-canvas canvas.frontground {
 	position: fixed;
 	overflow: hidden;
+}
+
+f-canvas canvas.frontground {
 	pointer-events: none;
 }
 
