@@ -1,4 +1,3 @@
-
 class PointerMonitor {
 
 	started = false;
@@ -15,7 +14,7 @@ class PointerMonitor {
 			this.x = event.x;
 			this.y = event.y;
 
-		}
+		};
 
 	}
 
@@ -43,10 +42,16 @@ class PointerMonitor {
 
 export const pointer = new PointerMonitor().start();
 
-export const draggableDOM = ( dom, callback = null, settings = { className: 'dragging', click: false, bypass: false } ) => {
+export const draggableDOM = ( dom, callback = null, settings = {} ) => {
+
+	settings = Object.assign( {
+		className: 'dragging',
+		click: false,
+		bypass: false
+	}, settings );
 
 	let dragData = null;
-	
+
 	const { className, click, bypass } = settings;
 
 	const getZoom = () => {
@@ -88,11 +93,11 @@ export const draggableDOM = ( dom, callback = null, settings = { className: 'dra
 		};
 
 		if ( click === true ) {
-			
+
 			callback( dragData );
-			
-			dragData.frame++;
-			
+
+			dragData.frame ++;
+
 		}
 
 		window.addEventListener( 'mousemove', onGlobalMouseMove );
@@ -122,8 +127,8 @@ export const draggableDOM = ( dom, callback = null, settings = { className: 'dra
 			if ( callback !== null ) {
 
 				callback( dragData );
-				
-				dragData.frame++;
+
+				dragData.frame ++;
 
 			} else {
 
@@ -178,8 +183,8 @@ export const draggableDOM = ( dom, callback = null, settings = { className: 'dra
 		if ( callback !== null ) {
 
 			callback( dragData );
-			
-			dragData.frame++;
+
+			dragData.frame ++;
 
 		}
 
@@ -243,8 +248,8 @@ export const numberToHex = ( val ) => {
 
 export const rgbaToArray = ( rgba ) => {
 
-	const values = rgba.substring( rgba.indexOf( '(' ) + 1, rgba.indexOf( ')' )  )
-		.split(',')
+	const values = rgba.substring( rgba.indexOf( '(' ) + 1, rgba.indexOf( ')' ) )
+		.split( ',' )
 		.map( num => parseInt( num.trim() ) );
 
 	return values;
