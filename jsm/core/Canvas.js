@@ -326,11 +326,14 @@ export class Canvas extends Serializer {
 			const event = e.touches ? e.touches[ 0 ] : e;
 			const { zoom, rect } = this;
 
-			this.clientX = ( event.clientX - rect.left ) / zoom;
-			this.clientY = ( event.clientY - rect.top ) / zoom;
+			this.clientX = event.clientX;
+			this.clientY = event.clientY;
 
-			this.relativeClientX = this.clientX - this.scrollLeft;
-			this.relativeClientY = this.clientY - this.scrollTop;
+			const rectClientX = ( this.clientX - rect.left ) / zoom;
+			const rectClientY = ( this.clientY - rect.top ) / zoom;
+
+			this.relativeClientX = rectClientX - this.scrollLeft;
+			this.relativeClientY = rectClientY - this.scrollTop;
 
 		};
 
