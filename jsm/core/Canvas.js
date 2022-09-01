@@ -87,15 +87,9 @@ export class Canvas extends Serializer {
 		dom.append( areaDOM );
 		dom.append( mapCanvas );
 
-		const clampZoom = ( zoom ) => {
-
-			return Math.min( Math.max( zoom, .2 ), 1 );
-
-		};
-
 		const zoomTo = ( zoom, clientX = this.clientX, clientY = this.clientY ) => {
 
-			zoom = clampZoom( zoom );
+			zoom = Math.min( Math.max( zoom, .2 ), 1 );
 
 			this.scrollLeft -= ( clientX / this.zoom ) - ( clientX / zoom );
 			this.scrollTop -= ( clientY / this.zoom ) - ( clientY / zoom );
