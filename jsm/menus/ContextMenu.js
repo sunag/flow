@@ -1,5 +1,5 @@
 import { Menu } from './Menu.js';
-import { toPX, pointer } from '../core/Utils.js';
+import { numberToPX, pointer } from '../core/Utils.js';
 import { dispatchEventList } from '../core/Utils.js';
 
 let lastContext = null;
@@ -105,8 +105,8 @@ export class ContextMenu extends Menu {
 
 		const dom = this.dom;
 
-		dom.style.left = toPX( x );
-		dom.style.top = toPX( y );
+		dom.style.left = numberToPX( x );
+		dom.style.top = numberToPX( y );
 
 		return this;
 

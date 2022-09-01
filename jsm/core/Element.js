@@ -1,6 +1,6 @@
 import { Styles } from './Styles.js';
 import { Serializer } from './Serializer.js';
-import { toPX, toHex, draggableDOM, dispatchEventList } from './Utils.js';
+import { numberToPX, numberToHex, draggableDOM, dispatchEventList } from './Utils.js';
 import { Link } from './Link.js';
 
 let selected = null;
@@ -82,6 +82,7 @@ export class Element extends Serializer {
 		this.node = null;
 
 		this.style = '';
+		this.color = null;
 
 		this.object = null;
 		this.objectCallback = null;
@@ -206,9 +207,24 @@ export class Element extends Serializer {
 
 	setColor( color ) {
 
-		this.dom.style[ 'background-color' ] = toHex( color );
+		this.dom.style[ 'background-color' ] = numberToHex( color );
+		this.color = null;
 
 		return this;
+
+	}
+
+	getColor() {
+
+		if ( this.color === null ) {
+
+			const css = window.getComputedStyle( this.dom );
+
+			this.color = css.getPropertyValue( 'background-color' );
+
+		}
+
+		return this.color;
 
 	}
 
@@ -221,6 +237,7 @@ export class Element extends Serializer {
 		if ( style ) dom.classList.add( style );
 
 		this.style = style;
+		this.color = null;
 
 		return this;
 
@@ -312,7 +329,7 @@ export class Element extends Serializer {
 
 	setLIOColor( color ) {
 
-		this.lioDOM.style[ 'border-color' ] = toHex( color );
+		this.lioDOM.style[ 'border-color' ] = numberToHex( color );
 
 		return this;
 
@@ -336,7 +353,7 @@ export class Element extends Serializer {
 
 	setRIOColor( color ) {
 
-		this.rioDOM.style[ 'border-color' ] = toHex( color );
+		this.rioDOM.style[ 'border-color' ] = numberToHex( color );
 
 		return this;
 
@@ -372,7 +389,7 @@ export class Element extends Serializer {
 
 	setHeight( val ) {
 
-		this.dom.style.height = toPX( val );
+		this.dom.style.height = numberToPX( val );
 
 		return this;
 
@@ -705,7 +722,7 @@ export class Element extends Serializer {
 
 				}
 
-			}, 'connecting' );
+			}, { className: 'connecting' } );
 
 		};
 

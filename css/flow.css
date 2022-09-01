@@ -15,7 +15,8 @@
 }
 
 f-canvas,
-f-canvas canvas {
+f-canvas canvas.background,
+f-canvas canvas.frontground {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -28,11 +29,10 @@ f-canvas canvas {
 }
 
 f-canvas {
-	overflow: auto;
 	cursor: grab;
 }
 
-f-canvas canvas.front {
+f-canvas canvas.frontground {
 	z-index: 10;
 }
 
@@ -45,9 +45,13 @@ f-canvas.grabbing * {
 	user-select: none;
 }
 
-f-canvas canvas {
+f-canvas canvas.background,
+f-canvas canvas.frontground {
 	position: fixed;
 	overflow: hidden;
+}
+
+f-canvas canvas.frontground {
 	pointer-events: none;
 }
 
@@ -70,10 +74,24 @@ f-canvas::-webkit-scrollbar-thumb {
 	border: 0;
 }
 
+f-canvas f-content {
+	left: 0;
+	top: 0;
+}
+
 f-canvas f-content,
 f-canvas f-area {
 	position: absolute;
     display: block;
+}
+
+f-canvas canvas.map {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	z-index: 100;
+	backdrop-filter: blur( 10px );
+	background-color: rgba( 45, 45, 48, .8 );
 }
 
 f-node {
@@ -91,6 +109,12 @@ f-node {
 
 f-node.selected {
 	z-index: 2;
+}
+
+f-canvas.editing f-node:not(.selected),
+f-canvas.editing f-element f-disconnect:not(.selected) {
+	opacity: 0;
+	pointer-events: none;
 }
 
 f-node.selected,
@@ -126,7 +150,7 @@ f-node.top-left {
 }
 
 f-node {
-	transition: filter 0.2s ease;
+	transition: filter 0.2s ease, opacity 0.12s ease;
 }
 
 f-node {
@@ -1004,9 +1028,23 @@ f-menu.search input {
 
 f-menu.circle {
 	position: absolute;
-	left: 40px;
-	bottom: 40px;
 	z-index: 100;
+}
+
+f-menu.circle.top {
+	top: 40px;
+}
+
+f-menu.circle.left {
+	left: 40px;
+}
+
+f-menu.circle.bottom {
+	bottom: 40px;
+}
+
+f-menu.circle.right {
+	right: 40px;
 }
 
 f-menu.circle f-item {
@@ -1031,6 +1069,10 @@ f-menu.circle f-item button {
 
 f-menu.circle f-item f-tooltip {
 	margin-top: -60px;
+}
+
+f-menu.circle.top f-item f-tooltip {
+	margin-top: 50px;
 }
 
 /* rounded */
@@ -1104,6 +1146,10 @@ f-menu.circle f-item f-tooltip {
 
 	f-menu.circle f-item button:hover > f-tooltip {
 		margin-top: -50px;
+	}
+
+	f-menu.circle.top f-item button:hover > f-tooltip {
+		margin-top: 60px;
 	}
 
 	f-menu.context f-item button:hover > f-tooltip {

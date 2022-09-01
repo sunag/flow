@@ -73,7 +73,7 @@ export class SliderInput extends Input {
 
 			this.dispatchEvent( new Event( 'change' ) );
 
-		}, '' );
+		}, { className: '' } );
 
 	}
 

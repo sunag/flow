@@ -10,6 +10,14 @@ export class TitleElement extends DraggableElement {
 
 		dom.className = 'title';
 
+		const dbClick = () => {
+
+			this.node.canvas.focusSelected = ! this.node.canvas.focusSelected;
+
+		};
+
+		dom.addEventListener( 'dblclick', dbClick );
+
 		const spanDOM = document.createElement( 'span' );
 		spanDOM.innerText = title;
 

@@ -17,10 +17,10 @@
 /*
 flow {
 	position: absolute;
-	left: 50px;
-	top: 50px;
-	width: 100%;
-	height: 100%;
+	left: 50%;
+	top: 50%;
+	width: 50%;
+	height: 50%;
 }
 */
 </style>
@@ -78,7 +78,7 @@ flow {
 		node2.setWidth( 350 );
 		node2.setPosition( 200, 300 );
 
-		node2.add( new Flow.TitleElement( 'Inputs' ).setStyle( 'red' ) );
+		node2.add( new Flow.TitleElement( 'Addition' ).setStyle( 'red' ) );
 
 		const vector = new Flow.LabelElement( 'N 2' )
 			.setIcon( 'ti ti-palette' )
@@ -144,9 +144,12 @@ flow {
 
 
 		const canvas = new Flow.Canvas();
+		canvas.setSize( window.innerWidth, window.innerHeight );
 		canvas.add( node );
 		canvas.add( node2 );
 		canvas.add( node1 );
+
+		window.onresize = () => canvas.setSize( window.innerWidth, window.innerHeight );
 
 		// context-menu
 
@@ -204,6 +207,7 @@ flow {
 		context.add( new Flow.ButtonInput( 'Integer' ).setIcon( 'ti ti-list-numbers' ) );
 */
 		const menu = new Flow.CircleMenu();
+		menu.setAlign( 'top left' );
 		const circleButton = new Flow.ButtonInput( /*'☰'*/ )
 			.setIcon( 'ti ti-apps' )
 			.setToolTip( 'Add' )
