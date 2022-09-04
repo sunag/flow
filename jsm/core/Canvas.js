@@ -438,11 +438,11 @@ export class Canvas extends Serializer {
 
 		if ( value ) {
 
-			classList.add( 'editing' );
+			classList.add( 'focusing' );
 
 		} else {
 
-			classList.remove( 'editing' );
+			classList.remove( 'focusing' );
 
 		}
 
@@ -747,7 +747,7 @@ export class Canvas extends Serializer {
 		context.clearRect( 0, 0, _width, _height );
 		frontContext.clearRect( 0, 0, _width, _height );
 
-		if ( this._focusSelected ) return;
+		//
 
 		context.globalCompositeOperation = 'lighter';
 		frontContext.globalCompositeOperation = 'source-over';
