@@ -90,7 +90,7 @@ f-canvas canvas.map {
 	position: absolute;
 	top: 10px;
 	right: 10px;
-	z-index: 100;
+	z-index: 50;
 	backdrop-filter: blur( 10px );
 	background-color: rgba( 45, 45, 48, .8 );
 }
