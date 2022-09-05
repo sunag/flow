@@ -413,6 +413,8 @@ export class Element extends Serializer {
 
 		if ( element !== null ) {
 
+			element = element.baseElement || element;
+
 			if ( dispatchEventList( this.events.valid, this, element, 'connect' ) === false ) {
 
 				return false;

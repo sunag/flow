@@ -73,6 +73,12 @@ export class Node extends Serializer {
 
 	}
 
+	get baseElement() {
+
+		return this.elements[ 0 ];
+
+	}
+
 	onFocus( callback ) {
 
 		this.events.focus.push( callback );
