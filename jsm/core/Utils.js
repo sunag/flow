@@ -146,7 +146,7 @@ export const draggableDOM = ( dom, callback = null, settings = {} ) => {
 
 				dom.classList.add( 'drag' );
 
-				if ( className ) document.body.classList.add( className );
+				if ( className ) document.body.classList.add( ...className.split( ' ' ) );
 
 				if ( bypass === false ) e.stopImmediatePropagation();
 
@@ -162,7 +162,7 @@ export const draggableDOM = ( dom, callback = null, settings = {} ) => {
 
 		dom.classList.remove( 'drag' );
 
-		if ( className ) document.body.classList.remove( className );
+		if ( className ) document.body.classList.remove( ...className.split( ' ' ) );
 
 		window.removeEventListener( 'mousemove', onGlobalMouseMove );
 		window.removeEventListener( 'mouseup', onGlobalMouseUp );

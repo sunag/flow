@@ -123,8 +123,8 @@ f-canvas.focusing f-element f-disconnect:not(.selected) {
 	opacity: 0;
 }
 
-.dragging f-canvas.focusing canvas.background,
-.dragging f-canvas.focusing f-node:not(.selected) {
+.dragging.node f-canvas.focusing canvas.background,
+.dragging.node f-canvas.focusing f-node:not(.selected) {
 	opacity: .5;
 }
 
