@@ -34,6 +34,8 @@ export class SliderInput extends Input {
 
 			rangeDOM.value = field.getValue();
 
+			this.dispatchEvent( new Event( 'change' ) );
+
 		} );
 
 		field.addEventListener( 'range', () => {
