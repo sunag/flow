@@ -11,8 +11,8 @@ class PointerMonitor {
 
 			const event = e.touches ? e.touches[ 0 ] : e;
 
-			this.x = event.x;
-			this.y = event.y;
+			this.x = event.clientX;
+			this.y = event.clientY;
 
 		};
 
