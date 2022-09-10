@@ -111,7 +111,7 @@ export class Canvas extends Serializer {
 
 			e.stopImmediatePropagation();
 
-			const delta = e.deltaY * .001;
+			const delta = e.deltaY * .003;
 
 			zoomTo( this.zoom - delta );
 
