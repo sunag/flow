@@ -517,7 +517,7 @@ f-element f-subinputs {
 f-element f-inputs {
 	left: 100px;
 	top: 50%;
-	transform: translateY(-50%);
+	transform: translateY( -50% );
 	position: absolute;
 	width: calc( 100% - 106px );
 	height: calc( 100% - 4px );
@@ -544,7 +544,7 @@ f-element f-label {
 	white-space: nowrap;
 	position: absolute;
 	top: 50%;
-	transform: translateY(-50%);
+	transform: translateY( -50% );
 	width: calc( 100% - 20px );
 }
 
@@ -557,9 +557,9 @@ f-element.center f-label {
 }
 
 f-element f-label i {
-	float: left;
 	font-size: 18px;
 	margin-right: 6px;
+	vertical-align: sub;
 }
 
 f-element f-label.center {
@@ -609,10 +609,14 @@ f-element.title.left {
 	justify-content: start;
 }
 
-f-element.title span {
+f-element.title f-title {
 	text-align: center;
 	font-size: 15px;
 	padding-top: 2px;
+	position: absolute;
+	top: 50%;
+	transform: translateY( -50% );
+	width: 100%;
 }
 
 f-element.title i {
@@ -620,7 +624,7 @@ f-element.title i {
 	position: absolute;
 	right: 10px;
 	top: 50%;
-	transform: translateY(-50%);
+	transform: translateY( -50% );
 	opacity: .5;
 }
 
@@ -873,8 +877,8 @@ f-menu.context f-item.submenu::after {
 	position: absolute;
 	right: 6px;
 	top: 50%;
-	-webkit-transform: translateY(-50%);
-	transform: translateY(-50%);
+	-webkit-transform: translateY( -50% );
+	transform: translateY( -50% );
 	border: 5px solid transparent;
 	border-left-color: #808080;
 }
