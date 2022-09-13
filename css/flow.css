@@ -720,7 +720,8 @@ f-element.large {
     height: 36px;
 }
 
-body.connecting f-node:not(.io-connect) f-element:hover,
+f-canvas.dragging-lio f-node:not(.io-connect) f-element.rio:hover,
+f-canvas.dragging-rio f-node:not(.io-connect) f-element.lio:hover,
 f-element.select {
 	background-color: rgba(61, 70, 82, 0.98);
 }
@@ -749,13 +750,6 @@ f-element.invalid::after {
 	left: 0;
 	top: 0;
 	text-transform: initial;
-}
-
-f-element.invalid > f-inputs,
-f-element.invalid > f-label,
-f-element.invalid > input,
-f-element.invalid > select {
-	opacity: .1;
 }
 
 /* drop */
@@ -1130,7 +1124,7 @@ f-menu.circle.top f-item f-tooltip {
 		transition: opacity 0.2s ease;
 	}
 
-	f-node:hover > f-element f-toolbar {
+	body:not(.connecting) f-node:hover > f-element f-toolbar {
 		visibility: visible;
 		opacity: 1;
 	}
@@ -1189,6 +1183,17 @@ f-menu.circle.top f-item f-tooltip {
 		overflow: hidden !important;
 	}
 
+}
+
+/* overlay */
+
+f-element.invalid > f-inputs,
+f-element.invalid > f-label,
+f-element.invalid > f-title,
+f-element.invalid > f-toolbar,
+f-element.invalid > input,
+f-element.invalid > select {
+	opacity: .1 !important;
 }
 
 /* optimizations */

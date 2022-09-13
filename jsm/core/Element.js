@@ -100,9 +100,6 @@ export class Element extends Serializer {
 
 		this.dom.classList.add( `input-${ Link.InputDirection }` );
 
-		this.dom.append( this.lioDOM );
-		this.dom.append( this.rioDOM );
-
 		this.addEventListener( 'connect', ( ) => {
 
 			dispatchEventList( this.events.connect, this );
@@ -341,6 +338,18 @@ export class Element extends Serializer {
 
 		this.lioDOM.style.visibility = length > 0 ? '' : 'hidden';
 
+		if ( length > 0 ) {
+
+			this.dom.classList.add( 'lio' );
+			this.dom.prepend( this.lioDOM );
+
+		} else {
+
+			this.dom.classList.remove( 'lio' );
+			this.lioDOM.remove();
+
+		}
+
 		return this;
 
 	}
@@ -370,6 +379,18 @@ export class Element extends Serializer {
 		this.rioLength = length;
 
 		this.rioDOM.style.visibility = length > 0 ? '' : 'hidden';
+
+		if ( length > 0 ) {
+
+			this.dom.classList.add( 'rio' );
+			this.dom.prepend( this.rioDOM );
+
+		} else {
+
+			this.dom.classList.remove( 'rio' );
+			this.rioDOM.remove();
+
+		}
 
 		return this;
 
