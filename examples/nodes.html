@@ -42,6 +42,7 @@ flow {
 				.add( new Flow.NumberInput( 2 ) )
 				.add( new Flow.NumberInput( 3 ) )
 				.setInput( 1 )
+				.setOutput( 1 )
 				.setInputColor( 'red' )
 		);
 
@@ -90,7 +91,7 @@ flow {
 
 		node2.add( vector );
 		node2.add( new Flow.LabelElement( 'Numbers' ).add( new Flow.ButtonInput( 'Test' ) ).setOutput( 3 ) );
-		node2.add( new Flow.LabelElement( 'Numbers' ).add( new Flow.SliderInput( .5, 0, 1 ) ) );
+		node2.add( new Flow.LabelElement( 'Numbers' ).add( new Flow.SliderInput( .5, 0, 1 ) ).setInput( 3 ) );
 
 		let abcElement;
 		let testElement;
