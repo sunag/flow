@@ -40,7 +40,7 @@ export class Tips extends EventTarget {
 
 		const timeout = setTimeout( () => {
 
-			this.time -= this.duration;
+			this.time = Math.max( this.time - this.duration, 0 );
 
 			dom.style.opacity = 0;
 

@@ -17,10 +17,10 @@
 /*
 flow {
 	position: absolute;
-	left: 50px;
-	top: 50px;
-	width: 100%;
-	height: 100%;
+	left: 50%;
+	top: 50%;
+	width: 50%;
+	height: 50%;
 }
 */
 </style>
@@ -42,6 +42,7 @@ flow {
 				.add( new Flow.NumberInput( 2 ) )
 				.add( new Flow.NumberInput( 3 ) )
 				.setInput( 1 )
+				.setOutput( 1 )
 				.setInputColor( 'red' )
 		);
 
@@ -78,7 +79,7 @@ flow {
 		node2.setWidth( 350 );
 		node2.setPosition( 200, 300 );
 
-		node2.add( new Flow.TitleElement( 'Inputs' ).setStyle( 'red' ) );
+		node2.add( new Flow.TitleElement( 'Addition' ).addButton( new Flow.ButtonInput( 'X' ) ).setStyle( 'red' ) );
 
 		const vector = new Flow.LabelElement( 'N 2' )
 			.setIcon( 'ti ti-palette' )
@@ -90,7 +91,7 @@ flow {
 
 		node2.add( vector );
 		node2.add( new Flow.LabelElement( 'Numbers' ).add( new Flow.ButtonInput( 'Test' ) ).setOutput( 3 ) );
-		node2.add( new Flow.LabelElement( 'Numbers' ).add( new Flow.SliderInput( .5, 0, 1 ) ) );
+		node2.add( new Flow.LabelElement( 'Numbers' ).add( new Flow.SliderInput( .5, 0, 1 ) ).setInput( 3 ) );
 
 		let abcElement;
 		let testElement;
@@ -144,9 +145,12 @@ flow {
 
 
 		const canvas = new Flow.Canvas();
+		canvas.setSize( window.innerWidth, window.innerHeight );
 		canvas.add( node );
 		canvas.add( node2 );
 		canvas.add( node1 );
+
+		window.onresize = () => canvas.setSize( window.innerWidth, window.innerHeight );
 
 		// context-menu
 
@@ -204,6 +208,7 @@ flow {
 		context.add( new Flow.ButtonInput( 'Integer' ).setIcon( 'ti ti-list-numbers' ) );
 */
 		const menu = new Flow.CircleMenu();
+		menu.setAlign( 'top left' );
 		const circleButton = new Flow.ButtonInput( /*'☰'*/ )
 			.setIcon( 'ti ti-apps' )
 			.setToolTip( 'Add' )
@@ -234,6 +239,9 @@ flow {
 		tip.tip( 'Message box!!! (3)' );
 		tip.tip( 'Message box!!! (4)' );
 		setTimeout( () => tip.tip( 'Message box!!! (5)' ), 1000 );
+		setTimeout( () => tip.tip( 'Message box!!! (6)' ), 2000 );
+		setTimeout( () => tip.tip( 'Message box!!! (7)' ), 3000 );
+		setTimeout( () => tip.tip( 'Message box!!! (8)' ), 4000 );
 		dom.appendChild( tip.dom );
 
 		//const jsonCanvas = Flow.Loader.parse( json );

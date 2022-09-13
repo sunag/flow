@@ -10,13 +10,11 @@ export class LabelElement extends Element {
 		this.inputsDOM = document.createElement( 'f-inputs' );
 
 		const spanDOM = document.createElement( 'span' );
-		const iconDOM = document.createElement( 'i' );
 
 		this.spanDOM = spanDOM;
-		this.iconDOM = iconDOM;
+		this.iconDOM = null;
 
-		this.labelDOM.append( this.spanDOM );
-		this.labelDOM.append( this.iconDOM );
+		this.labelDOM.append( spanDOM );
 
 		this.dom.append( this.labelDOM );
 		this.dom.append( this.inputsDOM );
@@ -30,7 +28,11 @@ export class LabelElement extends Element {
 
 	setIcon( value ) {
 
+		this.iconDOM = this.iconDOM || document.createElement( 'i' );
 		this.iconDOM.className = value;
+
+		if ( value ) this.labelDOM.prepend( this.iconDOM );
+		else this.iconDOM.remove();
 
 		return this;
 
@@ -38,7 +40,7 @@ export class LabelElement extends Element {
 
 	getIcon() {
 
-		return this.iconDOM.className;
+		return this.iconDOM?.className;
 
 	}
 

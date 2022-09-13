@@ -10,8 +10,16 @@ export class TitleElement extends DraggableElement {
 
 		dom.className = 'title';
 
-		const spanDOM = document.createElement( 'span' );
-		spanDOM.innerText = title;
+		const dbClick = () => {
+
+			this.node.canvas.focusSelected = ! this.node.canvas.focusSelected;
+
+		};
+
+		dom.addEventListener( 'dblclick', dbClick );
+
+		const titleDOM = document.createElement( 'f-title' );
+		titleDOM.innerText = title;
 
 		const iconDOM = document.createElement( 'i' );
 
@@ -19,11 +27,11 @@ export class TitleElement extends DraggableElement {
 
 		this.buttons = [];
 
-		this.spanDOM = spanDOM;
+		this.titleDOM = titleDOM;
 		this.iconDOM = iconDOM;
 		this.toolbarDOM = toolbarDOM;
 
-		dom.append( spanDOM );
+		dom.append( titleDOM );
 		dom.append( iconDOM );
 		dom.append( toolbarDOM );
 
@@ -45,7 +53,7 @@ export class TitleElement extends DraggableElement {
 
 	setTitle( value ) {
 
-		this.spanDOM.innerText = value;
+		this.titleDOM.innerText = value;
 
 		return this;
 
@@ -53,7 +61,7 @@ export class TitleElement extends DraggableElement {
 
 	getTitle() {
 
-		return this.spanDOM.innerText;
+		return this.titleDOM.innerText;
 
 	}
 

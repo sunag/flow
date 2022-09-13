@@ -1,7 +1,7 @@
 import { Serializer } from './Serializer.js';
 import { Node } from './Node.js';
 import { TitleElement } from '../elements/TitleElement.js';
-import { draggableDOM, dispatchEventList, toPX } from './Utils.js';
+import { draggableDOM, dispatchEventList, numberToPX } from './Utils.js';
 import { drawLine } from './CanvasUtils.js';
 
 const colors = [
@@ -25,9 +25,11 @@ export class Canvas extends Serializer {
 
 		const canvas = document.createElement( 'canvas' );
 		const frontCanvas = document.createElement( 'canvas' );
+		const mapCanvas = document.createElement( 'canvas' );
 
 		const context = canvas.getContext( '2d' );
 		const frontContext = frontCanvas.getContext( '2d' );
+		const mapContext = mapCanvas.getContext( '2d' );
 
 		this.dom = dom;
 
@@ -37,20 +39,17 @@ export class Canvas extends Serializer {
 
 		this.canvas = canvas;
 		this.frontCanvas = frontCanvas;
+		this.mapCanvas = mapCanvas;
 
 		this.context = context;
 		this.frontContext = frontContext;
-
-		this.width = 10000;
-		this.height = 10000;
+		this.mapContext = mapContext;
 
 		this.clientX = 0;
 		this.clientY = 0;
 
 		this.relativeClientX = 0;
 		this.relativeClientY = 0;
-
-		this.zoom = 1;
 
 		this.nodes = [];
 
@@ -64,13 +63,20 @@ export class Canvas extends Serializer {
 			'drop': []
 		};
 
-		frontCanvas.className = 'front';
+		this._scrollLeft = 0;
+		this._scrollTop = 0;
+		this._zoom = 1;
+		this._width = 0;
+		this._height = 0;
+		this._focusSelected = false;
+		this._mapInfo = {
+			scale: 1,
+			screen: {}
+		};
 
-		contentDOM.style.left = toPX( this.centerX );
-		contentDOM.style.top = toPX( this.centerY );
-
-		areaDOM.style.width = `calc( 100% + ${ this.width }px )`;
-		areaDOM.style.height = `calc( 100% + ${ this.height }px )`;
+		canvas.className = 'background';
+		frontCanvas.className = 'frontground';
+		mapCanvas.className = 'map';
 
 		dropDOM.innerHTML = '<span>drop your file</span>';
 
@@ -79,77 +85,108 @@ export class Canvas extends Serializer {
 		dom.append( frontCanvas );
 		dom.append( contentDOM );
 		dom.append( areaDOM );
-		/*
-		let zoomTouchData = null;
+		dom.append( mapCanvas );
 
-		const onZoomStart = () => {
+		const zoomTo = ( zoom, clientX = this.clientX, clientY = this.clientY ) => {
 
-			zoomTouchData = null;
+			zoom = Math.min( Math.max( zoom, .2 ), 1 );
+
+			this.scrollLeft -= ( clientX / this.zoom ) - ( clientX / zoom );
+			this.scrollTop -= ( clientY / this.zoom ) - ( clientY / zoom );
+			this.zoom = zoom;
 
 		};
-*/
-		const onZoom = ( e ) => {
 
-			if ( e.touches ) {
+		let touchData = null;
 
-				if ( e.touches.length === 2 ) {
+		const onTouchStart = () => {
 
-					e.preventDefault();
+			touchData = null;
 
-					e.stopImmediatePropagation();
-					/*
-					const clientX = ( e.touches[ 0 ].clientX + e.touches[ 1 ].clientX ) / 2;
-					const clientY = ( e.touches[ 0 ].clientY + e.touches[ 1 ].clientY ) / 2;
+		};
 
-					const distance = Math.hypot(
-						e.touches[ 0 ].clientX - e.touches[ 1 ].clientX,
-						e.touches[ 0 ].clientY - e.touches[ 1 ].clientY
-					);
+		const onMouseZoom = ( e ) => {
 
-					if ( zoomTouchData === null ) {
+			e.preventDefault();
 
-						zoomTouchData = {
-							distance
-						};
+			e.stopImmediatePropagation();
 
-					}
+			const delta = e.deltaY * .003;
 
-					const delta = ( zoomTouchData.distance - distance );
-					zoomTouchData.distance = distance;
+			zoomTo( this.zoom - delta );
 
-					let zoom = Math.min( Math.max( this.zoom - delta * .01, .5 ), 1.2 );
+		};
 
-					if ( zoom < .52 ) zoom = .5;
-					else if ( zoom > .98 ) zoom = 1;
+		const onTouchZoom = ( e ) => {
 
-					contentDOM.style.left = toPX( this.centerX / zoom );
-					contentDOM.style.top = toPX( this.centerY / zoom );
-					contentDOM.style.zoom = this.zoom = zoom;
-*/
-
-				}
-
-			} else {
+			if ( e.touches && e.touches.length === 2 ) {
 
 				e.preventDefault();
 
 				e.stopImmediatePropagation();
-				/*
-				const delta = e.deltaY / 100;
-				const zoom = Math.min( Math.max( this.zoom - delta * .1, .5 ), 1 );
 
-				contentDOM.style.left = toPX( this.centerX / zoom );
-				contentDOM.style.top = toPX( this.centerY / zoom );
-				contentDOM.style.zoom = this.zoom = zoom;
-*/
+				const clientX = ( e.touches[ 0 ].clientX + e.touches[ 1 ].clientX ) / 2;
+				const clientY = ( e.touches[ 0 ].clientY + e.touches[ 1 ].clientY ) / 2;
+
+				const distance = Math.hypot(
+					e.touches[ 0 ].clientX - e.touches[ 1 ].clientX,
+					e.touches[ 0 ].clientY - e.touches[ 1 ].clientY
+				);
+
+				if ( touchData === null ) {
+
+					touchData = {
+						distance
+					};
+
+				}
+
+				const delta = ( touchData.distance - distance ) * .003;
+				touchData.distance = distance;
+
+				zoomTo( this.zoom - delta, clientX, clientY );
 
 			}
 
 		};
 
-		dom.addEventListener( 'wheel', onZoom );
-		dom.addEventListener( 'touchmove', onZoom );
-		//dom.addEventListener( 'touchstart', onZoomStart );
+		const onTouchMove = ( e ) => {
+
+			if ( e.touches && e.touches.length === 1 ) {
+
+				e.preventDefault();
+
+				e.stopImmediatePropagation();
+
+				const clientX = e.touches[ 0 ].clientX;
+				const clientY = e.touches[ 0 ].clientY;
+
+				if ( touchData === null ) {
+
+					const { scrollLeft, scrollTop } = this;
+
+					touchData = {
+						scrollLeft,
+						scrollTop,
+						clientX,
+						clientY
+					};
+
+				}
+
+				const zoom = this.zoom;
+
+				this.scrollLeft = touchData.scrollLeft + ( ( clientX - touchData.clientX ) / zoom );
+				this.scrollTop = touchData.scrollTop + ( ( clientY - touchData.clientY ) / zoom );
+
+			}
+
+		};
+
+		dom.addEventListener( 'wheel', onMouseZoom );
+		dom.addEventListener( 'touchmove', onTouchZoom );
+		dom.addEventListener( 'touchstart', onTouchStart );
+		canvas.addEventListener( 'touchmove', onTouchMove );
 
 		let dropEnterCount = 0;
 
@@ -221,13 +258,15 @@ export class Canvas extends Serializer {
 
 				if ( data.scrollTop === undefined ) {
 
-					data.scrollLeft = dom.scrollLeft;
-					data.scrollTop = dom.scrollTop;
+					data.scrollLeft = this.scrollLeft;
+					data.scrollTop = this.scrollTop;
 
 				}
 
-				dom.scrollLeft = data.scrollLeft - delta.x;
-				dom.scrollTop = data.scrollTop - delta.y;
+				const zoom = this.zoom;
+
+				this.scrollLeft = data.scrollLeft + ( delta.x / zoom );
+				this.scrollTop = data.scrollTop + ( delta.y / zoom );
 
 			}
 
@@ -241,7 +280,48 @@ export class Canvas extends Serializer {
 
 			}
 
-		}, 'dragging-canvas' );
+		}, { className: 'dragging-canvas' } );
+
+
+		draggableDOM( mapCanvas, ( data ) => {
+
+			const { scale, screen } = this._mapInfo;
+
+			if ( data.scrollLeft === undefined ) {
+
+				const rect = this.mapCanvas.getBoundingClientRect();
+
+				const clientMapX = data.client.x - rect.left;
+				const clientMapY = data.client.y - rect.top;
+
+				const overMapScreen =
+					clientMapX > screen.x && clientMapY > screen.y &&
+					clientMapX < screen.x + screen.width && clientMapY < screen.y + screen.height;
+
+				if ( overMapScreen === false ) {
+
+					const scaleX = this._mapInfo.width / this.mapCanvas.width;
+
+					let scrollLeft = - this._mapInfo.left - ( clientMapX * scaleX );
+					let scrollTop = - this._mapInfo.top - ( clientMapY * ( this._mapInfo.height / this.mapCanvas.height ) );
+
+					scrollLeft += ( screen.width / 2 ) / scale;
+					scrollTop += ( screen.height / 2 ) / scale;
+
+					this.scrollLeft = scrollLeft;
+					this.scrollTop = scrollTop;
+
+				}
+
+				data.scrollLeft = this.scrollLeft;
+				data.scrollTop = this.scrollTop;
+
+			}
+
+			this.scrollLeft = data.scrollLeft - ( data.delta.x / scale );
+			this.scrollTop = data.scrollTop - ( data.delta.y / scale );
+
+		}, { click: true } );
 
 		this._onMoveEvent = ( e ) => {
 
@@ -251,14 +331,11 @@ export class Canvas extends Serializer {
 			this.clientX = event.clientX;
 			this.clientY = event.clientY;
 
-			this.relativeClientX = ( ( ( dom.scrollLeft - this.centerX ) + event.clientX ) - rect.left ) / zoom;
-			this.relativeClientY = ( ( ( dom.scrollTop - this.centerY ) + event.clientY ) - rect.top ) / zoom;
+			const rectClientX = ( this.clientX - rect.left ) / zoom;
+			const rectClientY = ( this.clientY - rect.top ) / zoom;
 
-		};
-
-		this._onContentLoaded = () => {
-
-			this.centralize();
+			this.relativeClientX = rectClientX - this.scrollLeft;
+			this.relativeClientY = rectClientY - this.scrollTop;
 
 		};
 
@@ -272,33 +349,110 @@ export class Canvas extends Serializer {
 
 	}
 
+	getBounds() {
+
+		const bounds = { x: Infinity, y: Infinity, width: - Infinity, height: - Infinity };
+
+		for ( const node of this.nodes ) {
+
+			const { x, y, width, height } = node.getBound();
+
+			bounds.x = Math.min( bounds.x, x );
+			bounds.y = Math.min( bounds.y, y );
+			bounds.width = Math.max( bounds.width, x + width );
+			bounds.height = Math.max( bounds.height, y + height );
+
+		}
+
+		bounds.x = Math.round( bounds.x );
+		bounds.y = Math.round( bounds.y );
+		bounds.width = Math.round( bounds.width );
+		bounds.height = Math.round( bounds.height );
+
+		return bounds;
+
+	}
+
+	get width() {
+
+		return this._width;
+
+	}
+
+	get height() {
+
+		return this._height;
+
+	}
+
 	get rect() {
 
 		return this.dom.getBoundingClientRect();
 
 	}
 
-	get relativeX() {
+	get zoom() {
 
-		return this.dom.scrollLeft - this.centerX;
-
-	}
-
-	get relativeY() {
-
-		return this.dom.scrollTop - this.centerY;
+		return this._zoom;
 
 	}
 
-	get centerX() {
+	set zoom( val ) {
 
-		return this.width / 2;
+		this._zoom = val;
+		this.contentDOM.style.zoom = val;
 
 	}
 
-	get centerY() {
+	set scrollLeft( val ) {
 
-		return this.height / 2;
+		this._scrollLeft = val;
+		this.contentDOM.style.left = numberToPX( val );
+
+	}
+
+	get scrollLeft() {
+
+		return this._scrollLeft;
+
+	}
+
+	set scrollTop( val ) {
+
+		this._scrollTop = val;
+		this.contentDOM.style.top = numberToPX( val );
+
+	}
+
+	get scrollTop() {
+
+		return this._scrollTop;
+
+	}
+
+	set focusSelected( value ) {
+
+		if ( this._focusSelected === value ) return;
+
+		const classList = this.dom.classList;
+
+		this._focusSelected = value;
+
+		if ( value ) {
+
+			classList.add( 'focusing' );
+
+		} else {
+
+			classList.remove( 'focusing' );
+
+		}
+
+	}
+
+	get focusSelected() {
+
+		return this._focusSelected;
 
 	}
 
@@ -324,8 +478,6 @@ export class Canvas extends Serializer {
 
 		document.addEventListener( 'dragover', this._onMoveEvent, true );
 
-		document.addEventListener( 'DOMContentLoaded', this._onContentLoaded );
-
 		requestAnimationFrame( this._onUpdate );
 
 	}
@@ -343,8 +495,6 @@ export class Canvas extends Serializer {
 		document.removeEventListener( 'touchmove', this._onMoveEvent, true );
 
 		document.removeEventListener( 'dragover', this._onMoveEvent, true );
-
-		document.removeEventListener( 'DOMContentLoaded', this._onContentLoaded );
 
 	}
 
@@ -440,7 +590,21 @@ export class Canvas extends Serializer {
 
 	centralize() {
 
-		this.dom.scroll( this.centerX, this.centerY );
+		const bounds = this.getBounds();
+
+		this.scrollLeft = ( this.canvas.width / 2 ) - ( ( - bounds.x + bounds.width ) / 2 );
+		this.scrollTop = ( this.canvas.height / 2 ) - ( ( - bounds.y + bounds.height ) / 2 );
+
+		return this;
+
+	}
+
+	setSize( width, height ) {
+
+		this._width = width;
+		this._height = height;
+
+		this.update();
 
 		return this;
 
@@ -453,6 +617,8 @@ export class Canvas extends Serializer {
 		const previousNode = this.selected;
 
 		if ( previousNode !== null ) {
+
+			this.focusSelected = false;
 
 			previousNode.dom.classList.remove( 'selected' );
 
@@ -474,31 +640,116 @@ export class Canvas extends Serializer {
 
 	}
 
-	update() {
+	updateMap() {
 
-		if ( this.updating === false ) return;
+		const { nodes, mapCanvas, mapContext, scrollLeft, scrollTop, canvas, zoom, _mapInfo } = this;
 
-		requestAnimationFrame( this._onUpdate );
+		const bounds = this.getBounds();
 
-		const { dom, zoom, canvas, frontCanvas, frontContext, context } = this;
+		mapCanvas.width = 300;
+		mapCanvas.height = 200;
 
-		const width = window.innerWidth;
-		const height = window.innerHeight;
+		mapContext.clearRect( 0, 0, mapCanvas.width, mapCanvas.height );
 
-		const domRect = this.rect;
+		mapContext.fillStyle = 'rgba( 0, 0, 0, 0 )';
+		mapContext.fillRect( 0, 0, mapCanvas.width, mapCanvas.height );
 
-		if ( canvas.width !== width || canvas.height !== height ) {
+		const boundsWidth = - bounds.x + bounds.width;
+		const boundsHeight = - bounds.y + bounds.height;
 
-			canvas.width = width;
-			canvas.height = height;
+		const mapScale = Math.min( mapCanvas.width / boundsWidth, mapCanvas.height / boundsHeight ) * .5;
 
-			frontCanvas.width = width;
-			frontCanvas.height = height;
+		const boundsMapWidth = boundsWidth * mapScale;
+		const boundsMapHeight = boundsHeight * mapScale;
+
+		const boundsOffsetX = ( mapCanvas.width / 2 ) - ( boundsMapWidth / 2 );
+		const boundsOffsetY = ( mapCanvas.height / 2 ) - ( boundsMapHeight / 2 );
+
+		let selectedNode = null;
+
+		for ( const node of nodes ) {
+
+			const nodeBound = node.getBound();
+			const nodeColor = node.getColor();
+
+			nodeBound.x += - bounds.x;
+			nodeBound.y += - bounds.y;
+
+			nodeBound.x *= mapScale;
+			nodeBound.y *= mapScale;
+			nodeBound.width *= mapScale;
+			nodeBound.height *= mapScale;
+
+			nodeBound.x += boundsOffsetX;
+			nodeBound.y += boundsOffsetY;
+
+			if ( node !== this.selected ) {
+
+				mapContext.fillStyle = nodeColor;
+				mapContext.fillRect( nodeBound.x, nodeBound.y, nodeBound.width, nodeBound.height );
+
+			} else {
+
+				selectedNode = {
+					nodeBound,
+					nodeColor
+				};
+
+			}
 
 		}
 
-		context.clearRect( 0, 0, width, height );
-		frontContext.clearRect( 0, 0, width, height );
+		if ( selectedNode !== null ) {
+
+			const { nodeBound, nodeColor } = selectedNode;
+
+			mapContext.fillStyle = nodeColor;
+			mapContext.fillRect( nodeBound.x, nodeBound.y, nodeBound.width, nodeBound.height );
+
+		}
+
+		const screenMapX = ( - ( scrollLeft + bounds.x ) * mapScale ) + boundsOffsetX;
+		const screenMapY = ( - ( scrollTop + bounds.y ) * mapScale ) + boundsOffsetY;
+		const screenMapWidth = ( canvas.width * mapScale ) / zoom;
+		const screenMapHeight = ( canvas.height * mapScale ) / zoom;
+
+		mapContext.fillStyle = 'rgba( 200, 200, 200, 0.1 )';
+		mapContext.fillRect( screenMapX, screenMapY, screenMapWidth, screenMapHeight );
+
+		//
+
+		_mapInfo.scale = mapScale;
+		_mapInfo.left = ( - boundsOffsetX / mapScale ) + bounds.x;
+		_mapInfo.top = ( - boundsOffsetY / mapScale ) + bounds.y;
+		_mapInfo.width = mapCanvas.width / mapScale;
+		_mapInfo.height = mapCanvas.height / mapScale;
+		_mapInfo.screen.x = screenMapX;
+		_mapInfo.screen.y = screenMapY;
+		_mapInfo.screen.width = screenMapWidth;
+		_mapInfo.screen.height = screenMapHeight;
+
+	}
+
+	updateLines() {
+
+		const { dom, zoom, canvas, frontCanvas, frontContext, context, _width, _height } = this;
+
+		const domRect = this.rect;
+
+		if ( canvas.width !== _width || canvas.height !== _height ) {
+
+			canvas.width = _width;
+			canvas.height = _height;
+
+			frontCanvas.width = _width;
+			frontCanvas.height = _height;
+
+		}
+
+		context.clearRect( 0, 0, _width, _height );
+		frontContext.clearRect( 0, 0, _width, _height );
+
+		//
 
 		context.globalCompositeOperation = 'lighter';
 		frontContext.globalCompositeOperation = 'source-over';
@@ -644,6 +895,18 @@ export class Canvas extends Serializer {
 			dom.classList.remove( 'dragging-rio' );
 
 		}
+
+	}
+
+
+	update() {
+
+		if ( this.updating === false ) return;
+
+		requestAnimationFrame( this._onUpdate );
+
+		this.updateLines();
+		this.updateMap();
 
 	}
 

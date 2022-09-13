@@ -16,6 +16,8 @@ export class Search extends Menu {
 		this.events.submit = [];
 		this.events.filter = [];
 
+		this.tags = new WeakMap();
+
 		const inputDOM = document.createElement( 'input' );
 		inputDOM.placeholder = 'Type here';
 
@@ -247,10 +249,17 @@ export class Search extends Menu {
 
 	}
 
+	setTag( button, tags ) {
+
+		this.tags.set( button, tags );
+
+	}
+
 	filter( text ) {
 
 		text = filterString( text );
 
+		const tags = this.tags;
 		const filtered = [];
 
 		for ( const button of this.buttons ) {
@@ -259,7 +268,9 @@ export class Search extends Menu {
 
 			buttonDOM.remove();
 
-			const label = filterString( button.getValue() );
+			const buttonTags = tags.has( button ) ? ' ' + tags.get( button ) : '';
+
+			const label = filterString( button.getValue() + buttonTags );
 
 			if ( text && label.includes( text ) === true ) {
 

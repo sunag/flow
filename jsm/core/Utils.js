@@ -1,4 +1,3 @@
-
 class PointerMonitor {
 
 	started = false;
@@ -12,10 +11,10 @@ class PointerMonitor {
 
 			const event = e.touches ? e.touches[ 0 ] : e;
 
-			this.x = event.x;
-			this.y = event.y;
+			this.x = event.clientX;
+			this.y = event.clientY;
 
-		}
+		};
 
 	}
 
@@ -43,9 +42,17 @@ class PointerMonitor {
 
 export const pointer = new PointerMonitor().start();
 
-export const draggableDOM = ( dom, callback = null, className = 'dragging' ) => {
+export const draggableDOM = ( dom, callback = null, settings = {} ) => {
+
+	settings = Object.assign( {
+		className: 'dragging',
+		click: false,
+		bypass: false
+	}, settings );
 
 	let dragData = null;
+
+	const { className, click, bypass } = settings;
 
 	const getZoom = () => {
 
@@ -73,15 +80,25 @@ export const draggableDOM = ( dom, callback = null, className = 'dragging' ) => 
 
 		const event = e.touches ? e.touches[ 0 ] : e;
 
-		e.stopImmediatePropagation();
+		if ( bypass === false ) e.stopImmediatePropagation();
 
 		dragData = {
 			client: { x: event.clientX, y: event.clientY },
 			delta: { x: 0, y: 0 },
 			start: { x: dom.offsetLeft, y: dom.offsetTop },
+			frame: 0,
+			isDown: true,
 			dragging: false,
 			isTouch: !! e.touches
 		};
+
+		if ( click === true ) {
+
+			callback( dragData );
+
+			dragData.frame ++;
+
+		}
 
 		window.addEventListener( 'mousemove', onGlobalMouseMove );
 		window.addEventListener( 'mouseup', onGlobalMouseUp );
@@ -111,13 +128,15 @@ export const draggableDOM = ( dom, callback = null, className = 'dragging' ) => 
 
 				callback( dragData );
 
+				dragData.frame ++;
+
 			} else {
 
 				dom.style.cssText += `; left: ${ dragData.x }px; top: ${ dragData.y }px;`;
 
 			}
 
-			e.stopImmediatePropagation();
+			if ( bypass === false ) e.stopImmediatePropagation();
 
 		} else {
 
@@ -127,9 +146,9 @@ export const draggableDOM = ( dom, callback = null, className = 'dragging' ) => 
 
 				dom.classList.add( 'drag' );
 
-				if ( className ) document.body.classList.add( className );
+				if ( className ) document.body.classList.add( ...className.split( ' ' ) );
 
-				e.stopImmediatePropagation();
+				if ( bypass === false ) e.stopImmediatePropagation();
 
 			}
 
@@ -139,11 +158,11 @@ export const draggableDOM = ( dom, callback = null, className = 'dragging' ) => 
 
 	const onGlobalMouseUp = ( e ) => {
 
-		e.stopImmediatePropagation();
+		if ( bypass === false ) e.stopImmediatePropagation();
 
 		dom.classList.remove( 'drag' );
 
-		if ( className ) document.body.classList.remove( className );
+		if ( className ) document.body.classList.remove( ...className.split( ' ' ) );
 
 		window.removeEventListener( 'mousemove', onGlobalMouseMove );
 		window.removeEventListener( 'mouseup', onGlobalMouseUp );
@@ -159,10 +178,13 @@ export const draggableDOM = ( dom, callback = null, className = 'dragging' ) => 
 		}
 
 		dragData.dragging = false;
+		dragData.isDown = false;
 
 		if ( callback !== null ) {
 
 			callback( dragData );
+
+			dragData.frame ++;
 
 		}
 
@@ -200,7 +222,7 @@ export const dispatchEventList = ( list, ...params ) => {
 
 };
 
-export const toPX = ( val ) => {
+export const numberToPX = ( val ) => {
 
 	if ( isNaN( val ) === false ) {
 
@@ -212,7 +234,7 @@ export const toPX = ( val ) => {
 
 };
 
-export const toHex = ( val ) => {
+export const numberToHex = ( val ) => {
 
 	if ( isNaN( val ) === false ) {
 
@@ -221,5 +243,27 @@ export const toHex = ( val ) => {
 	}
 
 	return val;
+
+};
+
+export const rgbaToArray = ( rgba ) => {
+
+	const values = rgba.substring( rgba.indexOf( '(' ) + 1, rgba.indexOf( ')' ) )
+		.split( ',' )
+		.map( num => parseInt( num.trim() ) );
+
+	return values;
+
+};
+
+export const removeDOMClass = ( dom, classList ) => {
+
+	if ( classList ) classList.split( ' ' ).forEach( alignClass => dom.classList.remove( alignClass ) );
+
+};
+
+export const addDOMClass = ( dom, classList ) => {
+
+	if ( classList ) classList.split( ' ' ).forEach( alignClass => dom.classList.add( alignClass ) );
 
 };

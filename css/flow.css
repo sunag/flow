@@ -15,7 +15,8 @@
 }
 
 f-canvas,
-f-canvas canvas {
+f-canvas canvas.background,
+f-canvas canvas.frontground {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -24,15 +25,15 @@ f-canvas canvas {
 	width: 100%;
 	height: 100%;
 	/*scroll-behavior: smooth;*/
-	-webkit-touch-callout: none;   
+	-webkit-touch-callout: none;
+	transition: opacity .17s;
 }
 
 f-canvas {
-	overflow: auto;
 	cursor: grab;
 }
 
-f-canvas canvas.front {
+f-canvas canvas.frontground {
 	z-index: 10;
 }
 
@@ -45,9 +46,13 @@ f-canvas.grabbing * {
 	user-select: none;
 }
 
-f-canvas canvas {
+f-canvas canvas.background,
+f-canvas canvas.frontground {
 	position: fixed;
 	overflow: hidden;
+}
+
+f-canvas canvas.frontground {
 	pointer-events: none;
 }
 
@@ -70,10 +75,24 @@ f-canvas::-webkit-scrollbar-thumb {
 	border: 0;
 }
 
+f-canvas f-content {
+	left: 0;
+	top: 0;
+}
+
 f-canvas f-content,
 f-canvas f-area {
 	position: absolute;
     display: block;
+}
+
+f-canvas canvas.map {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	z-index: 50;
+	backdrop-filter: blur( 10px );
+	background-color: rgba( 45, 45, 48, .8 );
 }
 
 f-node {
@@ -91,6 +110,22 @@ f-node {
 
 f-node.selected {
 	z-index: 2;
+}
+
+f-canvas.focusing canvas.background,
+f-canvas.focusing f-node:not(.selected),
+f-canvas.focusing f-element f-disconnect:not(.selected) {
+	opacity: 0;
+	pointer-events: none;
+}
+
+.dragging f-canvas f-element f-disconnect {
+	opacity: 0;
+}
+
+.dragging.node f-canvas.focusing canvas.background,
+.dragging.node f-canvas.focusing f-node:not(.selected) {
+	opacity: .5;
 }
 
 f-node.selected,
@@ -126,7 +161,7 @@ f-node.top-left {
 }
 
 f-node {
-	transition: filter 0.2s ease;
+	transition: filter 0.2s ease, opacity 0.12s ease;
 }
 
 f-node {
@@ -482,7 +517,7 @@ f-element f-subinputs {
 f-element f-inputs {
 	left: 100px;
 	top: 50%;
-	transform: translateY(-50%);
+	transform: translateY( -50% );
 	position: absolute;
 	width: calc( 100% - 106px );
 	height: calc( 100% - 4px );
@@ -509,7 +544,7 @@ f-element f-label {
 	white-space: nowrap;
 	position: absolute;
 	top: 50%;
-	transform: translateY(-50%);
+	transform: translateY( -50% );
 	width: calc( 100% - 20px );
 }
 
@@ -522,9 +557,9 @@ f-element.center f-label {
 }
 
 f-element f-label i {
-	float: left;
 	font-size: 18px;
 	margin-right: 6px;
+	vertical-align: sub;
 }
 
 f-element f-label.center {
@@ -574,10 +609,14 @@ f-element.title.left {
 	justify-content: start;
 }
 
-f-element.title span {
+f-element.title f-title {
 	text-align: center;
 	font-size: 15px;
 	padding-top: 2px;
+	position: absolute;
+	top: 50%;
+	transform: translateY( -50% );
+	width: 100%;
 }
 
 f-element.title i {
@@ -585,7 +624,7 @@ f-element.title i {
 	position: absolute;
 	right: 10px;
 	top: 50%;
-	transform: translateY(-50%);
+	transform: translateY( -50% );
 	opacity: .5;
 }
 
@@ -681,7 +720,8 @@ f-element.large {
     height: 36px;
 }
 
-body.connecting f-node:not(.io-connect) f-element:hover,
+f-canvas.dragging-lio f-node:not(.io-connect) f-element.rio:hover,
+f-canvas.dragging-rio f-node:not(.io-connect) f-element.lio:hover,
 f-element.select {
 	background-color: rgba(61, 70, 82, 0.98);
 }
@@ -710,13 +750,6 @@ f-element.invalid::after {
 	left: 0;
 	top: 0;
 	text-transform: initial;
-}
-
-f-element.invalid > f-inputs,
-f-element.invalid > f-label,
-f-element.invalid > input,
-f-element.invalid > select {
-	opacity: .1;
 }
 
 /* drop */
@@ -838,8 +871,8 @@ f-menu.context f-item.submenu::after {
 	position: absolute;
 	right: 6px;
 	top: 50%;
-	-webkit-transform: translateY(-50%);
-	transform: translateY(-50%);
+	-webkit-transform: translateY( -50% );
+	transform: translateY( -50% );
 	border: 5px solid transparent;
 	border-left-color: #808080;
 }
@@ -1004,9 +1037,23 @@ f-menu.search input {
 
 f-menu.circle {
 	position: absolute;
-	left: 40px;
-	bottom: 40px;
 	z-index: 100;
+}
+
+f-menu.circle.top {
+	top: 40px;
+}
+
+f-menu.circle.left {
+	left: 40px;
+}
+
+f-menu.circle.bottom {
+	bottom: 40px;
+}
+
+f-menu.circle.right {
+	right: 40px;
 }
 
 f-menu.circle f-item {
@@ -1031,6 +1078,10 @@ f-menu.circle f-item button {
 
 f-menu.circle f-item f-tooltip {
 	margin-top: -60px;
+}
+
+f-menu.circle.top f-item f-tooltip {
+	margin-top: 50px;
 }
 
 /* rounded */
@@ -1073,7 +1124,7 @@ f-menu.circle f-item f-tooltip {
 		transition: opacity 0.2s ease;
 	}
 
-	f-node:hover > f-element f-toolbar {
+	body:not(.connecting) f-node:hover > f-element f-toolbar {
 		visibility: visible;
 		opacity: 1;
 	}
@@ -1106,6 +1157,10 @@ f-menu.circle f-item f-tooltip {
 		margin-top: -50px;
 	}
 
+	f-menu.circle.top f-item button:hover > f-tooltip {
+		margin-top: 60px;
+	}
+
 	f-menu.context f-item button:hover > f-tooltip {
 		/*margin-left: 120px;*/
 		top: -30px;
@@ -1128,6 +1183,17 @@ f-menu.circle f-item f-tooltip {
 		overflow: hidden !important;
 	}
 
+}
+
+/* overlay */
+
+f-element.invalid > f-inputs,
+f-element.invalid > f-label,
+f-element.invalid > f-title,
+f-element.invalid > f-toolbar,
+f-element.invalid > input,
+f-element.invalid > select {
+	opacity: .1 !important;
 }
 
 /* optimizations */
