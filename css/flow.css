@@ -612,11 +612,11 @@ f-element.title.left {
 f-element.title f-title {
 	text-align: center;
 	font-size: 15px;
-	padding-top: 2px;
+	padding-top: 1px;
 	position: absolute;
 	top: 50%;
 	transform: translateY( -50% );
-	width: 100%;
+	width: calc( 100% - 14px );
 }
 
 f-element.title i {
