@@ -44,6 +44,12 @@ export class Serializer extends EventTarget {
 
 	}
 
+	get className() {
+
+		return this.constructor.name;
+
+	}
+
 	toJSON( data = null ) {
 
 		let object = null;
@@ -77,7 +83,7 @@ export class Serializer extends EventTarget {
 		}
 
 		object.id = id;
-		object.type = this.constructor.name;
+		object.type = this.className;
 
 		return object;
 

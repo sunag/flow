@@ -15,6 +15,8 @@ export class Input extends Serializer {
 
 		this.tagColor = null;
 
+		this.property = null;
+
 		this.events = {
 			'change': [],
 			'click': []
@@ -45,6 +47,20 @@ export class Input extends Serializer {
 	getExtra() {
 
 		return this.extra;
+
+	}
+
+	setProperty( name ) {
+
+		this.property = name;
+
+		return this;
+
+	}
+
+	getProperty() {
+
+		return this.property;
 
 	}
 

@@ -898,7 +898,6 @@ export class Canvas extends Serializer {
 
 	}
 
-
 	update() {
 
 		if ( this.updating === false ) return;

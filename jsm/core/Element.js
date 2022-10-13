@@ -518,16 +518,40 @@ export class Element extends Serializer {
 
 	}
 
+	getInputByProperty( property ) {
+
+		for ( const input of this.inputs ) {
+
+			if ( input.getProperty() === property ) {
+
+				return input;
+
+			}
+
+		}
+
+	}
+
 	serialize( data ) {
 
 		const height = this.getHeight();
 
 		const inputs = [];
+		const properties = [];
 		const links = [];
 
 		for ( const input of this.inputs ) {
 
-			inputs.push( input.toJSON( data ).id );
+			const id = input.toJSON( data ).id;
+			const property = input.getProperty();
+
+			inputs.push( id );
+
+			if ( property !== null ) {
+
+				properties.push( { property, id } );
+
+			}
 
 		}
 
@@ -545,6 +569,7 @@ export class Element extends Serializer {
 		if ( this.outputLength > 0 ) data.outputLength = this.outputLength;
 
 		if ( inputs.length > 0 ) data.inputs = inputs;
+		if ( properties.length > 0 ) data.properties = properties;
 		if ( links.length > 0 ) data.links = links;
 
 		if ( this.style !== '' ) {
@@ -566,7 +591,15 @@ export class Element extends Serializer {
 		if ( data.inputLength !== undefined ) this.setInput( data.inputLength );
 		if ( data.outputLength !== undefined ) this.setOutput( data.outputLength );
 
-		if ( data.inputs !== undefined ) {
+		if ( data.properties !== undefined ) {
+
+			for ( const { id, property } of data.properties ) {
+
+				data.objects[ id ] = this.getInputByProperty( property );
+
+			}
+
+		} else if ( data.inputs !== undefined ) {
 
 			const inputs = this.inputs;
 
