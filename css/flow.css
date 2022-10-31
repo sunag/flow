@@ -56,24 +56,28 @@ f-canvas canvas.frontground {
 	pointer-events: none;
 }
 
-f-canvas::-webkit-scrollbar {
+/* @TODO: move to local */
+
+::-webkit-scrollbar {
 	width: 8px;
 	height: 8px;
 }
 
-f-canvas::-webkit-scrollbar-thumb:hover{
+::-webkit-scrollbar-thumb:hover{
 	background: #014fc5;
 }
 
-f-canvas::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
 	background: #363636;
 }
 
-f-canvas::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
 	background-color: #666666;
 	border-radius: 10px;
 	border: 0;
 }
+
+/* -- */
 
 f-canvas f-content {
 	left: 0;
@@ -750,6 +754,97 @@ f-element.invalid::after {
 	left: 0;
 	top: 0;
 	text-transform: initial;
+}
+
+/* treeview */
+
+f-treeview {
+    width: 100%;
+	background-color: #232324d1;
+	padding-top: 1px;    
+    padding-left: 4px;
+	border-radius: 2px;
+	overflow-y: auto;
+    overflow-x: hidden;
+	margin-top: 2px;
+    margin-left: 2px;
+	height: calc( 100% - 6px );
+	box-shadow: inset 0px 1px 1px rgb(0 0 0 / 20%), 0px 1px 0px rgb(255 255 255 / 5%);
+}
+
+f-treeview f-treeview-node {
+	position: relative;
+	margin-top: 1px;
+	min-height: 24px;
+}
+
+f-treeview f-treeview-node f-treeview-children {
+	position: relative;
+	display: none;
+    padding-left: 16px;
+}
+
+f-treeview f-treeview-node input[type='checkbox'] {
+	position: absolute;
+	width: 100%;
+	height: 25px;
+	margin-top: 0px;
+	background: none;
+	box-shadow: none;
+	cursor: default;
+	width: calc( 100% + 100px );
+	padding-top: 3px;
+	margin-left: -100px;
+}
+
+f-treeview f-treeview-node input[type='checkbox']:checked ~ f-treeview-children {
+    display: block;
+}
+
+f-treeview f-arrow {
+	border: solid #eeeeee;
+    border-width: 0 1px 1px 0;
+    display: inline-block;
+    padding: 3px;
+    position: absolute;
+    right: 10px;
+	margin-top: 9px;
+	transform: rotate( -45deg );
+	transition: all 0.1s ease;
+}
+
+f-treeview f-treeview-node input[type='checkbox']:checked ~ f-arrow {
+    transform: rotate( 45deg  );
+}
+
+f-treeview f-treeview-label {
+	width: 100%;
+	height: 23px;
+	background: none;
+	/*background: #3331;*/
+	box-shadow: none;
+	cursor: default;
+	width: calc( 100% + 100px );
+	padding-top: 3px;
+	margin-left: -100px;
+	padding-left: 106px;
+	border-bottom: 1px solid #333;
+	pointer-events: none;
+	z-index: 1;
+}
+
+f-treeview f-treeview-node input[type='checkbox']:hover {
+	background: #9993;
+}
+
+f-treeview f-treeview-label i {
+	margin-right: 6px;
+}
+
+f-treeview f-treeview-node {
+    position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 /* drop */

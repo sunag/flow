@@ -26,3 +26,4 @@ export { SliderInput } from './inputs/SliderInput.js';
 export { StringInput } from './inputs/StringInput.js';
 export { TextInput } from './inputs/TextInput.js';
 export { ToggleInput } from './inputs/ToggleInput.js';
+export { TreeViewInput, TreeViewNode } from './inputs/TreeViewInput.js';
