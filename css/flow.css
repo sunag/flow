@@ -802,8 +802,8 @@ f-treeview f-treeview-node input[type='checkbox']:checked ~ f-treeview-children 
 }
 
 f-treeview f-arrow {
-	border: solid #eeeeee;
-    border-width: 0 1px 1px 0;
+	border: solid #999;
+    border-width: 0 2px 2px 0;
     display: inline-block;
     padding: 3px;
     position: absolute;
@@ -827,7 +827,7 @@ f-treeview f-treeview-label {
 	width: calc( 100% + 100px );
 	padding-top: 3px;
 	margin-left: -100px;
-	padding-left: 106px;
+	padding-left: 105px;
 	border-bottom: 1px solid #333;
 	pointer-events: none;
 	z-index: 1;
@@ -845,6 +845,38 @@ f-treeview f-treeview-node {
     position: relative;
     display: flex;
     flex-direction: column;
+}
+
+f-menu.context f-item f-node {
+	position: relative;
+	display: block;
+    width: calc( 100% - 6px ) !important;
+	margin: 3px;
+	animation: unset;
+}
+
+/* string */
+
+f-string {
+	display: contents;
+}
+
+f-string i {
+	position: absolute;
+	font-size: 16px;
+	top: calc( 50% - 1px );
+	right: 13px;
+	transform: translateY( -50% );
+	opacity: .5;
+}
+
+f-string:hover i,
+f-string input:focus ~ f-string {
+	opacity: .9;
+}
+
+f-string:hover input::placeholder {
+	color: #999;
 }
 
 /* drop */
