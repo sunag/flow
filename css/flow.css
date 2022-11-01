@@ -761,8 +761,6 @@ f-element.invalid::after {
 f-treeview {
     width: 100%;
 	background-color: #232324d1;
-	padding-top: 1px;    
-    padding-left: 4px;
 	border-radius: 2px;
 	overflow-y: auto;
     overflow-x: hidden;
@@ -808,7 +806,7 @@ f-treeview f-arrow {
     padding: 3px;
     position: absolute;
     right: 10px;
-	margin-top: 9px;
+	margin-top: 8px;
 	transform: rotate( -45deg );
 	transition: all 0.1s ease;
 }
@@ -834,7 +832,20 @@ f-treeview f-treeview-label {
 }
 
 f-treeview f-treeview-node input[type='checkbox']:hover {
-	background: #9993;
+	background: #2c2c2f;
+}
+
+f-treeview f-treeview-node:has( f-arrow ) > input[type='checkbox'] {
+    background: #2c2c2f;
+}
+
+f-treeview f-treeview-node:has( f-arrow ) > input[type='checkbox']:hover {
+    background: #333339;
+}
+
+f-treeview f-treeview-label {
+	color: #aaa;
+	transition: color 0.1s ease;
 }
 
 f-treeview f-treeview-label i {
@@ -845,6 +856,10 @@ f-treeview f-treeview-node {
     position: relative;
     display: flex;
     flex-direction: column;
+}
+
+f-treeview f-treeview-node input[type='checkbox']:hover ~ f-treeview-label {
+    color: #eee;
 }
 
 f-menu.context f-item f-node {
