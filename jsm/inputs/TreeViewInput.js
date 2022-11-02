@@ -21,15 +21,6 @@ export class TreeViewNode {
 		this.iconDOM = null;
 		
 		this.children = [];
-		
-		this.setIcon( 'ti ti-3d-cube-sphere' );
-		dom.oncontextmenu = ( e ) => {
-			
-			e.preventDefault();
-			e.stopPropagation();
-			this.setVisible( false );
-			
-		}
 
 	}
 	

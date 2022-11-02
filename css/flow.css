@@ -812,6 +812,7 @@ f-treeview f-arrow {
 }
 
 f-treeview f-treeview-node input[type='checkbox']:checked ~ f-arrow {
+	margin-top: 7px;
     transform: rotate( 45deg  );
 }
 
@@ -845,11 +846,12 @@ f-treeview f-treeview-node:has( f-arrow ) > input[type='checkbox']:hover {
 
 f-treeview f-treeview-label {
 	color: #aaa;
-	transition: color 0.1s ease;
 }
 
 f-treeview f-treeview-label i {
+	color: #ccc;
 	margin-right: 6px;
+	transition: color 0.1s ease;
 }
 
 f-treeview f-treeview-node {
@@ -860,6 +862,10 @@ f-treeview f-treeview-node {
 
 f-treeview f-treeview-node input[type='checkbox']:hover ~ f-treeview-label {
     color: #eee;
+}
+
+f-treeview f-treeview-node input[type='checkbox']:hover ~ f-treeview-label i {
+	color: #fff;
 }
 
 f-menu.context f-item f-node {
