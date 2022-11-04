@@ -6,27 +6,34 @@ export class StringInput extends Input {
 
 	constructor( value = '' ) {
 
-		const dom = document.createElement( 'input' );
+		const dom = document.createElement( 'f-string' );
 		super( dom );
 
-		dom.type = 'text';
-		dom.value = value;
-		dom.spellcheck = false;
-		dom.autocomplete = 'off';
+		const inputDOM = document.createElement( 'input' );
 
-		dom.onblur = () => {
+		dom.append( inputDOM );
+
+		inputDOM.type = 'text';
+		inputDOM.value = value;
+		inputDOM.spellcheck = false;
+		inputDOM.autocomplete = 'off';
+
+		this.iconDOM = null;
+		this.inputDOM = inputDOM;
+
+		inputDOM.onblur = () => {
 
 			this.dispatchEvent( new Event( 'blur' ) );
 
 		};
 
-		dom.onchange = () => {
+		inputDOM.onchange = () => {
 
 			this.dispatchEvent( new Event( 'change' ) );
 
 		};
 
-		dom.onkeyup = ( e ) => {
+		inputDOM.onkeyup = ( e ) => {
 
 			if ( e.keyCode === ENTER_KEY ) {
 
@@ -39,6 +46,32 @@ export class StringInput extends Input {
 			this.dispatchEvent( new Event( 'change' ) );
 
 		};
+
+	}
+
+	setPlaceHolder( text ) {
+
+		this.inputDOM.placeholder = text;
+
+		return this;
+
+	}
+
+	setIcon( value ) {
+
+		this.iconDOM = this.iconDOM || document.createElement( 'i' );
+		this.iconDOM.className = value;
+
+		if ( value ) this.dom.prepend( this.iconDOM );
+		else this.iconDOM.remove();
+
+		return this;
+
+	}
+
+	getIcon() {
+
+		return this.iconDOM?.className;
 
 	}
 

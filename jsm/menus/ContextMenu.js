@@ -101,6 +101,14 @@ export class ContextMenu extends Menu {
 
 	}
 
+	setWidth( width ) {
+
+		this.dom.style.width = numberToPX( width );
+
+		return this;
+
+	}
+
 	setPosition( x, y ) {
 
 		const dom = this.dom;

@@ -56,24 +56,28 @@ f-canvas canvas.frontground {
 	pointer-events: none;
 }
 
-f-canvas::-webkit-scrollbar {
-	width: 8px;
-	height: 8px;
+/* -- */
+
+f-node * ::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
 }
 
-f-canvas::-webkit-scrollbar-thumb:hover{
+f-node * ::-webkit-scrollbar-thumb:hover{
 	background: #014fc5;
 }
 
-f-canvas::-webkit-scrollbar-track {
+f-node * ::-webkit-scrollbar-track {
 	background: #363636;
 }
 
-f-canvas::-webkit-scrollbar-thumb {
+f-node * ::-webkit-scrollbar-thumb {
 	background-color: #666666;
 	border-radius: 10px;
 	border: 0;
 }
+
+/* -- */
 
 f-canvas f-content {
 	left: 0;
@@ -406,7 +410,7 @@ f-element textarea {
 	width: calc( 100% - 18px );
 	padding-top: 1px;
 	padding-bottom: 3px;
-	padding-left: 3px;
+	padding-left: 4px;
 	padding-right: 8px;
 	margin-top: 2px;
 	margin-left: 2px;
@@ -750,6 +754,149 @@ f-element.invalid::after {
 	left: 0;
 	top: 0;
 	text-transform: initial;
+}
+
+/* treeview */
+
+f-treeview {
+    width: 100%;
+	background-color: #232324d1;
+	border-radius: 2px;
+	overflow-y: auto;
+    overflow-x: hidden;
+	margin-top: 2px;
+    margin-left: 2px;
+	height: calc( 100% - 6px );
+	box-shadow: inset 0px 1px 1px rgb(0 0 0 / 20%), 0px 1px 0px rgb(255 255 255 / 5%);
+}
+
+f-treeview f-treeview-node {
+	position: relative;
+	margin-top: 1px;
+	min-height: 24px;
+}
+
+f-treeview f-treeview-node f-treeview-children {
+	position: relative;
+	display: none;
+    padding-left: 16px;
+}
+
+f-treeview f-treeview-node input[type='checkbox'] {
+	position: absolute;
+	width: 100%;
+	height: 25px;
+	margin-top: 0px;
+	background: none;
+	box-shadow: none;
+	cursor: default;
+	width: calc( 100% + 100px );
+	padding-top: 3px;
+	margin-left: -100px;
+}
+
+f-treeview f-treeview-node input[type='checkbox']:checked ~ f-treeview-children {
+    display: block;
+}
+
+f-treeview f-arrow {
+	border: solid #999;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    position: absolute;
+    right: 10px;
+	margin-top: 8px;
+	transform: rotate( -45deg );
+	transition: all 0.1s ease;
+}
+
+f-treeview f-treeview-node input[type='checkbox']:checked ~ f-arrow {
+	margin-top: 7px;
+    transform: rotate( 45deg  );
+}
+
+f-treeview f-treeview-label {
+	width: 100%;
+	height: 23px;
+	background: none;
+	box-shadow: none;
+	cursor: default;
+	width: calc( 100% + 100px );
+	padding-top: 3px;
+	margin-left: -100px;
+	padding-left: 105px;
+	border-bottom: 1px solid #333;
+	pointer-events: none;
+	z-index: 1;
+}
+
+f-treeview f-treeview-node input[type='checkbox']:hover {
+	background: #2c2c2f;
+}
+
+f-treeview f-treeview-node:has( f-arrow ) > input[type='checkbox'] {
+    background: #2c2c2f;
+}
+
+f-treeview f-treeview-node:has( f-arrow ) > input[type='checkbox']:hover {
+    background: #333339;
+}
+
+f-treeview f-treeview-label {
+	color: #aaa;
+}
+
+f-treeview f-treeview-label i {
+	color: #ccc;
+	margin-right: 6px;
+	transition: color 0.1s ease;
+}
+
+f-treeview f-treeview-node {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+f-treeview f-treeview-node input[type='checkbox']:hover ~ f-treeview-label {
+    color: #eee;
+}
+
+f-treeview f-treeview-node input[type='checkbox']:hover ~ f-treeview-label i {
+	color: #fff;
+}
+
+f-menu.context f-item f-node {
+	position: relative;
+	display: block;
+    width: calc( 100% - 6px ) !important;
+	margin: 3px;
+	animation: unset;
+}
+
+/* string */
+
+f-string {
+	display: contents;
+}
+
+f-string i {
+	position: absolute;
+	font-size: 16px;
+	top: calc( 50% - 1px );
+	right: 13px;
+	transform: translateY( -50% );
+	opacity: .5;
+}
+
+f-string:hover i,
+f-string input:focus ~ f-string {
+	opacity: .9;
+}
+
+f-string:hover input::placeholder {
+	color: #999;
 }
 
 /* drop */
