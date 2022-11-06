@@ -75,5 +75,11 @@ export class StringInput extends Input {
 
 	}
 
+	getInput() {
+
+		return this.inputDOM;
+
+	}
+
 }
 

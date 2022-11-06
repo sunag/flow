@@ -109,7 +109,7 @@ export class Input extends Serializer {
 
 	setReadOnly( value ) {
 
-		this.dom.readOnly = value;
+		this.getInput().readOnly = value;
 
 		return this;
 
@@ -117,13 +117,13 @@ export class Input extends Serializer {
 
 	getReadOnly() {
 
-		return this.dom.readOnly;
+		return this.getInput().readOnly;
 
 	}
 
 	setValue( value, dispatch = true ) {
 
-		this.dom.value = value;
+		this.getInput().value = value;
 
 		if ( dispatch ) this.dispatchEvent( new Event( 'change' ) );
 
@@ -133,7 +133,13 @@ export class Input extends Serializer {
 
 	getValue() {
 
-		return this.dom.value;
+		return this.getInput().value;
+
+	}
+
+	getInput() {
+
+		return this.dom;
 
 	}
 
