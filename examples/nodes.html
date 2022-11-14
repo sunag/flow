@@ -123,7 +123,7 @@ flow {
 		treeView.add( new Flow.TreeViewNode( 'File 1' ) );
 		treeView.add( new Flow.TreeViewNode( 'File 2' )
 			.add( new Flow.TreeViewNode( 'Child 2' ) )
-			.add( new Flow.TreeViewNode( 'Child 3' ) ) 
+			.add( new Flow.TreeViewNode( 'Child 3' ).add( new Flow.TreeViewNode( 'Child 4' ) ) ) 
 		);
 		treeView.add( new Flow.TreeViewNode( 'File 3' ) );
 		treeView.add( new Flow.TreeViewNode( 'File 4' ) );
