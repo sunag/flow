@@ -86,6 +86,7 @@ export class TreeViewInput extends Input {
 		dom.append( childrenDOM );
 
 		dom.setAttribute( 'type', 'tree' );
+		dom.classList.add( 'f-scroll' );
 
 		this.childrenDOM = childrenDOM;
 

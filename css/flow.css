@@ -844,7 +844,7 @@ f-treeview f-treeview-node:has( f-arrow ) > input[type='checkbox']:hover {
 }
 
 f-treeview f-treeview-label {
-	color: #aaa;
+	color: #ddd;
 }
 
 f-treeview f-treeview-label i {
@@ -860,7 +860,7 @@ f-treeview f-treeview-node {
 }
 
 f-treeview f-treeview-node input[type='checkbox']:hover ~ f-treeview-label {
-    color: #eee;
+    color: #fff;
 }
 
 f-treeview f-treeview-node input[type='checkbox']:hover ~ f-treeview-label i {

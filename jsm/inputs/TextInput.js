@@ -11,6 +11,8 @@ export class TextInput extends Input {
 
 		dom.innerText = innerText;
 
+		dom.classList.add( 'f-scroll' );
+
 		dom.onblur = () => {
 
 			this.dispatchEvent( new Event( 'blur' ) );

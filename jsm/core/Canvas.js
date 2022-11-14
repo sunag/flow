@@ -105,7 +105,25 @@ export class Canvas extends Serializer {
 
 		};
 
+		const classInElements = ( element, className ) => {
+
+			do {
+
+				if ( element.classList?.contains( className ) ) {
+
+					return true;
+
+				}
+
+			} while( ( element = element.parentElement ) && element !== dom );
+
+			return false;
+
+		};
+
 		const onMouseZoom = ( e ) => {
+
+			if ( classInElements( e.srcElement, 'f-scroll' ) ) return;
 
 			e.preventDefault();
 
