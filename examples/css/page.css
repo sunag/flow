@@ -1,10 +1,295 @@
 html {
-	overflow: hidden;
-	width: 100%;
-	height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+  height: auto;
+  padding-bottom: 200px;
 }
 
 body {
-	background-color: #262626;
-	background-image: url(../../media/background.jpg);
+  background-color: #262626;
+  background-image: url(../../media/background.jpg);
 }
+
+f-node{
+  margin-top: 250px;
+}
+
+f-group {
+  position: relative;
+  width:100%;
+  background: rgba(45, 45, 48, 0.95);
+  pointer-events: auto;
+  border-bottom: 2px solid #232323;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+input[type="checkbox"] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: calc(100% + 14px);
+  margin: 0 0 0 -15px;
+  height: 24px;
+  background: none;
+  box-shadow: none;
+  cursor: default;
+  z-index: +1;
+}
+
+#groupBox {
+  opacity: 0;
+}
+
+#groupBox:hover {
+  cursor: pointer;
+}
+
+input {
+  writing-mode: horizontal-tb !important;
+  text-rendering: auto;
+  letter-spacing: normal;
+  word-spacing: normal;
+  line-height: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: start;
+  appearance: auto;
+  -webkit-rtl-ordering: logical;
+  cursor: text;
+  margin: 0em;
+  padding: 1px 2px;
+  border-width: 2px;
+  border-style: inset;
+  border-color: -internal-light-dark(
+    rgb(118, 118, 118),
+    rgb(133, 133, 133)
+  );
+  border-image: initial;
+}
+
+f-group input[type="checkbox"]:checked ~ f-elements {
+  max-height: 100vh;
+  width: 100%;
+  transition: all 500ms ease;
+  padding: 0;
+  margin: 0;
+}
+
+f-group f-elements {
+  position: relative;
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 100ms ease;
+}
+
+f-group f-info {
+    position: relative;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    min-height: 24px;
+    padding-left: 11px;
+    line-height: 24px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    text-transform: capitalize;
+    color: #eeeeee;
+}
+
+f-group input[type="checkbox"]:checked ~ f-info {
+  border-bottom: 2px solid #232323;
+}
+
+f-group input[type="checkbox"] ~ f-info::after {
+  content: url(../../media/arrowDown.svg);
+  transform: scale(0.015);
+  height: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: -96.5px;
+}
+
+f-group input[type="checkbox"]:checked ~ f-info::after {
+  transform: rotate(180deg) scale(0.015);
+  color: #eeeeee;
+}
+
+f-group f-element:nth-last-child(1) {
+  border-bottom: none;
+}
+
+f-treeview {
+  width: 100%;
+  padding-top: 1px;
+  padding-bottom: 3px;
+  padding-left: 16px;
+  margin-top: 2px;
+  margin-left: 2px;
+  height: calc( 100% - 8px );
+  max-height: 300px;
+  border-radius: 2px;
+  resize: none;
+  box-shadow: inset 0px 1px 1px rgb(0 0 0 / 20%), 0px 1px 0px rgb(255 255 255 / 5%);
+  background-color: #232324d1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  position: relative;
+}
+
+f-treeview f-files {
+  position: relative;
+  display: block;
+}
+f-treeview * {
+  box-sizing: border-box;
+  
+}
+
+f-treeview f-file {
+  position: relative;
+  display: block;
+  white-space: nowrap;
+  min-height: 32px;
+
+}
+
+f-treeview input[type='checkbox'] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: calc(100% + 14px);
+  margin: 0 0 0 -15px;
+  height: 32px;
+  background: none;
+  box-shadow: none;
+  cursor: default;
+  z-index: 3;
+  border: solid 1px rgba(43,153,255,0);
+  border-radius: 4px;
+  transition: all 0.5s ease;
+}
+
+f-treeview input[type='checkbox']:hover {
+border: 1px solid #1e90ff;
+}
+
+f-treeview input[type='checkbox']:checked ~ f-files {
+  display: block;
+}
+
+f-treeview f-file f-info {
+  position: absolute;
+  top: 15px;
+  left: 16px;
+  line-height: 30px;
+}
+
+f-treeview f-file f-files:before {
+  content: '';
+  width: 1px;
+  height: calc(100% - 35px);
+  background: rgba(255,255,255,0.1);
+  position: absolute;
+  top: 25px;
+  left: 27px;
+}
+
+f-treeview f-file f-files {
+  display: none;
+  position: relative;
+  padding-top: 32px;
+  padding-left: 25px;
+}
+
+f-treeview f-file f-files:before {
+    content: '';
+    width: 1px;
+    height: calc(100% - 40px);
+    background: rgba(255,255,255,0.1);
+    position: absolute;
+    top: 25px;
+    left: 27px;
+}
+f-treeview f-file f-files f-file:after {
+  content: '';
+  width: 14px;
+  height: 1px;
+  background: rgba(255,255,255,0.1);
+  position: absolute;
+  top: 16px;
+  left: 3px;
+}
+
+f-treeview f-file f-files:not(:empty) + f-info f-icon {
+  width: 14px;
+  height: 14px;
+  border: solid 1px rgba(255,255,255,0.1);
+  box-shadow: 0 0 0 2px #242426;
+  border-radius: 4px;
+  position: absolute;
+  left: -20px;
+  top: -8px;
+  background: #242426;
+  z-index: 2;
+}
+
+f-treeview f-file f-info f-icon p{
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: -9px;
+  padding-left: 2px;
+  color: rgba(255,255,255,0.1);
+}
+
+.wrap{
+  background-color:#232324d1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(4rem, 1fr));
+  grid-gap: 0.7rem;
+  padding: 30px 15px 15px 15px;
+}
+
+.gallery-item{
+  width:80px;
+  height:80px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.gallery-image{
+  width:100%;
+  height:100%;
+  border-radius: 10px;
+}
+
+.gallery-image:hover{
+  transform: scale(1.2);
+  transition: all 200ms ease-in-out;
+  cursor: pointer;
+}
+
+.btnX{
+  margin-left:93%;
+}
+
+
+
+
+
+
+
+
+
