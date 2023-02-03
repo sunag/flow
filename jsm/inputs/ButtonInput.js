@@ -25,7 +25,8 @@ export class ButtonInput extends Input {
 
 		};
 
-		dom.onclick = dom.ontouchstart = ( e ) => {
+		dom.onclick = dom.ontouchstart =
+		iconDOM.onclick = iconDOM.ontouchstart = ( e ) => {
 
 			e.preventDefault();
 
@@ -42,6 +43,12 @@ export class ButtonInput extends Input {
 		this.iconDOM.className = className;
 
 		return this;
+
+	}
+
+	getIcon() {
+
+		return this.iconDOM.className;
 
 	}
 

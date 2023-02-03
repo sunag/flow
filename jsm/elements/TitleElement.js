@@ -8,7 +8,7 @@ export class TitleElement extends DraggableElement {
 
 		const { dom } = this;
 
-		dom.className = 'title';
+		dom.classList.add( 'title' );
 
 		const dbClick = () => {
 

@@ -1,4 +1,9 @@
-/*box-sizing: border-box;*/
+f-canvas .ti {
+	vertical-align: middle;
+    font-size: 22px;
+    display: inline-block;
+    margin-top: -3px;
+}
 
 @keyframes f-animation-open {
 
@@ -184,7 +189,7 @@ f-element button,
 f-element textarea {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 13px;
-	text-transform: capitalize;
+	/*text-transform: capitalize;*/
 	color: #eeeeee;
 	outline: solid 0px #000;
 	/*letter-spacing: .2px;*/
@@ -303,6 +308,7 @@ f-element input {
 	width: 100%;
 	padding-left: 4px;
 	padding-right: 4px;
+	line-height: 100%;
 }
 
 f-element input.number {
@@ -438,30 +444,22 @@ f-element select {
 
 f-element f-toolbar {
 	position: absolute;
-	display: flex;
 	top: 0;
-	width: 100%;
 	height: 100%;
 	align-content: space-around;
-}
-
-f-element.input-right f-toolbar {
-	right: 7px;
-	float: right;
-	justify-content: end;
-}
-
-f-element f-toolbar {
 	margin-top: auto;
 	margin-bottom: auto;
 	margin-left: 3px;
 	margin-right: 3px;
 	font-size: 18px;
     line-height: 18px;
+	display: inline-flex;
+    justify-content: flex-end;
+	right: 0;
 }
 
 f-element f-toolbar button {
-	opacity: .7;
+	opacity: .7;	
 	cursor: pointer;
 	font-size: 14px;
 	width: unset;
@@ -471,6 +469,10 @@ f-element f-toolbar button {
 	outline: 0;
 	background-color: unset;
 	box-shadow: unset;
+	padding-right: 25px;
+    padding-left: 5px;
+	margin-left: 0;
+    margin-right: 0;
 }
 
 f-element f-toolbar button:hover,
@@ -525,7 +527,7 @@ f-element f-inputs {
 	position: absolute;
 	width: calc( 100% - 106px );
 	height: calc( 100% - 4px );
-	z-index: 1;
+	/*z-index: 1;*/
 }
 
 f-element.inputs-disable f-inputs {
@@ -562,7 +564,7 @@ f-element.center f-label {
 
 f-element f-label i {
 	font-size: 18px;
-	margin-right: 6px;
+	margin-right: 4px;
 	vertical-align: sub;
 }
 
@@ -624,23 +626,19 @@ f-element.title f-title {
 }
 
 f-element.title i {
-	font-size: 18px;
+	font-size: 24px;
 	position: absolute;
-	right: 10px;
+	left: 10px;
 	top: 50%;
 	transform: translateY( -50% );
-	opacity: .5;
+	margin-top: -2px;
+	opacity: .7;
 }
 
 f-element.title f-toolbar i {
-	font-size: 20px;
+	font-size: 24px;
 	right: unset;
-	left: 0px;
-}
-
-f-element.input-right.title i {
-	left: 10px;
-	right: unset;
+	left: unset;
 }
 
 f-element.title.left span {
@@ -785,7 +783,7 @@ f-treeview f-treeview-node f-treeview-children {
 f-treeview f-treeview-node input[type='checkbox'] {
 	position: absolute;
 	width: 100%;
-	height: 25px;
+	height: 24px;
 	margin-top: 0px;
 	background: none;
 	box-shadow: none;
@@ -809,16 +807,19 @@ f-treeview f-arrow {
 	margin-top: 8px;
 	transform: rotate( -45deg );
 	transition: all 0.1s ease;
+	pointer-events: none;
 }
 
 f-treeview f-treeview-node input[type='checkbox']:checked ~ f-arrow {
 	margin-top: 7px;
-    transform: rotate( 45deg  );
+	transform: rotate( 45deg  );
 }
 
 f-treeview f-treeview-label {
+	display: flex;
+	align-content: center;
 	width: 100%;
-	height: 23px;
+	height: 22px;
 	background: none;
 	/*background: #3331;*/
 	box-shadow: none;
@@ -849,8 +850,7 @@ f-treeview f-treeview-label {
 }
 
 f-treeview f-treeview-label i {
-	color: #ccc;
-	margin-right: 6px;
+	color: #ccc;	
 	transition: color 0.1s ease;
 }
 
@@ -876,28 +876,73 @@ f-menu.context f-item f-node {
 	animation: unset;
 }
 
+f-treeview f-treeview-node.selected > input[type='checkbox'] {
+	background-color: #014fc5;
+}
+
+f-treeview f-treeview-node.selected > f-treeview-label,
+f-treeview f-treeview-node.selected > f-treeview-label i {
+	color: #fff;
+}
+
+f-treeview f-treeview-node.selected > input[type='checkbox']:hover {
+	background-color: #06f;
+}
+
 /* string */
 
 f-string {
 	display: contents;
 }
 
-f-string i {
+f-string f-buttons {
 	position: absolute;
-	font-size: 16px;
-	top: calc( 50% - 1px );
-	right: 13px;
+	top: 50%;
+	right: 1px;
 	transform: translateY( -50% );
-	opacity: .5;
 }
 
-f-string:hover i,
+f-string f-buttons i {
+	font-size: 18px !important;
+	margin-top: -4px !important;
+	color: #999;
+	padding-left: 4px;
+	padding-right: 0px;
+	margin-right: 1px;
+	cursor: pointer;
+	background: #252526eb;
+	height: 100%;
+}
+
+f-string i[type=icon] {
+	font-size: 22px;
+	color: #999;
+	margin-top: -1px;
+	padding-right: 2px;
+	padding-left: 2px;
+	padding-bottom: 2px;
+	margin: auto;
+}
+
+f-string f-buttons i:hover {
+	color: #eeeeee;
+}
+
+/*f-string:hover i,*/
 f-string input:focus ~ f-string {
 	opacity: .9;
 }
 
 f-string:hover input::placeholder {
 	color: #999;
+}
+
+f-string f-treeview {
+	position: absolute;
+    max-height: 200px;
+    height: 200px;
+    background-color: #000;
+	z-index: 10;
 }
 
 /* drop */
@@ -1214,7 +1259,8 @@ f-menu.circle f-item {
 f-menu.circle f-item button {
 	width: 47px;
 	height: 47px;
-	font-size: 22px;
+	font-size: 27px;
+	padding-left: 6px;
 	background: #17171794;
 	border-radius: 50%;
 	backdrop-filter: blur(6px);

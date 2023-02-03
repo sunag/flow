@@ -34,7 +34,7 @@ flow {
 		node.setWidth( 350 );
 		node.setPosition( 100, 100 );
 
-		node.add( new Flow.TitleElement( 'Inputs' ).setIcon( 'ti ti-box-multiple-2' ).setStyle( 'blue' ) );
+		node.add( new Flow.TitleElement( 'Inputs' ).setIcon( 'ti ti-dots' ).setStyle( 'blue' ).setInput( 1 ).setOutput( 1 ) );
 
 		node.add(
 			new Flow.LabelElement( 'Numbers' )
@@ -42,6 +42,7 @@ flow {
 				.add( new Flow.NumberInput( 2 ) )
 				.add( new Flow.NumberInput( 3 ) )
 				.setInput( 1 )
+				.setOutput( 1 )
 				.setInputColor( 'red' )
 		);
 
@@ -78,7 +79,15 @@ flow {
 		node2.setWidth( 350 );
 		node2.setPosition( 200, 300 );
 
-		node2.add( new Flow.TitleElement( 'Addition' ).addButton( new Flow.ButtonInput( 'X' ) ).setStyle( 'red' ) );
+		//node2.add( new Flow.TitleElement( 'Addition' ).addButton( new Flow.ButtonInput( 'X' ) ).setStyle( 'red' ) );
+		node2.add( 
+			new Flow.TitleElement( 'Addition' )
+				.addButton( new Flow.ButtonInput().setIcon( 'ti ti-dots' ) )
+				.addButton( new Flow.ButtonInput().setIcon( 'ti ti-grid-dots' ) )
+				.setStyle( 'red' )
+				.setOutput( 1 )
+		);
+		
 
 		const vector = new Flow.LabelElement( 'N 2' )
 			.setIcon( 'ti ti-palette' )
@@ -90,7 +99,7 @@ flow {
 
 		node2.add( vector );
 		node2.add( new Flow.LabelElement( 'Numbers' ).add( new Flow.ButtonInput( 'Test' ) ).setOutput( 3 ) );
-		node2.add( new Flow.LabelElement( 'Numbers' ).add( new Flow.SliderInput( .5, 0, 1 ) ) );
+		node2.add( new Flow.LabelElement( 'Numbers' ).add( new Flow.SliderInput( .5, 0, 1 ) ).setInput( 3 ) );
 
 		let abcElement;
 		let testElement;
@@ -118,9 +127,50 @@ flow {
 		abcElement.setAttribute( 'tooltip', 'Abc a asdfasdf asdasdfasdf asdfasdf fasdfasdf asdf asdf asdfasdf bc' );
 		abcElement.setAttribute( 'error', true );
 
+		const treeView = new Flow.TreeViewInput();
+		let viewNode, viewNode2, viewNode3;
+		treeView.add( viewNode = new Flow.TreeViewNode( 'File 1' ) );
+		treeView.add( viewNode2 = new Flow.TreeViewNode( 'File 2' ).setIcon( 'ti ti-adjustments-horizontal' )
+			.add( new Flow.TreeViewNode( 'Child 2' ) )
+			.add( new Flow.TreeViewNode( 'Child 3' ) ) 
+		);
+		treeView.add( viewNode3 = new Flow.TreeViewNode( 'File 3' ) );
+		treeView.add( new Flow.TreeViewNode( 'File 4' ) );
+
+		node2.add( new Flow.Element().setHeight( 200 ).add( treeView ) );
+		
+		viewNode.setIcon( 'ti ti-3d-cube-sphere' );
+		viewNode.onClick( () => {
+		
+			viewNode.setSelected( !viewNode.selected );
+			
+			console.log( 'click' );
+			
+		} );
+		
+		//viewNode2.onClick( () => viewNode2.setSelected( !viewNode2.selected ) );
+		//viewNode3.onClick( () => viewNode3.setSelected( !viewNode3.selected ) );
+
 		//testElement.setColor( 'forestgreen' );
 
 		node2.add( new Flow.LabelElement( 'TEST' ).setStyle( 'right' ) );
+
+		const nodeS = new Flow.Node();
+		//nodeS.setPosition( 700, 500 );
+		//nodeS.add( new Flow.TitleElement( 'Nodes' ) );
+		//nodeS.add( new Flow.Element().setHeight( 30 ).add( new Flow.StringInput().setPlaceHolder( 'Search...' ).setIcon( 'ti ti-list-search' ) ) );
+		const treeView2 = new Flow.TreeViewInput();
+		treeView2.add( new Flow.TreeViewNode( 'File 1' ) );
+		treeView2.add( new Flow.TreeViewNode( 'File 2' )
+			.add( new Flow.TreeViewNode( 'Child 2' ) )
+			.add( new Flow.TreeViewNode( 'Child 3' ) ) 
+		);
+		treeView2.add( new Flow.TreeViewNode( 'File 3' ) );
+		treeView2.add( new Flow.TreeViewNode( 'File 4' ) );
+
+		nodeS.add( new Flow.Element().setHeight( 30 ).add( new Flow.StringInput().setPlaceHolder( 'Search...' ).setIcon( 'ti ti-list-search' ) ) );
+		nodeS.add( new Flow.Element().setHeight( 200 ).add( treeView2 ) );
+		
 
 		vector.setOutput( 1 );
 		slider.setInput( 3 )/*.setInputColor( 'green' )*/;
@@ -148,12 +198,17 @@ flow {
 		canvas.add( node );
 		canvas.add( node2 );
 		canvas.add( node1 );
+		//canvas.add( nodeS );
 
 		window.onresize = () => canvas.setSize( window.innerWidth, window.innerHeight );
 
 		// context-menu
 
 		const context = new Flow.ContextMenu( document.body );
+		context.setWidth( 300 );
+		//context.add( new Flow.ButtonInput( 'Vector 4' ).setIcon( 'ti ti-box-multiple-2' ) );
+		context.add( nodeS );
+		/*
 		context.add( new Flow.ButtonInput( 'Float' ).setToolTip( 'Min / Max' ).setIcon( 'ti ti-box-multiple-1' ).onClick( () => {
 
 			const canvasRect = canvas.rect;
@@ -185,6 +240,7 @@ flow {
 
 
 		} ) );
+		*/
 
 		const context3 = new Flow.ContextMenu();
 		context3.add( new Flow.ButtonInput( '1' ) );
@@ -197,9 +253,9 @@ flow {
 		context2.add( new Flow.ButtonInput( 'C' ), context3 );
 
 		//context.add( new Flow.ButtonInput( 'Vector 2' ).setIcon( 'ti ti-box-multiple-2' ) );
-		context.add( new Flow.ButtonInput( 'Vector 3' ).setIcon( 'ti ti-box-multiple-3' ), context2 );
+		//context.add( new Flow.ButtonInput( 'Vector 3' ).setIcon( 'ti ti-box-multiple-3' ), context2 );
 		/*
-		context.add( new Flow.ButtonInput( 'Vector 4' ).setIcon( 'ti ti-box-multiple-2' ) );
+		
 		context.add( new Flow.ButtonInput( 'Color' ).setIcon( 'ti ti-palette' ) );
 		context.add( new Flow.ButtonInput( 'Map' ).setIcon( 'ti ti-photo' ) );
 		context.add( new Flow.ButtonInput( 'Cube Map' ).setIcon( 'ti ti-box' ) );

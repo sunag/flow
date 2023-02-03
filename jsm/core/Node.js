@@ -241,7 +241,7 @@ export class Node extends Serializer {
 
 	getColor() {
 
-		return this.elements[ 0 ]?.getColor();
+		return this.elements.length > 0 ? this.elements[ 0 ].getColor() : null;
 
 	}
 

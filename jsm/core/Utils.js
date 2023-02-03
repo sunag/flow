@@ -1,11 +1,10 @@
 class PointerMonitor {
 
-	started = false;
-
 	constructor() {
 
 		this.x = 0;
 		this.y = 0;
+		this.started = false;
 
 		this._onMoveEvent = ( e ) => {
 
