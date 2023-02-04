@@ -402,12 +402,16 @@ export class Canvas extends Serializer {
 		this._zoom = val;
 		this.contentDOM.style.zoom = val;
 
+		this.updateMozTransform();
+
 	}
 
 	set scrollLeft( val ) {
 
 		this._scrollLeft = val;
 		this.contentDOM.style.left = numberToPX( val );
+
+		this.updateMozTransform();
 
 	}
 
@@ -421,6 +425,8 @@ export class Canvas extends Serializer {
 
 		this._scrollTop = val;
 		this.contentDOM.style.top = numberToPX( val );
+
+		this.updateMozTransform();
 
 	}
 
@@ -453,6 +459,21 @@ export class Canvas extends Serializer {
 	get focusSelected() {
 
 		return this._focusSelected;
+
+	}
+
+	get useTransform() {
+
+		return navigator.userAgent.match( /firefox/i ) !== null;
+
+	}
+
+	updateMozTransform() {
+
+		if ( this.useTransform === false ) return;
+
+		this.contentDOM.style[ '-moz-transform' ] = 'scale(' + this.zoom + ')';
+		this.contentDOM.style[ '-moz-transform-origin' ] = '-' + this.contentDOM.style.left + ' -' + this.contentDOM.style.top;
 
 	}
 
@@ -732,7 +753,7 @@ export class Canvas extends Serializer {
 
 	updateLines() {
 
-		const { dom, zoom, canvas, frontCanvas, frontContext, context, _width, _height } = this;
+		const { dom, zoom, canvas, frontCanvas, frontContext, context, _width, _height, useTransform } = this;
 
 		const domRect = this.rect;
 
@@ -779,6 +800,13 @@ export class Canvas extends Serializer {
 				aPos.x = rect.x + rect.width;
 				aPos.y = rect.y + ( rect.height / 2 );
 
+				if ( useTransform ) {
+
+					aPos.x /= zoom;
+					aPos.y /= zoom;
+
+				}
+
 			} else {
 
 				aPos.x = this.clientX;
@@ -796,6 +824,13 @@ export class Canvas extends Serializer {
 
 				bPos.x = rect.x;
 				bPos.y = rect.y + ( rect.height / 2 );
+
+				if ( useTransform ) {
+
+					bPos.x /= zoom;
+					bPos.y /= zoom;
+
+				}
 
 			} else {
 
