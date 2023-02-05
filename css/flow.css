@@ -1,8 +1,8 @@
-f-canvas .ti {
+f-element .ti {
 	vertical-align: middle;
-    font-size: 22px;
+    font-size: 26px;
     display: inline-block;
-    margin-top: -3px;
+    margin-top: -6px;
 }
 
 @keyframes f-animation-open {
@@ -309,6 +309,10 @@ f-element input {
 	padding-left: 4px;
 	padding-right: 4px;
 	line-height: 100%;
+}
+
+f-element f-string:has( i[type=icon] ) input {
+	padding-left: 24px;
 }
 
 f-element input.number {
@@ -909,10 +913,11 @@ f-string f-buttons {
 
 f-string f-buttons i {
 	font-size: 18px !important;
-	margin-top: -4px !important;
+	margin-top: -2px !important;
 	color: #999;
 	padding-left: 4px;
 	padding-right: 0px;
+	padding-bottom: 2px;
 	margin-right: 1px;
 	cursor: pointer;
 	background: #252526eb;
@@ -920,13 +925,15 @@ f-string f-buttons i {
 }
 
 f-string i[type=icon] {
-	font-size: 22px;
-	color: #999;
-	margin-top: -1px;
-	padding-right: 2px;
-	padding-left: 2px;
-	padding-bottom: 2px;
-	margin: auto;
+    font-size: 22px;
+    color: #999;
+    position: absolute;
+    left: 13px;
+    top: calc( 50% - 7px );
+}
+
+f-inputs f-string i[type=icon] {
+    left: 6px;
 }
 
 f-string f-buttons i:hover {
