@@ -312,7 +312,7 @@ f-element input {
 }
 
 f-element f-string:has( i[type=icon] ) input {
-	padding-left: 24px;
+	padding-left: 23px;
 }
 
 f-element input.number {
@@ -933,7 +933,7 @@ f-string i[type=icon] {
 }
 
 f-inputs f-string i[type=icon] {
-    left: 6px;
+    left: 5px;
 }
 
 f-string f-buttons i:hover {
@@ -1114,7 +1114,8 @@ f-menu.search f-item button {
 f-menu.context f-item button i,
 f-menu.search f-item button i {
 	float: left;
-	font-size: 16px;
+	font-size: 21px;
+    margin-top: -3px;
 }
 
 f-menu.context f-item button span,
