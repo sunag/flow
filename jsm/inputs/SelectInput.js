@@ -65,7 +65,7 @@ export class SelectInput extends Input {
 
 	getOptions() {
 
-		return this._options;
+		return this.options;
 
 	}
 
