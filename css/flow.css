@@ -189,7 +189,7 @@ f-element button,
 f-element textarea {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 13px;
-	/*text-transform: capitalize;*/
+	text-transform: capitalize;
 	color: #eeeeee;
 	outline: solid 0px #000;
 	/*letter-spacing: .2px;*/
