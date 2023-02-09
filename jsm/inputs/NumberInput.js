@@ -1,8 +1,6 @@
 import { Input } from '../core/Input.js';
 import { draggableDOM } from '../core/Utils.js';
 
-const ENTER_KEY = 13;
-
 export class NumberInput extends Input {
 
 	constructor( value = 0, min = - Infinity, max = Infinity, step = .01 ) {
@@ -58,7 +56,7 @@ export class NumberInput extends Input {
 
 			}
 
-			if ( e.keyCode === ENTER_KEY ) {
+			if ( e.key === 'Enter' ) {
 
 				e.target.blur();
 

@@ -34,9 +34,9 @@ export class Search extends Menu {
 
 		inputDOM.onkeydown = ( e ) => {
 
-			const keyCode = e.keyCode;
+			const key = e.key;
 
-			if ( keyCode === 38 ) {
+			if ( key === 'ArrowUp' ) {
 
 				const index = this.filteredIndex;
 
@@ -54,7 +54,7 @@ export class Search extends Menu {
 
 				filter = false;
 
-			} else if ( keyCode === 40 ) {
+			} else if ( key === 'ArrowDown' ) {
 
 				const index = this.filteredIndex;
 
@@ -74,7 +74,7 @@ export class Search extends Menu {
 
 				filter = false;
 
-			} else if ( keyCode === 13 ) {
+			} else if ( key === 'Enter' ) {
 
 				this.value = this.currentFiltered ? this.currentFiltered.button.getValue() : inputDOM.value;
 
