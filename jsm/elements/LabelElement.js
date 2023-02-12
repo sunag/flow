@@ -40,7 +40,7 @@ export class LabelElement extends Element {
 
 	getIcon() {
 
-		return this.iconDOM?.className;
+		return this.iconDOM ? this.iconDOM.className : null;
 
 	}
 

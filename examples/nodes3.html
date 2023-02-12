@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>flow - javascript ui</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<link rel="icon" href="../favicon.ico" />
+	<link rel="stylesheet" href="css/page.css" type="text/css"/>
+	<link rel="stylesheet" href="../css/flow.css" type="text/css"/>
+	
+	<link rel="stylesheet" href="../fonts/open-sans/open-sans.css" type="text/css"/>
+	<link rel="stylesheet" href="../fonts/tabler-icons/tabler-icons.css" type="text/css"/>
+	<!-- -->
+</head>
+<style>
+/*
+flow {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 50%;
+	height: 50%;
+}
+*/
+</style>
+<body>
+	<flow></flow>
+	<script type="module">
+
+		import * as Flow from '../jsm/Flow.js';
+
+		const node = new Flow.Node();
+		node.setWidth( 350 );
+		node.setPosition( 100, 100 );
+		//node.add( new Flow.TitleElement( 'SEA3D Loader' ).setColor( 'purple' ).setOutput( 1 ).setOutputColor( 'fuchsia' ) );
+		node.add( new Flow.TitleElement( 'SEA3D Loader' ).setOutput( 1 ).setOutputColor( 'orange' ) );
+		node.add( new Flow.LabelElement( 'File' ).setInput( 1 ).setInputColor( 'cyan' ) );		
+		
+		const node2 = new Flow.Node();
+		node2.setWidth( 350 );
+		node2.setPosition( 100, 200 );
+		node2.add( new Flow.TitleElement( 'Set Material' ) );
+		node2.add( new Flow.LabelElement( 'Objects' ).setInput( 1 ).setInputColor( 'orange' ) );
+		node2.add( new Flow.LabelElement( 'Material' ).setInput( 1 ).setInputColor( 'forestgreen' ) );
+		node2.add( new Flow.LabelElement( 'Recursive' ).add( new Flow.ToggleInput( false ) ) );
+		
+		const node3 = new Flow.Node();
+		node3.setWidth( 350 );
+		node3.setPosition( 100, 300 );
+		node3.add( new Flow.TitleElement( 'Get Texture' ) );
+		node3.add( new Flow.LabelElement( 'Objects' ).setInput( 1 ).setInputColor( 'orange' ) );
+		node3.add( new Flow.LabelElement( 'File' ).setOutput( 1 ).setOutputColor( 'cyan' ) );
+		
+		const node4 = new Flow.Node();
+		node4.setWidth( 350 );
+		node4.setPosition( 100, 400 );
+		node4.add( new Flow.TitleElement( 'Find Material' ).setOutput( 1 ).setOutputColor( 'forestgreen' ) );
+		node4.add( new Flow.LabelElement( 'Objects' ).setInput( 1 ).setInputColor( 'orange' ) );	
+		node4.add( new Flow.LabelElement( 'Replace' ).setInput( 1 ).setInputColor( 'forestgreen' ) );	
+		node4.add( new Flow.LabelElement( 'Name' ).add( new Flow.StringInput() ) );
+		node4.add( new Flow.LabelElement( 'Case-Senstive' ).add( new Flow.ToggleInput( false ) ) );
+		
+		
+		const stringInput = new Flow.StringInput();
+		stringInput.addOption( 'Texture' );
+		stringInput.addOption( 'Mesh' );
+		//stringInput.clearOptions();
+		
+		
+		const node5 = new Flow.Node();
+		node5.setWidth( 350 );
+		node5.setPosition( 100, 600 );
+		node5.add( new Flow.TitleElement( 'Filter by name' )
+			.setOutput( 1 ).setOutputColor( 'orange' ) 
+			.setInput( 1 ).setInputColor( 'orange' )
+		);
+		node5.add( new Flow.LabelElement( 'Name' ).add( stringInput ) );
+		
+		const node6 = new Flow.Node();
+		node6.setWidth( 350 );
+		node6.setPosition( 100, 700 );
+		node6.add( new Flow.TitleElement( 'Filter by class' ).setOutput( 1 ).setOutputColor( 'orange' ) );
+		node6.add( new Flow.LabelElement( 'Objects' ).setInput( 1 ).setInputColor( 'orange' ) );	
+		node6.add( new Flow.LabelElement( 'Name' ).add( new Flow.SelectInput( [ 'Select' ] ) ) );
+		
+		const node7 = new Flow.Node();
+		node7.setWidth( 350 );
+		node7.setPosition( 100, 800 );
+		node7.add( new Flow.TitleElement( 'Filter by name' )
+			.setOutput( 1 ).setOutputColor( 'orange' ) 
+			.setInput( 1 ).setInputColor( 'orange' )
+		);
+		node7.add( new Flow.LabelElement( 'Name' ).add( new Flow.StringInput().setIcon( 'ti ti-api-app' ) ) );
+		
+		const stringInputBtns = new Flow.StringInput()
+			.addButton( new Flow.ButtonInput().setIcon( 'ti ti-list-search' ).onClick( () => console.log( 'Test' ) ) )
+			.addButton( new Flow.ButtonInput().setIcon( 'ti ti-123' ) );
+		
+		node7.add( new Flow.LabelElement( 'Name' ).add( stringInputBtns ) );
+		
+		/*
+		node.add(
+			new Flow.LabelElement( 'Numbers' )
+				.add( new Flow.StringInput() )
+				.setInput( 1 )
+				.setOutput( 1 )
+				.setInputColor( 'red' )
+		);
+		*/
+
+		const canvas = new Flow.Canvas();
+		canvas.setSize( window.innerWidth, window.innerHeight );
+		canvas.add( node );
+		canvas.add( node2 );
+		canvas.add( node3 );
+		canvas.add( node4 );
+		canvas.add( node5 );
+		canvas.add( node6 );
+		canvas.add( node7 );
+
+		window.onresize = () => canvas.setSize( window.innerWidth, window.innerHeight );
+
+		const dom = document.querySelector( 'flow' );
+		
+		dom.appendChild( canvas.dom );
+
+	</script>
+</body>
+</html>

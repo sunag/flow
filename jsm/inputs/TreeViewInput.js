@@ -1,4 +1,5 @@
 import { Input } from '../core/Input.js';
+import { dispatchEventList } from '../core/Utils.js';
 
 export class TreeViewNode {
 
@@ -8,7 +9,10 @@ export class TreeViewNode {
 		const labelDOM = document.createElement( 'f-treeview-label' );
 		const inputDOM = document.createElement( 'input' );
 
-		labelDOM.innerText = title;
+		const labelSpam = document.createElement( 'spam' );
+		labelDOM.append( labelSpam );
+
+		labelSpam.innerText = title;
 
 		inputDOM.type = 'checkbox';
 
@@ -21,6 +25,19 @@ export class TreeViewNode {
 		this.iconDOM = null;
 
 		this.children = [];
+
+		this.selected = false;
+
+		this.events = {
+			'change': [],
+			'click': []
+		};
+
+		dom.addEventListener( 'click', ( ) => {
+
+			dispatchEventList( this.events.click, this );
+
+		} );
 
 	}
 
@@ -63,13 +80,36 @@ export class TreeViewNode {
 
 	getIcon() {
 
-		return this.iconDOM?.className;
+		return this.iconDOM ? this.iconDOM.className : null;
 
 	}
 
 	setVisible( value ) {
 
 		this.dom.style.display = value ? '' : 'none';
+
+		return this;
+
+	}
+
+	setSelected( value ) {
+
+		if ( this.selected === value ) return this;
+
+		if ( value ) this.dom.classList.add( 'selected' );
+		else this.dom.classList.remove( 'selected' );
+
+		this.selected = value;
+
+		return this;
+
+	}
+
+	onClick( callback ) {
+
+		this.events.click.push( callback );
+
+		return this;
 
 	}
 
@@ -86,7 +126,6 @@ export class TreeViewInput extends Input {
 		dom.append( childrenDOM );
 
 		dom.setAttribute( 'type', 'tree' );
-		dom.classList.add( 'f-scroll' );
 
 		this.childrenDOM = childrenDOM;
 
@@ -100,6 +139,28 @@ export class TreeViewInput extends Input {
 		this.childrenDOM.append( node.dom );
 
 		return this;
+
+	}
+
+	serialize( data ) {
+
+		//data.options = [ ...this.options ];
+
+		super.serialize( data );
+
+	}
+
+	deserialize( data ) {
+
+		/*const currentOptions = this.options;
+
+		if ( currentOptions.length === 0 ) {
+
+			this.setOptions( data.options );
+
+		}*/
+
+		super.deserialize( data );
 
 	}
 

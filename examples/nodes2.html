@@ -34,7 +34,7 @@ flow {
 		node.setWidth( 350 );
 		node.setPosition( 100, 100 );
 
-		node.add( new Flow.TitleElement( 'Inputs' ).setIcon( 'ti ti-box-multiple-2' ).setStyle( 'blue' ) );
+		node.add( new Flow.TitleElement( 'Inputs' ).setIcon( 'ti ti-dots' ).setStyle( 'blue' ).setInput( 1 ).setOutput( 1 ) );
 
 		node.add(
 			new Flow.LabelElement( 'Numbers' )
@@ -42,6 +42,7 @@ flow {
 				.add( new Flow.NumberInput( 2 ) )
 				.add( new Flow.NumberInput( 3 ) )
 				.setInput( 1 )
+				.setOutput( 1 )
 				.setInputColor( 'red' )
 		);
 
@@ -78,7 +79,15 @@ flow {
 		node2.setWidth( 350 );
 		node2.setPosition( 200, 300 );
 
-		node2.add( new Flow.TitleElement( 'Addition' ).addButton( new Flow.ButtonInput( 'Test' ) ).setStyle( 'red' ) );
+		//node2.add( new Flow.TitleElement( 'Addition' ).addButton( new Flow.ButtonInput( 'X' ) ).setStyle( 'red' ) );
+		node2.add( 
+			new Flow.TitleElement( 'Addition' )
+				.addButton( new Flow.ButtonInput().setIcon( 'ti ti-dots' ) )
+				.addButton( new Flow.ButtonInput().setIcon( 'ti ti-grid-dots' ) )
+				.setStyle( 'red' )
+				.setOutput( 1 )
+		);
+		
 
 		const vector = new Flow.LabelElement( 'N 2' )
 			.setIcon( 'ti ti-palette' )
@@ -90,7 +99,7 @@ flow {
 
 		node2.add( vector );
 		node2.add( new Flow.LabelElement( 'Numbers' ).add( new Flow.ButtonInput( 'Test' ) ).setOutput( 3 ) );
-		node2.add( new Flow.LabelElement( 'Numbers' ).add( new Flow.SliderInput( .5, 0, 1 ) ) );
+		node2.add( new Flow.LabelElement( 'Numbers' ).add( new Flow.SliderInput( .5, 0, 1 ) ).setInput( 3 ) );
 
 		let abcElement;
 		let testElement;
@@ -119,20 +128,28 @@ flow {
 		abcElement.setAttribute( 'error', true );
 
 		const treeView = new Flow.TreeViewInput();
-		treeView.add( new Flow.TreeViewNode( 'File 1' ) );
-		treeView.add( new Flow.TreeViewNode( 'File 2' )
+		let viewNode, viewNode2, viewNode3;
+		treeView.add( viewNode = new Flow.TreeViewNode( 'File 1' ) );
+		treeView.add( viewNode2 = new Flow.TreeViewNode( 'File 2' ).setIcon( 'ti ti-adjustments-horizontal' )
 			.add( new Flow.TreeViewNode( 'Child 2' ) )
-			.add( new Flow.TreeViewNode( 'Child 3' ).add( new Flow.TreeViewNode( 'Child 4' ) ) ) 
+			.add( new Flow.TreeViewNode( 'Child 3' ) ) 
 		);
-		treeView.add( new Flow.TreeViewNode( 'File 3' ) );
+		treeView.add( viewNode3 = new Flow.TreeViewNode( 'File 3' ) );
 		treeView.add( new Flow.TreeViewNode( 'File 4' ) );
-		treeView.add( new Flow.TreeViewNode( 'File 5' ) );
-		treeView.add( new Flow.TreeViewNode( 'File 6' ) );
-		treeView.add( new Flow.TreeViewNode( 'File 7' ) );
-		treeView.add( new Flow.TreeViewNode( 'File 8' ) );
-		treeView.add( new Flow.TreeViewNode( 'File 9' ) );
 
 		node2.add( new Flow.Element().setHeight( 200 ).add( treeView ) );
+		
+		viewNode.setIcon( 'ti ti-3d-cube-sphere' );
+		viewNode.onClick( () => {
+		
+			viewNode.setSelected( !viewNode.selected );
+			
+			console.log( 'click' );
+			
+		} );
+		
+		//viewNode2.onClick( () => viewNode2.setSelected( !viewNode2.selected ) );
+		//viewNode3.onClick( () => viewNode3.setSelected( !viewNode3.selected ) );
 
 		//testElement.setColor( 'forestgreen' );
 
@@ -281,10 +298,6 @@ flow {
 		setTimeout( () => tip.tip( 'Message box!!! (7)' ), 3000 );
 		setTimeout( () => tip.tip( 'Message box!!! (8)' ), 4000 );
 		dom.appendChild( tip.dom );
-
-
-		Flow.Styles.icons.unlink = 'ti ti-unlink';
-		
 
 		//const jsonCanvas = Flow.Loader.parse( json );
 

@@ -27,6 +27,18 @@
 			</f-inputs>
 		</f-element>
 		<f-element>
+			<f-label>Auto Complete</f-label>
+			<f-inputs>
+				<f-string>
+					<input type="text" spellcheck="false" autocomplete="on" list="myOptions" value=""/>
+					<datalist id="myOptions">
+						<option value="Textures">
+						<option value="Meshes">
+					</datalist>
+				</f-string>
+			</f-inputs>
+		</f-element>
+		<f-element>
 			<f-label>Color</f-label>
 			<f-inputs>
 				<input type="color" value="#FF9900"/>
@@ -88,6 +100,75 @@
 			<f-inputs>
 				<textarea>Static Text Area.</textarea>
 			</f-inputs>
+		</f-element>
+		<f-element>
+			<input class="number" type="text" spellcheck="false" autocomplete="off" value="0.0"/>
+		</f-element>
+		<f-element style="height: 200px">
+			<f-treeview>
+				<f-treeview-children>
+					<f-treeview-node>
+						<input type="checkbox">
+						<f-treeview-label>🗀 1.1 File</f-treeview-label>
+					</f-treeview-node>
+					<f-treeview-node>
+						<input type="checkbox">
+						<f-treeview-label>🗀 1.1 File</f-treeview-label>
+					</f-treeview-node>
+					<f-treeview-node>
+						<input type="checkbox">
+						<f-arrow></f-arrow>
+						<f-treeview-label>1.2 File</f-treeview-label>
+						<f-treeview-children>
+							<f-treeview-node>
+								<input type="checkbox">
+								<f-treeview-label>❤ 1.3.1 File</f-treeview-label>
+							</f-treeview-node>
+							<f-treeview-node>
+								<input type="checkbox">
+								<f-treeview-label>❤ 1.3.2 File</f-treeview-label>
+							</f-treeview-node>
+							<f-treeview-node>
+								<input type="checkbox">
+								<f-arrow></f-arrow>
+								<f-treeview-label>❤ 1.3.3 Folder</f-treeview-label>
+								<f-treeview-children>
+									<f-treeview-node>
+										<input type="checkbox">
+										<f-treeview-label>1.3.3.1 File</f-treeview-label>
+									</f-treeview-node>
+									<f-treeview-node>
+										<input type="checkbox">
+										<f-treeview-label>1.3.3.2 File</f-treeview-label>
+									</f-treeview-node>
+									<f-treeview-node>
+										<input type="checkbox">
+										<f-treeview-label>1.3.3.3 Folder</f-treeview-label>
+										<f-treeview-children>
+											<f-treeview-node>
+												<input type="checkbox">
+												<f-treeview-label>1.3.3.3.1 File</f-treeview-label>
+											</f-treeview-node>
+											<f-treeview-node>
+												<input type="checkbox">
+												<f-treeview-label>1.3.3.3.4 File</f-treeview-label>
+											</f-treeview-node>
+										</f-treeview-children>
+									</f-treeview-node>
+									<f-treeview-node>
+										<input type="checkbox">
+										<f-treeview-label>1.3.3.4 File</f-treeview-label>
+									</f-treeview-node>
+								</f-treeview-children>
+							</f-treeview-node>
+							<f-treeview-node>
+								<input type="checkbox">
+								<f-treeview-label>1.3.4 File</f-treeview-label>								
+							</f-treeview-node>
+						</f-treeview-children>
+					</f-treeview-node>
+				</f-treeview-children>
+			</f-treeview>
 		</f-element>
 		<f-element class="large">
 			<button type="button">OK</button>

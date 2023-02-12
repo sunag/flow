@@ -1,7 +1,5 @@
 import { Input } from '../core/Input.js';
 
-const ENTER_KEY = 13;
-
 export class TextInput extends Input {
 
 	constructor( innerText = '' ) {
@@ -27,7 +25,7 @@ export class TextInput extends Input {
 
 		dom.onkeyup = ( e ) => {
 
-			if ( e.keyCode === ENTER_KEY ) {
+			if ( e.key === 'Enter' ) {
 
 				e.target.blur();
 
