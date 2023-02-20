@@ -3,7 +3,7 @@ import { dispatchEventList } from '../core/Utils.js';
 
 export class TreeViewNode {
 
-	constructor( title = '' ) {
+	constructor( name = '' ) {
 
 		const dom = document.createElement( 'f-treeview-node' );
 		const labelDOM = document.createElement( 'f-treeview-label' );
@@ -12,7 +12,7 @@ export class TreeViewNode {
 		const labelSpam = document.createElement( 'spam' );
 		labelDOM.append( labelSpam );
 
-		labelSpam.innerText = title;
+		labelSpam.innerText = name;
 
 		inputDOM.type = 'checkbox';
 
@@ -21,9 +21,12 @@ export class TreeViewNode {
 
 		this.dom = dom;
 		this.childrenDOM = null;
+		this.labelSpam = labelSpam;
 		this.labelDOM = labelDOM;
+		this.inputDOM = inputDOM;
 		this.iconDOM = null;
 
+		this.parent = null;
 		this.children = [];
 
 		this.selected = false;
@@ -38,6 +41,20 @@ export class TreeViewNode {
 			dispatchEventList( this.events.click, this );
 
 		} );
+
+	}
+
+	setLabel( value ) {
+
+		this.labelSpam.innerText = value;
+
+		return this;
+
+	}
+
+	getLabel() {
+
+		return this.labelSpam.innerText;
 
 	}
 
@@ -62,7 +79,23 @@ export class TreeViewNode {
 		this.children.push( node );
 		childrenDOM.append( node.dom );
 
+		node.parent = this;
+
 		return this;
+
+	}
+
+	setOpened( value ) {
+
+		this.inputDOM.checked = value;
+
+		return this;
+
+	}
+
+	getOpened() {
+
+		return this.inputDOM.checkbox;
 
 	}
 
