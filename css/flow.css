@@ -1,8 +1,13 @@
 f-element .ti {
 	vertical-align: middle;
-    font-size: 26px;
+    font-size: 22px;
     display: inline-block;
-    margin-top: -6px;
+    margin-top: -3px;
+}
+
+f-element f-disconnect .ti {
+	font-size: 25px;
+	margin-top: -9px;
 }
 
 @keyframes f-animation-open {
@@ -64,8 +69,8 @@ f-canvas canvas.frontground {
 /* @TODO: move to local */
 
 ::-webkit-scrollbar {
-	width: 8px;
-	height: 8px;
+	width: 6px;
+	height: 6px;
 }
 
 ::-webkit-scrollbar-thumb:hover{
@@ -78,7 +83,7 @@ f-canvas canvas.frontground {
 
 ::-webkit-scrollbar-thumb {
 	background-color: #666666;
-	border-radius: 10px;
+	border-radius: 8px;
 	border: 0;
 }
 
@@ -188,8 +193,9 @@ f-element select,
 f-element button,
 f-element textarea {
 	font-family: 'Open Sans', sans-serif;
-	font-size: 13px;
-	text-transform: capitalize;
+	font-size: 12px;
+	text-transform: initial;
+	line-height: normal;
 	color: #eeeeee;
 	outline: solid 0px #000;
 	/*letter-spacing: .2px;*/
@@ -312,7 +318,7 @@ f-element input {
 }
 
 f-element f-string:has( i[type=icon] ) input {
-	padding-left: 23px;
+	padding-right: 23px;
 }
 
 f-element input.number {
@@ -459,7 +465,7 @@ f-element f-toolbar {
     line-height: 18px;
 	display: inline-flex;
     justify-content: flex-end;
-	right: 0;
+	left: 2px;
 }
 
 f-element f-toolbar button {
@@ -501,7 +507,7 @@ f-element button {
 	height: calc( 100% - 4px );
 	margin-left: 2px;
 	margin-right: 2px;
-	margin-top: 2px;
+	margin-top: 3px;
 	border-radius: 3px;
 	cursor: pointer;
 	/*text-transform: uppercase;*/
@@ -574,6 +580,7 @@ f-element f-label i {
 	font-size: 18px;
 	margin-right: 4px;
 	vertical-align: sub;
+	margin-right: 0;
 }
 
 f-element f-label.center {
@@ -636,7 +643,7 @@ f-element.title f-title {
 f-element.title i {
 	font-size: 24px;
 	position: absolute;
-	left: 11px;
+	right: 8px;
 	top: 50%;
 	transform: translateY( -50% );
 	margin-top: -2px;
@@ -858,6 +865,10 @@ f-treeview f-treeview-label {
 	color: #aaa;
 }
 
+f-treeview f-treeview-label spam {
+	margin-top: 1px;
+}
+
 f-treeview f-treeview-label i {
 	color: #ccc;	
 	transition: color 0.1s ease;
@@ -928,12 +939,13 @@ f-string i[type=icon] {
     font-size: 22px;
     color: #999;
     position: absolute;
-    left: 13px;
+    right: 8px;
     top: calc( 50% - 7px );
+	margin-top: -5px;
 }
 
 f-inputs f-string i[type=icon] {
-    left: 5px;
+    right: 0;
 }
 
 f-string f-buttons i:hover {
@@ -1120,7 +1132,7 @@ f-menu.search f-item button i {
 
 f-menu.context f-item button span,
 f-menu.search f-item button span {
-	margin-left: 6px;
+	margin-left: 4px;
 }
 
 f-menu.context f-item:hover > button,
@@ -1272,7 +1284,7 @@ f-menu.circle f-item {
 f-menu.circle f-item button {
 	width: 47px;
 	height: 47px;
-	font-size: 27px;
+	font-size: 28px;
 	padding-left: 6px;
 	background: #17171794;
 	border-radius: 50%;
@@ -1331,7 +1343,8 @@ f-menu.circle.top f-item f-tooltip {
 		transition: opacity 0.2s ease;
 	}
 
-	body:not(.connecting) f-node:hover > f-element f-toolbar {
+	body:not(.connecting) f-node:hover > f-element f-toolbar,
+	f-node.selected f-element f-toolbar {
 		visibility: visible;
 		opacity: 1;
 	}
