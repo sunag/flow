@@ -130,7 +130,7 @@ flow {
 		const treeView = new Flow.TreeViewInput();
 		let viewNode, viewNode2, viewNode3;
 		treeView.add( viewNode = new Flow.TreeViewNode( 'File 1' ) );
-		treeView.add( viewNode2 = new Flow.TreeViewNode( 'File 2' ).setIcon( 'ti ti-adjustments-horizontal' )
+		treeView.add( viewNode2 = new Flow.TreeViewNode( 'File 2' ).setOpened( true ).setIcon( 'ti ti-adjustments-horizontal' )
 			.add( new Flow.TreeViewNode( 'Child 2' ) )
 			.add( new Flow.TreeViewNode( 'Child 3' ) ) 
 		);
