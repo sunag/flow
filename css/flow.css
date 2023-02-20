@@ -207,6 +207,17 @@ f-element textarea {
 	transition: background 0.2s ease, filter 0.2s ease;
 }
 
+f-node.resizable {
+	display: grid;
+	width: auto !important;
+}
+
+f-node.resizable f-element:last-child {
+	resize: both;
+	overflow: auto;
+	min-width: 100px;
+}
+
 f-element input:read-only {
 	color: #666;
 }

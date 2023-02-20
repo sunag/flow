@@ -61,6 +61,7 @@ export class Node extends Serializer {
 		this.style = '';
 
 		this.canvas = null;
+		this.resizable = false;
 
 		this.elements = [];
 
@@ -76,6 +77,26 @@ export class Node extends Serializer {
 	get baseElement() {
 
 		return this.elements[ 0 ];
+
+	}
+
+	setResizable( val ) {
+
+		this.resizable = val === true;
+
+		if ( this.resizable ) {
+
+			this.dom.classList.add( 'resizable' );
+
+		} else {
+
+			this.dom.classList.remove( 'resizable' );
+
+		}
+
+		this.updateSize();
+
+		return this;
 
 	}
 
@@ -135,6 +156,8 @@ export class Node extends Serializer {
 
 		this.dom.style.width = numberToPX( val );
 
+		this.updateSize();
+
 		return this;
 
 	}
@@ -154,8 +177,7 @@ export class Node extends Serializer {
 	getBound() {
 
 		const { x, y } = this.getPosition();
-		const width = this.getWidth();
-		const height = this.getHeight();
+		const { width, height } = this.dom.getBoundingClientRect();
 
 		return { x, y, width, height };
 
@@ -171,6 +193,8 @@ export class Node extends Serializer {
 
 		this.dom.append( element.dom );
 
+		this.updateSize();
+
 		return this;
 
 	}
@@ -184,6 +208,8 @@ export class Node extends Serializer {
 		element.removeEventListener( 'connectChildren', this._onConnectChildren );
 
 		this.dom.removeChild( element.dom );
+
+		this.updateSize();
 
 		return this;
 
@@ -245,6 +271,26 @@ export class Node extends Serializer {
 
 	}
 
+	updateSize() {
+
+		if ( this.resizable !== true ) return;
+
+		for ( const element of this.elements ) {
+
+			element.dom.style.width = '';
+
+		}
+
+		const element = this.elements[ this.elements.length - 1 ];
+
+		if ( element !== undefined ) {
+
+			element.dom.style.width = this.dom.style.width;
+
+		}
+
+	}
+
 	serialize( data ) {
 
 		const { x, y } = this.getPosition();
@@ -261,6 +307,7 @@ export class Node extends Serializer {
 		data.y = y;
 		data.width = this.getWidth();
 		data.elements = elements;
+		data.autoResize = this.resizable;
 
 		if ( this.style !== '' ) {
 
@@ -274,6 +321,7 @@ export class Node extends Serializer {
 
 		this.setPosition( data.x, data.y );
 		this.setWidth( data.width );
+		this.setResizable( data.autoResize );
 
 		if ( data.style !== undefined ) {
 
