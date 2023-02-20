@@ -36,6 +36,10 @@ export class StringInput extends Input {
 
 		};
 
+		let keyDownStr = '';
+
+		inputDOM.onkeydown = () => keyDownStr = inputDOM.value;
+
 		inputDOM.onkeyup = ( e ) => {
 
 			if ( e.key === 'Enter' ) {
@@ -46,7 +50,11 @@ export class StringInput extends Input {
 
 			e.stopPropagation();
 
-			this.dispatchEvent( new Event( 'change' ) );
+			if ( keyDownStr !== inputDOM.value ) {
+
+				this.dispatchEvent( new Event( 'change' ) );
+
+			}
 
 		};
 
@@ -163,4 +171,3 @@ export class StringInput extends Input {
 	}
 
 }
-
