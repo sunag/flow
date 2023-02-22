@@ -619,6 +619,11 @@ f-element.title {
     border-top-right-radius: 6px;
 }
 
+f-element:last-child {
+	border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
 f-element.blue {
 	background-color: #014fc5;
 }
