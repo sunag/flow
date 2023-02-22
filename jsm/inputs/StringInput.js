@@ -156,17 +156,9 @@ export class StringInput extends Input {
 
 	}
 
-	setValue( val ) {
+	getInput() {
 
-		this.inputDOM.value = val;
-
-		return this;
-
-	}
-
-	getValue() {
-
-		return this.inputDOM.value;
+		return this.inputDOM;
 
 	}
 
