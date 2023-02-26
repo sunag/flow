@@ -16,16 +16,9 @@ function __flow__addCSS( css ) {
 
 }
 
-__flow__addCSS( `@keyframes f-animation-open { 0% { transform: scale(.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; }}f-canvas,f-canvas canvas { position: absolute; top: 0; left: 0; margin: 0; padding: 0; width: 100%; height: 100%; -webkit-touch-callout: none; }f-canvas { overflow: auto; cursor: grab;}f-canvas canvas.front { z-index: 10;}body.dragging *:not(.drag) { pointer-events: none !important;}f-canvas.grabbing * { cursor: grabbing; user-select: none;}f-canvas canvas { position: fixed; overflow: hidden; pointer-events: none;}f-canvas::-webkit-scrollbar { width: 8px; height: 8px;}f-canvas::-webkit-scrollbar-thumb:hover{ background: #014fc5;}f-canvas::-webkit-scrollbar-track { background: #363636;}f-canvas::-webkit-scrollbar-thumb { background-color: #666666; border-radius: 10px; border: 0;}f-canvas f-content,f-canvas f-area { position: absolute; display: block;}f-node { position: absolute; margin: 0; padding: 0; user-select: none; width: 320px; z-index: 1; cursor: auto; filter: drop-shadow(0 0 10px #00000061); backdrop-filter: blur(4px);}f-node.selected { z-index: 2;}f-node.selected,f-canvas.dragging-rio f-node:hover,f-canvas.dragging-lio f-node:hover { filter: drop-shadow(0 0 10px #00000061) drop-shadow(0 0 8px #4444dd);}f-node.closed f-element:not(:first-child) { display: none;}f-node.center { top: 50%; left: 50%; transform: translate( -50%, -50% );}f-node.top-right { top: 0; right: 0;}f-node.top-center { top: 0; left: 50%; transform: translateX( -50% );}f-node.top-left { top: 0; left: 0;}f-node { transition: filter 0.2s ease;}f-node { animation: .2s f-animation-open 1 alternate ease-out;}f-tips,f-drop,f-menu,f-menu input,f-menu button,f-element,f-element input,f-element select,f-element button,f-element textarea { font-family: 'Open Sans', sans-serif; font-size: 13px; text-transform: capitalize; color: #eeeeee; outline: solid 0px #000; margin: 0; padding: 0; border: 0; user-select: none; -webkit-tap-highlight-color: transparent; transition: background 0.2s ease, filter 0.2s ease;}f-element input:read-only { color: #666;}f-element input,f-element textarea { text-transform: initial;}f-element input { transition: background 0.1s ease;}f-element input,f-element select,f-element button,f-element textarea { background-color: #232324d1;}f-element { position: relative; width: calc( 100% - 14px ); background: rgba(45, 45, 48, 0.95); pointer-events: auto; border-bottom: 2px solid #232323; display: flex; padding-left: 7px; padding-right: 7px; padding-top: 2px; padding-bottom: 2px;}f-element:after,f-element:before { transition: opacity .17s; opacity: 0; content: '';}f-element[tooltip]:hover:after,f-element[tooltip]:focus-within:after { font-size: 14px !important; display: flex; justify-content: center; position: fixed; margin-left: -7px; width: calc( 100% ); background: #1d1d1de8; border: 1px solid #444444a1; border-radius: 6px; color: #dadada; content: attr( tooltip ); margin-top: -41px; font-size: 16px; padding-top: 3px; padding-bottom: 3px; z-index: 10; opacity: 1; backdrop-filter: blur(4px); white-space: nowrap; overflow: hidden; text-shadow: 1px 1px 0px #0007;}f-element[tooltip]:hover:before,f-element[tooltip]:focus-within:before { border: solid; border-color: #1d1d1de8 transparent; border-width: 12px 6px 0 6px; left: calc( 50% - 6px ); bottom: 30px; position: absolute; opacity: 1; z-index: 11;}f-element[error] { background-color: #ff0000;}f-element[error]:hover:after,f-element[error]:focus-within:after { border: none; background-color: #ff0000bb; filter: drop-shadow( 2px 2px 5px #000 ); color: #fff;}f-element[error]:hover:before,f-element[error]:focus-within:before { border-color: #ff0000bb transparent;}f-element { height: 24px;}f-element input { margin-top: 2px; margin-bottom: 2px; box-shadow: inset 0px 1px 1px rgb(0 0 0 / 20%), 0px 1px 0px rgb(255 255 255 / 5%); margin-left: 2px; margin-right: 2px; width: 100%; padding-left: 4px; padding-right: 4px;}f-element input.number { cursor: col-resize;}f-element input:focus[type='text'], f-element input:focus[type='range'], f-element input:focus[type='color'] { background: rgba( 0, 0, 0, 0.6 ); outline: solid 1px rgba( 0, 80, 200, 0.98 );}f-element input[type='color'] { appearance: none; padding: 0; margin-left: 2px; margin-right: 2px; height: calc( 100% - 4px ); margin-top: 2px; border: none;}f-element input[type='color']::-webkit-color-swatch-wrapper { padding: 2px;}f-element input[type='color']::-webkit-color-swatch { border: none; cursor: alias;}f-element input[type='range'] { appearance: none; width: 100%; overflow: hidden; padding: 0; cursor: ew-resize;}f-element input[type='range']::-webkit-slider-runnable-track { appearance: none; height: 10px; color: #13bba4; margin: 0;}f-element input[type='range']::-webkit-slider-thumb { appearance: none; width: 0; background: #434343; box-shadow: -500px 0 0 500px rgba( 0, 120, 255, 0.98 ); border-radius: 50%; border: 0 !important;}f-element input[type='range']::-webkit-slider-runnable-track { margin-left: -4px; margin-right: -5px;}f-element input[type='checkbox'] { appearance: none; cursor: pointer;}f-element input[type='checkbox'].toggle { height: 20px; width: 45px; border-radius: 16px; display: inline-block; position: relative; margin: 0; margin-top: 2px; background: linear-gradient( 0deg, #292929 0%, #0a0a0ac2 100% ); transition: all 0.2s ease;}f-element input[type='checkbox'].toggle:after { content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: white; box-shadow: 0 1px 2px rgba(44, 44, 44, 0.2); transition: all 0.2s cubic-bezier(0.5, 0.1, 0.75, 1.35);}f-element input[type='checkbox'].toggle:checked { background: linear-gradient( 0deg, #0177fb 0%, #0177fb 100% );}f-element input[type='checkbox'].toggle:checked:after { transform: translatex(25px);}f-element.auto-height { display: table;}f-element textarea { width: calc( 100% - 18px ); padding-top: 1px; padding-bottom: 3px; padding-left: 3px; padding-right: 8px; margin-top: 2px; margin-left: 2px; height: calc( 100% - 8px ); max-height: 300px; border-radius: 2px; resize: none; box-shadow: inset 0px 1px 1px rgb(0 0 0 / 20%), 0px 1px 0px rgb(255 255 255 / 5%);}f-element.auto-height textarea { resize: auto;}f-element select { width: 100%; margin-top: 2px; margin-bottom: 2px; margin-left: 2px; margin-right: 2px; cursor: pointer; box-shadow: inset 0px 1px 1px rgb(0 0 0 / 20%), 0px 1px 0px rgb(255 255 255 / 5%);}f-element f-toolbar { position: absolute; display: flex; top: 0; width: 100%; height: 100%; align-content: space-around;}f-element.input-right f-toolbar { right: 7px; float: right; justify-content: end;}f-element f-toolbar { margin-top: auto; margin-bottom: auto; margin-left: 3px; margin-right: 3px; font-size: 18px; line-height: 18px;}f-element f-toolbar button { opacity: .7; cursor: pointer; font-size: 14px; width: unset; height: unset; border-radius: unset; border: unset; outline: 0; background-color: unset; box-shadow: unset;}f-element f-toolbar button:hover,f-element f-toolbar button:active { opacity: 1; border: 0; background-color: unset;}f-element input.range-value { width: 60px; text-align: center;}f-menu.context button,f-element button { width: 100%; height: calc( 100% - 4px ); margin-left: 2px; margin-right: 2px; margin-top: 2px; border-radius: 3px; cursor: pointer;}f-element button { box-shadow: inset 1px 1px 1px 0 rgb(255 255 255 / 17%), inset -2px -2px 2px 0 rgb(0 0 0 / 26%);}f-element button:hover { color: #fff; background-color: #2a2a2a;}f-element button:active { border: 1px solid rgba( 0, 120, 255, 0.98 );}f-element f-inputs,f-element f-subinputs { display: flex; justify-content: flex-end; width: 100%;}f-element f-inputs { left: 100px; top: 50%; transform: translateY(-50%); position: absolute; width: calc( 100% - 106px ); height: calc( 100% - 4px ); z-index: 1;}f-element.inputs-disable f-inputs { filter: grayscale(100%); opacity: .5;}f-element.inputs-disable f-inputs input { pointer-events: none;}f-element f-label,f-element span { margin: auto; text-shadow: 1px 1px 0px #0007;}f-element f-label { padding-left: 4px; white-space: nowrap; position: absolute; top: 50%; transform: translateY(-50%); width: calc( 100% - 20px );}f-element.right f-label { text-align: right;}f-element.center f-label { text-align: center;}f-element f-label i { float: left; font-size: 18px; margin-right: 6px;}f-element f-label.center { width: 100%; text-align: center; display: block;}f-element.title { height: 29px; background-color: #3a3a3ab0; background-color: #3b3b43ed; cursor: all-scroll; border-top-left-radius: 6px; border-top-right-radius: 6px;}f-element.blue { background-color: #014fc5;}f-element.red { background-color: #bd0b0b;}f-element.green { background-color: #148d05;}f-element.yellow { background-color: #d6b100;}f-element.title.left { text-align: left; display: inline-grid; justify-content: start;}f-element.title span { text-align: center; font-size: 15px; padding-top: 2px;}f-element.title i { font-size: 18px; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); opacity: .5;}f-element.title f-toolbar i { font-size: 20px; right: unset; left: 0px;}f-element.input-right.title i { left: 10px; right: unset;}f-element.title.left span { text-align: left;}f-element f-io { border: 2px solid #dadada; width: 7px; height: 7px; position: absolute; background: #242427; border-radius: 8px; float: left; left: -7px; top: calc( 50% - 5px ); cursor: alias; box-shadow: 0 0 3px 2px #0000005e; z-index: 1;}f-element f-io.connect,f-canvas.dragging-rio f-element:hover f-io.lio,f-canvas.dragging-lio f-element:hover f-io.rio { zoom: 1.4;}f-node.io-connect f-io:not(.connect) { border: 2px solid #dadada !important; zoom: 1 !important;}f-element f-io.rio { float: right; right: -7px; left: unset;}f-element f-disconnect { position: absolute; left: -35px; top: 50%; font-size: 22px; transform: translateY( -50% ); filter: drop-shadow(0 0 5px #000); text-shadow: 0px 0px 5px black; cursor: pointer; transition: all .2s;}f-element.input-right f-disconnect { right: -35px; left: unset;}f-element f-disconnect:hover { color: #ff3300;}f-element textarea::-webkit-scrollbar { width: 6px;}f-element textarea::-webkit-scrollbar-track { background: #111; } f-element textarea::-webkit-scrollbar-thumb { background: #0177fb; }f-element textarea::-webkit-scrollbar-thumb:hover { background: #1187ff; }f-element.small { height: 18px;}f-element.large { height: 36px;}body.connecting f-node:not(.io-connect) f-element:hover,f-element.select { background-color: rgba(61, 70, 82, 0.98);}f-element.invalid > f-io { zoom: 1 !important;}f-element.invalid::after { font-size: 14px !important; display: flex; justify-content: center; align-items:center; margin: auto; position: absolute; width: 100%; height: 100%; background: #bd0b0b77; vertical-align: middle; color: #fff; content: 'Not Compatible'; opacity: .95; backdrop-filter: grayscale(100%); white-space: nowrap; overflow: hidden; left: 0; top: 0; text-transform: initial;}f-element.invalid > f-inputs,f-element.invalid > f-label,f-element.invalid > input,f-element.invalid > select { opacity: .1;}f-drop { width: 100%; height: 100%; position: sticky; left: 0; top: 0; background: #02358417; text-align: center; justify-content: center; align-items: center; display: flex; box-shadow: inset 0 0 20px 10px #464ace17; pointer-events: none; transition: all .07s; opacity: 0; visibility: hidden;}f-drop.visible { visibility: unset; opacity: unset; transition: all .23s;}f-drop span { opacity: .5; font-size: 40px; text-shadow: 0px 0px 5px #000; font-weight: bold;}f-tooltip { pointer-events: none;}f-tooltip { position: absolute; left: 0; top: 0; background: rgba(0,0,0,.8); backdrop-filter: blur(4px); font-size: 14px; padding: 7px; left: 50%; border-radius: 10px; transform: translateX(-50%); visibility: hidden; pointer-events: none; opacity: 0; transition: all 0.3s ease; z-index: 150; white-space: nowrap;}f-menu.context,f-menu.search { position: absolute;}f-menu.context { width: 170px; z-index: 110;}f-menu.search { bottom: 85px; left: 50%; transform: translateX(-50%); z-index: 10; width: 300px;}f-menu.context f-list { display: block; margin: 0; background: #171717e6; font-size: 12px; border-radius: 6px; backdrop-filter: blur(6px); border: 1px solid #7e7e7e45; box-shadow: 3px 3px 6px rgba(0,0,0,.2); transition: opacity 0.2s ease, transform 0.1s ease;}f-menu.search f-list { margin: 0 6px 0 6px; display: flex; flex-direction: column-reverse; margin-bottom: 5px;}f-menu.context.hidden { visibility: hidden; opacity: 0;}f-menu.context f-item,f-menu.search f-item { display: block; position: relative; margin: 0; padding: 0; white-space: nowrap;}f-menu.search f-item { opacity: 0;}f-menu.context f-item.submenu::after { content: ""; position: absolute; right: 6px; top: 50%; -webkit-transform: translateY(-50%); transform: translateY(-50%); border: 5px solid transparent; border-left-color: #808080;}f-menu.context f-item:hover > f-menu,f-menu.context f-item.active > f-menu { visibility: unset; transform: unset; opacity: unset;}f-menu.context f-menu { top: 0px; left: calc( 100% - 4px );}f-menu.context f-item button,f-menu.search f-item button { overflow: visible; display: block; width: calc( 100% - 6px ); text-align: left; cursor: pointer; white-space: nowrap; padding: 6px 8px; border-radius: 3px; background: rgba(45, 45, 48, 0.95); border: 0; color: #ddd; margin: 3px; text-shadow: 1px 1px 0px #0007;}f-menu.context f-item button i,f-menu.search f-item button i { float: left; font-size: 16px;}f-menu.context f-item button span,f-menu.search f-item button span { margin-left: 6px;}f-menu.context f-item:hover > button,f-menu.search f-item:hover > button,f-menu.search f-item.active > button { color: #fff; background-color: rgba(61, 70, 82, 0.98);}f-menu.search f-item:hover,f-menu.search f-item.active { opacity: 1 !important;}f-menu.context f-item button:active { outline: solid 1px rgba( 0, 80, 200, 0.98 );}f-menu.context f-item f-tooltip { margin-left: 85px; top: -50px;}f-menu.search f-item { display: none;}f-menu.search f-item:nth-child(1) { opacity: 1; display: unset;}f-menu.search f-item:nth-child(2) { opacity: .8; display: unset;}f-menu.search f-item:nth-child(3) { opacity: .6; display: unset;}f-menu.search f-item:nth-child(4) { opacity: .4; display: unset;}f-menu.search f-item button { border-radius: 14px;}f-tips { right: 10px; top: 10px; position: absolute; z-index: 100; pointer-events: none; display: flex; flex-direction: column;}f-tips f-tip { width: 450px; font-size: 13px; border-radius: 6px; text-align: center; display: block; height: auto; color: #ffffffe0; margin: 4px; padding: 4px; background: #17171794; border: 1px solid #7e7e7e38; line-height: 100%; backdrop-filter: blur(6px); transition: all 0.2s ease; text-transform: initial; opacity: 0;}f-tips f-tip:nth-child(1) { opacity: 1;}f-tips f-tip:nth-child(2) { opacity: .75;}f-tips f-tip:nth-child(3) { opacity: .25;}f-tips f-tip:nth-child(4) { opacity: .1;}f-tips f-tip.error { background: #b900005e;}f-menu.search input { width: calc( 100% - 28px ); height: 41px; position: absolute; z-index: 10; border-radius: 20px; padding-left: 14px; padding-right: 14px; font-size: 15px; background-color: #17171794; border: 1px solid #7e7e7e45; backdrop-filter: blur(6px); box-shadow: 3px 3px 6px rgb(0 0 0 / 20%); text-transform: initial;}f-menu.circle { position: absolute; left: 40px; bottom: 40px; z-index: 100;}f-menu.circle f-item { align-content: space-around; margin-right: 20px;}f-menu.circle f-item button { width: 47px; height: 47px; font-size: 22px; background: #17171794; border-radius: 50%; backdrop-filter: blur(6px); border: 1px solid #7e7e7e45; line-height: 100%; cursor: pointer; box-shadow: 3px 3px 6px rgba(0,0,0,.2);}f-menu.circle f-item f-tooltip { margin-top: -60px;}.f-rounded f-node f-element,.f-rounded f-node f-element.title.left { border-radius: 10px 5px 10px 5px;}.f-rounded f-node f-element input, .f-rounded f-node f-element select,.f-rounded f-node f-element button,.f-rounded f-node f-element textarea,.f-rounded f-node f-element input[type='checkbox'].toggle,.f-rounded f-node f-element input[type='checkbox'].toggle:after { border-radius: 20px 10px;}.f-rounded f-node f-element input { padding-left: 7px; padding-right: 7px;}.f-rounded f-menu.context,.f-rounded f-menu.context f-item button { border-radius: 20px 10px;}@media (hover: hover) and (pointer: fine) { f-node:not(.selected):hover { filter: drop-shadow(0 0 6px #66666630); } f-element f-toolbar { visibility: hidden; opacity: 0; transition: opacity 0.2s ease; } f-node:hover > f-element f-toolbar { visibility: visible; opacity: 1; } f-element f-io:hover { zoom: 1.4; } f-menu.circle f-item button:hover { background-color: #2a2a2a; } f-menu.search input:hover, f-menu.search input:focus { background-color: #1a1a1a; filter: drop-shadow(0 0 6px #66666630); } f-menu.search input:focus { filter: drop-shadow(0 0 8px #4444dd); } f-menu.circle f-item button:hover > f-tooltip, f-menu.context f-item button:hover > f-tooltip { visibility: visible; opacity: 1; } f-menu.circle f-item button:hover > f-tooltip { margin-top: -50px; } f-menu.context f-item button:hover > f-tooltip { top: -30px; } f-menu.circle f-item button:focus > f-tooltip, f-menu.context f-item button:focus > f-tooltip { visibility: hidden; opacity: 0; }}@media (hover: none) and (pointer: coarse) { body.dragging f-canvas, body.connecting f-canvas { overflow: hidden !important; }}f-canvas { will-change: top, left;}f-node { will-change: transform !important;}` );
+__flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 22px; display: inline-block; margin-top: -3px;}f-element f-disconnect .ti { font-size: 25px; margin-top: -9px;}@keyframes f-animation-open { 0% { transform: scale(.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; }}f-canvas,f-canvas canvas.background,f-canvas canvas.frontground { position: absolute; top: 0; left: 0; margin: 0; padding: 0; width: 100%; height: 100%; -webkit-touch-callout: none; transition: opacity .17s;}f-canvas { cursor: grab;}f-canvas canvas.frontground { z-index: 10;}body.dragging *:not(.drag) { pointer-events: none !important;}f-canvas.grabbing * { cursor: grabbing; user-select: none;}f-canvas canvas.background,f-canvas canvas.frontground { position: fixed; overflow: hidden;}f-canvas canvas.frontground { pointer-events: none;}::-webkit-scrollbar { width: 6px; height: 6px;}::-webkit-scrollbar-thumb:hover{ background: #014fc5;}::-webkit-scrollbar-track { background: #363636;}::-webkit-scrollbar-thumb { background-color: #666666; border-radius: 8px; border: 0;}f-canvas f-content { left: 0; top: 0;}f-canvas f-content,f-canvas f-area { position: absolute; display: block;}f-canvas canvas.map { position: absolute; top: 10px; right: 10px; z-index: 50; backdrop-filter: blur( 10px ); background-color: rgba( 45, 45, 48, .8 );}f-node { position: absolute; margin: 0; padding: 0; user-select: none; width: 320px; z-index: 1; cursor: auto; filter: drop-shadow(0 0 10px #00000061); backdrop-filter: blur(4px);}f-node.selected { z-index: 2;}f-canvas.focusing canvas.background,f-canvas.focusing f-node:not(.selected),f-canvas.focusing f-element f-disconnect:not(.selected) { opacity: 0; pointer-events: none;}.dragging f-canvas f-element f-disconnect { opacity: 0;}.dragging.node f-canvas.focusing canvas.background,.dragging.node f-canvas.focusing f-node:not(.selected) { opacity: .5;}f-node.selected,f-canvas.dragging-rio f-node:hover,f-canvas.dragging-lio f-node:hover { filter: drop-shadow(0 0 10px #00000061) drop-shadow(0 0 8px #4444dd);}f-node.closed f-element:not(:first-child) { display: none;}f-node.center { top: 50%; left: 50%; transform: translate( -50%, -50% );}f-node.top-right { top: 0; right: 0;}f-node.top-center { top: 0; left: 50%; transform: translateX( -50% );}f-node.top-left { top: 0; left: 0;}f-node { transition: filter 0.2s ease, opacity 0.12s ease;}f-node { animation: .2s f-animation-open 1 alternate ease-out;}f-tips,f-drop,f-menu,f-menu input,f-menu button,f-element,f-element input,f-element select,f-element button,f-element textarea { font-family: 'Open Sans', sans-serif; font-size: 12px; text-transform: initial; line-height: normal; color: #eeeeee; outline: solid 0px #000; margin: 0; padding: 0; border: 0; user-select: none; -webkit-tap-highlight-color: transparent; transition: background 0.2s ease, filter 0.2s ease;}f-node.resizable { display: grid; width: auto !important;}f-node.resizable f-element:last-child { resize: both; overflow: auto; min-width: 100px;}f-element input:read-only { color: #666;}f-element input,f-element textarea { text-transform: initial;}f-element input { transition: background 0.1s ease;}f-element input,f-element select,f-element button,f-element textarea { background-color: #232324d1;}f-element { position: relative; width: calc( 100% - 14px ); background: rgba(45, 45, 48, 0.95); pointer-events: auto; border-bottom: 2px solid #232323; display: flex; padding-left: 7px; padding-right: 7px; padding-top: 2px; padding-bottom: 2px;}f-element:after,f-element:before { transition: opacity .17s; opacity: 0; content: '';}f-element[tooltip]:hover:after,f-element[tooltip]:focus-within:after { font-size: 14px !important; display: flex; justify-content: center; position: fixed; margin-left: -7px; width: calc( 100% ); background: #1d1d1de8; border: 1px solid #444444a1; border-radius: 6px; color: #dadada; content: attr( tooltip ); margin-top: -41px; font-size: 16px; padding-top: 3px; padding-bottom: 3px; z-index: 10; opacity: 1; backdrop-filter: blur(4px); white-space: nowrap; overflow: hidden; text-shadow: 1px 1px 0px #0007;}f-element[tooltip]:hover:before,f-element[tooltip]:focus-within:before { border: solid; border-color: #1d1d1de8 transparent; border-width: 12px 6px 0 6px; left: calc( 50% - 6px ); bottom: 30px; position: absolute; opacity: 1; z-index: 11;}f-element[error] { background-color: #ff0000;}f-element[error]:hover:after,f-element[error]:focus-within:after { border: none; background-color: #ff0000bb; filter: drop-shadow( 2px 2px 5px #000 ); color: #fff;}f-element[error]:hover:before,f-element[error]:focus-within:before { border-color: #ff0000bb transparent;}f-element { height: 24px;}f-element input { margin-top: 2px; margin-bottom: 2px; box-shadow: inset 0px 1px 1px rgb(0 0 0 / 20%), 0px 1px 0px rgb(255 255 255 / 5%); margin-left: 2px; margin-right: 2px; width: 100%; padding-left: 4px; padding-right: 4px; line-height: 100%;}f-element f-string:has( i[type=icon] ) input { padding-right: 23px;}f-element input.number { cursor: col-resize;}f-element input:focus[type='text'], f-element input:focus[type='range'], f-element input:focus[type='color'] { background: rgba( 0, 0, 0, 0.6 ); outline: solid 1px rgba( 0, 80, 200, 0.98 );}f-element input[type='color'] { appearance: none; padding: 0; margin-left: 2px; margin-right: 2px; height: calc( 100% - 4px ); margin-top: 2px; border: none;}f-element input[type='color']::-webkit-color-swatch-wrapper { padding: 2px;}f-element input[type='color']::-webkit-color-swatch { border: none; cursor: alias;}f-element input[type='range'] { appearance: none; width: 100%; overflow: hidden; padding: 0; cursor: ew-resize;}f-element input[type='range']::-webkit-slider-runnable-track { appearance: none; height: 10px; color: #13bba4; margin: 0;}f-element input[type='range']::-webkit-slider-thumb { appearance: none; width: 0; background: #434343; box-shadow: -500px 0 0 500px rgba( 0, 120, 255, 0.98 ); border-radius: 50%; border: 0 !important;}f-element input[type='range']::-webkit-slider-runnable-track { margin-left: -4px; margin-right: -5px;}f-element input[type='checkbox'] { appearance: none; cursor: pointer;}f-element input[type='checkbox'].toggle { height: 20px; width: 45px; border-radius: 16px; display: inline-block; position: relative; margin: 0; margin-top: 2px; background: linear-gradient( 0deg, #292929 0%, #0a0a0ac2 100% ); transition: all 0.2s ease;}f-element input[type='checkbox'].toggle:after { content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: white; box-shadow: 0 1px 2px rgba(44, 44, 44, 0.2); transition: all 0.2s cubic-bezier(0.5, 0.1, 0.75, 1.35);}f-element input[type='checkbox'].toggle:checked { background: linear-gradient( 0deg, #0177fb 0%, #0177fb 100% );}f-element input[type='checkbox'].toggle:checked:after { transform: translatex(25px);}f-element.auto-height { display: table;}f-element textarea { width: calc( 100% - 18px ); padding-top: 1px; padding-bottom: 3px; padding-left: 4px; padding-right: 8px; margin-top: 2px; margin-left: 2px; height: calc( 100% - 8px ); max-height: 300px; border-radius: 2px; resize: none; box-shadow: inset 0px 1px 1px rgb(0 0 0 / 20%), 0px 1px 0px rgb(255 255 255 / 5%);}f-element.auto-height textarea { resize: auto;}f-element select { width: 100%; margin-top: 2px; margin-bottom: 2px; margin-left: 2px; margin-right: 2px; cursor: pointer; box-shadow: inset 0px 1px 1px rgb(0 0 0 / 20%), 0px 1px 0px rgb(255 255 255 / 5%);}f-element f-toolbar { position: absolute; top: 0; height: 100%; align-content: space-around; margin-top: auto; margin-bottom: auto; margin-left: 6px; margin-right: 6px; font-size: 18px; line-height: 18px; display: inline-flex; justify-content: flex-end; left: 2px;}f-element f-toolbar button { opacity: .7; cursor: pointer; font-size: 14px; width: unset; height: unset; border-radius: unset; border: unset; outline: 0; background-color: unset; box-shadow: unset; padding-right: 0; padding-left: 0; margin-left: 0; margin-right: 0;}f-element f-toolbar button span { padding-right: 5px;}f-element f-toolbar button:hover,f-element f-toolbar button:active { opacity: 1; border: 0; background-color: unset;}f-element input.range-value { width: 60px; text-align: center;}f-menu.context button,f-element button { width: 100%; height: calc( 100% - 4px ); margin-left: 2px; margin-right: 2px; margin-top: 3px; border-radius: 3px; cursor: pointer;}f-element button { box-shadow: inset 1px 1px 1px 0 rgb(255 255 255 / 17%), inset -2px -2px 2px 0 rgb(0 0 0 / 26%);}f-element button:hover { color: #fff; background-color: #2a2a2a;}f-element button:active { border: 1px solid rgba( 0, 120, 255, 0.98 );}f-element f-inputs,f-element f-subinputs { display: flex; justify-content: flex-end; width: 100%;}f-element f-inputs { left: 100px; top: 50%; transform: translateY( -50% ); position: absolute; width: calc( 100% - 106px ); height: calc( 100% - 4px );}f-element.inputs-disable f-inputs { filter: grayscale(100%); opacity: .5;}f-element.inputs-disable f-inputs input { pointer-events: none;}f-element f-label,f-element span { margin: auto; text-shadow: 1px 1px 0px #0007;}f-element f-label { padding-left: 4px; white-space: nowrap; position: absolute; top: 50%; transform: translateY( -50% ); width: calc( 100% - 20px );}f-element.right f-label { text-align: right;}f-element.center f-label { text-align: center;}f-element f-label i { font-size: 18px; margin-right: 4px; vertical-align: sub; margin-right: 0;}f-element f-label.center { width: 100%; text-align: center; display: block;}f-element.title { height: 29px; background-color: #3a3a3ab0; background-color: #3b3b43ed; cursor: all-scroll; border-top-left-radius: 6px; border-top-right-radius: 6px;}f-element.blue { background-color: #014fc5;}f-element.red { background-color: #bd0b0b;}f-element.green { background-color: #148d05;}f-element.yellow { background-color: #d6b100;}f-element.title.left { text-align: left; display: inline-grid; justify-content: start;}f-element.title f-title { text-align: center; font-size: 15px; padding-top: 2px; position: absolute; top: 50%; transform: translateY( -50% ); width: calc( 100% - 14px );}f-element.title i { font-size: 24px; position: absolute; right: 8px; top: 50%; transform: translateY( -50% ); margin-top: -2px; opacity: .7;}f-element.title f-toolbar i { font-size: 24px; display: contents; right: unset; left: unset;}f-element.title.left span { text-align: left;}f-element f-io { border: 2px solid #dadada; width: 7px; height: 7px; position: absolute; background: #242427; border-radius: 8px; float: left; left: -7px; top: calc( 50% - 5px ); cursor: alias; box-shadow: 0 0 3px 2px #0000005e; z-index: 1;}f-element f-io.connect,f-canvas.dragging-rio f-element:hover f-io.lio,f-canvas.dragging-lio f-element:hover f-io.rio { zoom: 1.4;}f-node.io-connect f-io:not(.connect) { border: 2px solid #dadada !important; zoom: 1 !important;}f-element f-io.rio { float: right; right: -7px; left: unset;}f-element f-disconnect { position: absolute; left: -35px; top: 50%; font-size: 22px; transform: translateY( -50% ); filter: drop-shadow(0 0 5px #000); text-shadow: 0px 0px 5px black; cursor: pointer; transition: all .2s;}f-element.input-right f-disconnect { right: -35px; left: unset;}f-element f-disconnect:hover { color: #ff3300;}f-element textarea::-webkit-scrollbar { width: 6px;}f-element textarea::-webkit-scrollbar-track { background: #111; } f-element textarea::-webkit-scrollbar-thumb { background: #0177fb; }f-element textarea::-webkit-scrollbar-thumb:hover { background: #1187ff; }f-element.small { height: 18px;}f-element.large { height: 36px;}f-canvas.dragging-lio f-node:not(.io-connect) f-element.rio:hover,f-canvas.dragging-rio f-node:not(.io-connect) f-element.lio:hover,f-element.select { background-color: rgba(61, 70, 82, 0.98);}f-element.invalid > f-io { zoom: 1 !important;}f-element.invalid::after { font-size: 14px !important; display: flex; justify-content: center; align-items:center; margin: auto; position: absolute; width: 100%; height: 100%; background: #bd0b0b77; vertical-align: middle; color: #fff; content: 'Not Compatible'; opacity: .95; backdrop-filter: grayscale(100%); white-space: nowrap; overflow: hidden; left: 0; top: 0; text-transform: initial;}f-treeview { width: 100%; background-color: #232324d1; border-radius: 2px; overflow-y: auto; overflow-x: hidden; margin-top: 2px; margin-left: 2px; height: calc( 100% - 6px ); box-shadow: inset 0px 1px 1px rgb(0 0 0 / 20%), 0px 1px 0px rgb(255 255 255 / 5%);}f-treeview f-treeview-node { position: relative; margin-top: 1px; min-height: 24px;}f-treeview f-treeview-node f-treeview-children { position: relative; display: none; padding-left: 16px;}f-treeview f-treeview-node input[type='checkbox'] { position: absolute; width: 100%; height: 24px; margin-top: 0px; background: none; box-shadow: none; cursor: default; width: calc( 100% + 100px ); padding-top: 3px; margin-left: -100px;}f-treeview f-treeview-node input[type='checkbox']:checked ~ f-treeview-children { display: block;}f-treeview f-arrow { border: solid #999; border-width: 0 2px 2px 0; display: inline-block; padding: 3px; position: absolute; right: 10px; margin-top: 8px; transform: rotate( -45deg ); transition: all 0.1s ease; pointer-events: none;}f-treeview f-treeview-node input[type='checkbox']:checked ~ f-arrow { margin-top: 7px; transform: rotate( 45deg );}f-treeview f-treeview-label { display: flex; align-content: center; width: 100%; height: 22px; background: none; box-shadow: none; cursor: default; width: calc( 100% + 100px ); padding-top: 3px; margin-left: -100px; padding-left: 105px; border-bottom: 1px solid #333; pointer-events: none; z-index: 1;}f-treeview f-treeview-node input[type='checkbox']:hover { background: #2c2c2f;}f-treeview f-treeview-node:has( f-arrow ) > input[type='checkbox'] { background: #2c2c2f;}f-treeview f-treeview-node:has( f-arrow ) > input[type='checkbox']:hover { background: #333339;}f-treeview f-treeview-label { color: #aaa;}f-treeview f-treeview-label spam { margin-top: 1px;}f-treeview f-treeview-label i { color: #ccc; transition: color 0.1s ease;}f-treeview f-treeview-node { position: relative; display: flex; flex-direction: column;}f-treeview f-treeview-node input[type='checkbox']:hover ~ f-treeview-label { color: #eee;}f-treeview f-treeview-node input[type='checkbox']:hover ~ f-treeview-label i { color: #fff;}f-menu.context f-item f-node { position: relative; display: block; width: calc( 100% - 6px ) !important; margin: 3px; animation: unset;}f-treeview f-treeview-node.selected > input[type='checkbox'] { background-color: #014fc5;}f-treeview f-treeview-node.selected > f-treeview-label,f-treeview f-treeview-node.selected > f-treeview-label i { color: #fff;}f-treeview f-treeview-node.selected > input[type='checkbox']:hover { background-color: #06f;}f-string { display: contents;}f-string f-buttons { position: absolute; top: 50%; right: 1px; transform: translateY( -50% );}f-string f-buttons i { font-size: 18px !important; margin-top: -2px !important; color: #999; padding-left: 4px; padding-right: 0px; padding-bottom: 2px; margin-right: 1px; cursor: pointer; background: #252526eb; height: 100%;}f-string i[type=icon] { font-size: 22px; color: #999; position: absolute; right: 8px; top: calc( 50% - 7px ); margin-top: -5px;}f-inputs f-string i[type=icon] { right: 0;}f-string f-buttons i:hover { color: #eeeeee;}f-string input:focus ~ f-string { opacity: .9;}f-string:hover input::placeholder { color: #999;}f-string f-treeview { position: absolute; max-height: 200px; height: 200px; background-color: #000; z-index: 10;}f-drop { width: 100%; height: 100%; position: sticky; left: 0; top: 0; background: #02358417; text-align: center; justify-content: center; align-items: center; display: flex; box-shadow: inset 0 0 20px 10px #464ace17; pointer-events: none; transition: all .07s; opacity: 0; visibility: hidden;}f-drop.visible { visibility: unset; opacity: unset; transition: all .23s;}f-drop span { opacity: .5; font-size: 40px; text-shadow: 0px 0px 5px #000; font-weight: bold;}f-tooltip { pointer-events: none;}f-tooltip { position: absolute; left: 0; top: 0; background: rgba(0,0,0,.8); backdrop-filter: blur(4px); font-size: 14px; padding: 7px; left: 50%; border-radius: 10px; transform: translateX(-50%); visibility: hidden; pointer-events: none; opacity: 0; transition: all 0.3s ease; z-index: 150; white-space: nowrap;}f-menu.context,f-menu.search { position: absolute;}f-menu.context { width: 170px; z-index: 110;}f-menu.search { bottom: 85px; left: 50%; transform: translateX(-50%); z-index: 10; width: 300px;}f-menu.context f-list { display: block; margin: 0; background: #171717e6; font-size: 12px; border-radius: 6px; backdrop-filter: blur(6px); border: 1px solid #7e7e7e45; box-shadow: 3px 3px 6px rgba(0,0,0,.2); transition: opacity 0.2s ease, transform 0.1s ease;}f-menu.search f-list { margin: 0 6px 0 6px; display: flex; flex-direction: column-reverse; margin-bottom: 5px;}f-menu.context.hidden { visibility: hidden; opacity: 0;}f-menu.context f-item,f-menu.search f-item { display: block; position: relative; margin: 0; padding: 0; white-space: nowrap;}f-menu.search f-item { opacity: 0;}f-menu.context f-item.submenu::after { content: ""; position: absolute; right: 6px; top: 50%; -webkit-transform: translateY( -50% ); transform: translateY( -50% ); border: 5px solid transparent; border-left-color: #808080;}f-menu.context f-item:hover > f-menu,f-menu.context f-item.active > f-menu { visibility: unset; transform: unset; opacity: unset;}f-menu.context f-menu { top: 0px; left: calc( 100% - 4px );}f-menu.context f-item button,f-menu.search f-item button { overflow: visible; display: block; width: calc( 100% - 6px ); text-align: left; cursor: pointer; white-space: nowrap; padding: 6px 8px; border-radius: 3px; background: rgba(45, 45, 48, 0.95); border: 0; color: #ddd; margin: 3px; text-shadow: 1px 1px 0px #0007;}f-menu.context f-item button i,f-menu.search f-item button i { float: left; font-size: 21px; margin-top: -3px;}f-menu.context f-item button span,f-menu.search f-item button span { margin-left: 4px;}f-menu.context f-item:hover > button,f-menu.search f-item:hover > button,f-menu.search f-item.active > button { color: #fff; background-color: rgba(61, 70, 82, 0.98);}f-menu.search f-item:hover,f-menu.search f-item.active { opacity: 1 !important;}f-menu.context f-item button:active { outline: solid 1px rgba( 0, 80, 200, 0.98 );}f-menu.context f-item f-tooltip { margin-left: 85px; top: -50px;}f-menu.search f-item { display: none;}f-menu.search f-item:nth-child(1) { opacity: 1; display: unset;}f-menu.search f-item:nth-child(2) { opacity: .8; display: unset;}f-menu.search f-item:nth-child(3) { opacity: .6; display: unset;}f-menu.search f-item:nth-child(4) { opacity: .4; display: unset;}f-menu.search f-item button { border-radius: 14px;}f-tips { right: 10px; top: 10px; position: absolute; z-index: 100; pointer-events: none; display: flex; flex-direction: column;}f-tips f-tip { width: 450px; font-size: 13px; border-radius: 6px; text-align: center; display: block; height: auto; color: #ffffffe0; margin: 4px; padding: 4px; background: #17171794; border: 1px solid #7e7e7e38; line-height: 100%; backdrop-filter: blur(6px); transition: all 0.2s ease; text-transform: initial; opacity: 0;}f-tips f-tip:nth-child(1) { opacity: 1;}f-tips f-tip:nth-child(2) { opacity: .75;}f-tips f-tip:nth-child(3) { opacity: .25;}f-tips f-tip:nth-child(4) { opacity: .1;}f-tips f-tip.error { background: #b900005e;}f-menu.search input { width: calc( 100% - 28px ); height: 41px; position: absolute; z-index: 10; border-radius: 20px; padding-left: 14px; padding-right: 14px; font-size: 15px; background-color: #17171794; border: 1px solid #7e7e7e45; backdrop-filter: blur(6px); box-shadow: 3px 3px 6px rgb(0 0 0 / 20%); text-transform: initial;}f-menu.circle { position: absolute; z-index: 100;}f-menu.circle.top { top: 40px;}f-menu.circle.left { left: 40px;}f-menu.circle.bottom { bottom: 40px;}f-menu.circle.right { right: 40px;}f-menu.circle f-item { align-content: space-around; margin-right: 20px;}f-menu.circle f-item button { width: 47px; height: 47px; font-size: 28px; padding-left: 6px; background: #17171794; border-radius: 50%; backdrop-filter: blur(6px); border: 1px solid #7e7e7e45; line-height: 100%; cursor: pointer; box-shadow: 3px 3px 6px rgba(0,0,0,.2);}f-menu.circle f-item f-tooltip { margin-top: -60px;}f-menu.circle.top f-item f-tooltip { margin-top: 50px;}.f-rounded f-node f-element,.f-rounded f-node f-element.title.left { border-radius: 10px 5px 10px 5px;}.f-rounded f-node f-element input, .f-rounded f-node f-element select,.f-rounded f-node f-element button,.f-rounded f-node f-element textarea,.f-rounded f-node f-element input[type='checkbox'].toggle,.f-rounded f-node f-element input[type='checkbox'].toggle:after { border-radius: 20px 10px;}.f-rounded f-node f-element input { padding-left: 7px; padding-right: 7px;}.f-rounded f-menu.context,.f-rounded f-menu.context f-item button { border-radius: 20px 10px;}@media (hover: hover) and (pointer: fine) { f-node:not(.selected):hover { filter: drop-shadow(0 0 6px #66666630); } f-element f-toolbar { visibility: hidden; opacity: 0; transition: opacity 0.2s ease; } body:not(.connecting) f-node:hover > f-element f-toolbar, f-node.selected f-element f-toolbar { visibility: visible; opacity: 1; } f-element f-io:hover { zoom: 1.4; } f-menu.circle f-item button:hover { background-color: #2a2a2a; } f-menu.search input:hover, f-menu.search input:focus { background-color: #1a1a1a; filter: drop-shadow(0 0 6px #66666630); } f-menu.search input:focus { filter: drop-shadow(0 0 8px #4444dd); } f-menu.circle f-item button:hover > f-tooltip, f-menu.context f-item button:hover > f-tooltip { visibility: visible; opacity: 1; } f-menu.circle f-item button:hover > f-tooltip { margin-top: -50px; } f-menu.circle.top f-item button:hover > f-tooltip { margin-top: 60px; } f-menu.context f-item button:hover > f-tooltip { top: -30px; } f-menu.circle f-item button:focus > f-tooltip, f-menu.context f-item button:focus > f-tooltip { visibility: hidden; opacity: 0; }}@media (hover: none) and (pointer: coarse) { body.dragging f-canvas, body.connecting f-canvas { overflow: hidden !important; }}f-element.invalid > f-inputs,f-element.invalid > f-label,f-element.invalid > f-title,f-element.invalid > f-toolbar,f-element.invalid > input,f-element.invalid > select { opacity: .1 !important;}f-canvas { will-change: top, left;}f-node { will-change: transform !important;}` );
 
-const REVISION = '1';
-
-const Styles = {
-	icons: {
-		close: '',
-		unlink: ''
-	}
-};
+const REVISION = '2';
 
 let _id = 0;
 
@@ -73,6 +66,12 @@ class Serializer extends EventTarget {
 
 	}
 
+	get className() {
+
+		return this.constructor.name;
+
+	}
+
 	toJSON( data = null ) {
 
 		let object = null;
@@ -106,7 +105,7 @@ class Serializer extends EventTarget {
 		}
 
 		object.id = id;
-		object.type = this.constructor.name;
+		object.type = this.className;
 
 		return object;
 
@@ -116,19 +115,18 @@ class Serializer extends EventTarget {
 
 class PointerMonitor {
 
-	started = false;
-
 	constructor() {
 
 		this.x = 0;
 		this.y = 0;
+		this.started = false;
 
 		this._onMoveEvent = ( e ) => {
 
 			const event = e.touches ? e.touches[ 0 ] : e;
 
-			this.x = event.x;
-			this.y = event.y;
+			this.x = event.clientX;
+			this.y = event.clientY;
 
 		};
 
@@ -158,9 +156,17 @@ class PointerMonitor {
 
 const pointer = new PointerMonitor().start();
 
-const draggableDOM = ( dom, callback = null, className = 'dragging' ) => {
+const draggableDOM = ( dom, callback = null, settings = {} ) => {
+
+	settings = Object.assign( {
+		className: 'dragging',
+		click: false,
+		bypass: false
+	}, settings );
 
 	let dragData = null;
+
+	const { className, click, bypass } = settings;
 
 	const getZoom = () => {
 
@@ -188,15 +194,25 @@ const draggableDOM = ( dom, callback = null, className = 'dragging' ) => {
 
 		const event = e.touches ? e.touches[ 0 ] : e;
 
-		e.stopImmediatePropagation();
+		if ( bypass === false ) e.stopImmediatePropagation();
 
 		dragData = {
 			client: { x: event.clientX, y: event.clientY },
 			delta: { x: 0, y: 0 },
 			start: { x: dom.offsetLeft, y: dom.offsetTop },
+			frame: 0,
+			isDown: true,
 			dragging: false,
 			isTouch: !! e.touches
 		};
+
+		if ( click === true ) {
+
+			callback( dragData );
+
+			dragData.frame ++;
+
+		}
 
 		window.addEventListener( 'mousemove', onGlobalMouseMove );
 		window.addEventListener( 'mouseup', onGlobalMouseUp );
@@ -226,13 +242,15 @@ const draggableDOM = ( dom, callback = null, className = 'dragging' ) => {
 
 				callback( dragData );
 
+				dragData.frame ++;
+
 			} else {
 
 				dom.style.cssText += `; left: ${ dragData.x }px; top: ${ dragData.y }px;`;
 
 			}
 
-			e.stopImmediatePropagation();
+			if ( bypass === false ) e.stopImmediatePropagation();
 
 		} else {
 
@@ -242,9 +260,9 @@ const draggableDOM = ( dom, callback = null, className = 'dragging' ) => {
 
 				dom.classList.add( 'drag' );
 
-				if ( className ) document.body.classList.add( className );
+				if ( className ) document.body.classList.add( ...className.split( ' ' ) );
 
-				e.stopImmediatePropagation();
+				if ( bypass === false ) e.stopImmediatePropagation();
 
 			}
 
@@ -254,11 +272,11 @@ const draggableDOM = ( dom, callback = null, className = 'dragging' ) => {
 
 	const onGlobalMouseUp = ( e ) => {
 
-		e.stopImmediatePropagation();
+		if ( bypass === false ) e.stopImmediatePropagation();
 
 		dom.classList.remove( 'drag' );
 
-		if ( className ) document.body.classList.remove( className );
+		if ( className ) document.body.classList.remove( ...className.split( ' ' ) );
 
 		window.removeEventListener( 'mousemove', onGlobalMouseMove );
 		window.removeEventListener( 'mouseup', onGlobalMouseUp );
@@ -274,10 +292,13 @@ const draggableDOM = ( dom, callback = null, className = 'dragging' ) => {
 		}
 
 		dragData.dragging = false;
+		dragData.isDown = false;
 
 		if ( callback !== null ) {
 
 			callback( dragData );
+
+			dragData.frame ++;
 
 		}
 
@@ -315,7 +336,7 @@ const dispatchEventList = ( list, ...params ) => {
 
 };
 
-const toPX = ( val ) => {
+const numberToPX = ( val ) => {
 
 	if ( isNaN( val ) === false ) {
 
@@ -327,7 +348,7 @@ const toPX = ( val ) => {
 
 };
 
-const toHex = ( val ) => {
+const numberToHex = ( val ) => {
 
 	if ( isNaN( val ) === false ) {
 
@@ -339,13 +360,38 @@ const toHex = ( val ) => {
 
 };
 
+const rgbaToArray = ( rgba ) => {
+
+	const values = rgba.substring( rgba.indexOf( '(' ) + 1, rgba.indexOf( ')' ) )
+		.split( ',' )
+		.map( num => parseInt( num.trim() ) );
+
+	return values;
+
+};
+
+const removeDOMClass = ( dom, classList ) => {
+
+	if ( classList ) classList.split( ' ' ).forEach( alignClass => dom.classList.remove( alignClass ) );
+
+};
+
+const addDOMClass = ( dom, classList ) => {
+
+	if ( classList ) classList.split( ' ' ).forEach( alignClass => dom.classList.add( alignClass ) );
+
+};
+
 var Utils = /*#__PURE__*/Object.freeze({
 	__proto__: null,
 	pointer: pointer,
 	draggableDOM: draggableDOM,
 	dispatchEventList: dispatchEventList,
-	toPX: toPX,
-	toHex: toHex
+	numberToPX: numberToPX,
+	numberToHex: numberToHex,
+	rgbaToArray: rgbaToArray,
+	removeDOMClass: removeDOMClass,
+	addDOMClass: addDOMClass
 });
 
 class Link {
@@ -397,6 +443,8 @@ class Element extends Serializer {
 	constructor( draggable = false ) {
 
 		super();
+
+		this.isElement = true;
 
 		const dom = document.createElement( 'f-element' );
 		dom.element = this;
@@ -469,6 +517,7 @@ class Element extends Serializer {
 		this.node = null;
 
 		this.style = '';
+		this.color = null;
 
 		this.object = null;
 		this.objectCallback = null;
@@ -485,9 +534,6 @@ class Element extends Serializer {
 		this.rioDOM = this._createIO( 'rio' );
 
 		this.dom.classList.add( `input-${ Link.InputDirection }` );
-
-		this.dom.append( this.lioDOM );
-		this.dom.append( this.rioDOM );
 
 		this.addEventListener( 'connect', ( ) => {
 
@@ -593,9 +639,24 @@ class Element extends Serializer {
 
 	setColor( color ) {
 
-		this.dom.style[ 'background-color' ] = toHex( color );
+		this.dom.style[ 'background-color' ] = numberToHex( color );
+		this.color = null;
 
 		return this;
+
+	}
+
+	getColor() {
+
+		if ( this.color === null ) {
+
+			const css = window.getComputedStyle( this.dom );
+
+			this.color = css.getPropertyValue( 'background-color' );
+
+		}
+
+		return this.color;
 
 	}
 
@@ -608,6 +669,7 @@ class Element extends Serializer {
 		if ( style ) dom.classList.add( style );
 
 		this.style = style;
+		this.color = null;
 
 		return this;
 
@@ -699,7 +761,7 @@ class Element extends Serializer {
 
 	setLIOColor( color ) {
 
-		this.lioDOM.style[ 'border-color' ] = toHex( color );
+		this.lioDOM.style[ 'border-color' ] = numberToHex( color );
 
 		return this;
 
@@ -710,6 +772,18 @@ class Element extends Serializer {
 		this.lioLength = length;
 
 		this.lioDOM.style.visibility = length > 0 ? '' : 'hidden';
+
+		if ( length > 0 ) {
+
+			this.dom.classList.add( 'lio' );
+			this.dom.prepend( this.lioDOM );
+
+		} else {
+
+			this.dom.classList.remove( 'lio' );
+			this.lioDOM.remove();
+
+		}
 
 		return this;
 
@@ -723,7 +797,7 @@ class Element extends Serializer {
 
 	setRIOColor( color ) {
 
-		this.rioDOM.style[ 'border-color' ] = toHex( color );
+		this.rioDOM.style[ 'border-color' ] = numberToHex( color );
 
 		return this;
 
@@ -740,6 +814,18 @@ class Element extends Serializer {
 		this.rioLength = length;
 
 		this.rioDOM.style.visibility = length > 0 ? '' : 'hidden';
+
+		if ( length > 0 ) {
+
+			this.dom.classList.add( 'rio' );
+			this.dom.prepend( this.rioDOM );
+
+		} else {
+
+			this.dom.classList.remove( 'rio' );
+			this.rioDOM.remove();
+
+		}
 
 		return this;
 
@@ -759,7 +845,7 @@ class Element extends Serializer {
 
 	setHeight( val ) {
 
-		this.dom.style.height = toPX( val );
+		this.dom.style.height = numberToPX( val );
 
 		return this;
 
@@ -783,6 +869,8 @@ class Element extends Serializer {
 
 		if ( element !== null ) {
 
+			element = element.baseElement || element;
+
 			if ( dispatchEventList( this.events.valid, this, element, 'connect' ) === false ) {
 
 				return false;
@@ -796,7 +884,7 @@ class Element extends Serializer {
 			if ( this.disconnectDOM === null ) {
 
 				this.disconnectDOM = document.createElement( 'f-disconnect' );
-				this.disconnectDOM.innerHTML = Styles.icons.unlink ? `<i class='${ Styles.icons.unlink }'></i>` : '✖';
+				this.disconnectDOM.innerHTML = Element.icons.unlink ? `<i class='${ Element.icons.unlink }'></i>` : '✖';
 
 				this.dom.append( this.disconnectDOM );
 
@@ -865,16 +953,40 @@ class Element extends Serializer {
 
 	}
 
+	getInputByProperty( property ) {
+
+		for ( const input of this.inputs ) {
+
+			if ( input.getProperty() === property ) {
+
+				return input;
+
+			}
+
+		}
+
+	}
+
 	serialize( data ) {
 
 		const height = this.getHeight();
 
 		const inputs = [];
+		const properties = [];
 		const links = [];
 
 		for ( const input of this.inputs ) {
 
-			inputs.push( input.toJSON( data ).id );
+			const id = input.toJSON( data ).id;
+			const property = input.getProperty();
+
+			inputs.push( id );
+
+			if ( property !== null ) {
+
+				properties.push( { property, id } );
+
+			}
 
 		}
 
@@ -892,6 +1004,7 @@ class Element extends Serializer {
 		if ( this.outputLength > 0 ) data.outputLength = this.outputLength;
 
 		if ( inputs.length > 0 ) data.inputs = inputs;
+		if ( properties.length > 0 ) data.properties = properties;
 		if ( links.length > 0 ) data.links = links;
 
 		if ( this.style !== '' ) {
@@ -913,7 +1026,15 @@ class Element extends Serializer {
 		if ( data.inputLength !== undefined ) this.setInput( data.inputLength );
 		if ( data.outputLength !== undefined ) this.setOutput( data.outputLength );
 
-		if ( data.inputs !== undefined ) {
+		if ( data.properties !== undefined ) {
+
+			for ( const { id, property } of data.properties ) {
+
+				data.objects[ id ] = this.getInputByProperty( property );
+
+			}
+
+		} else if ( data.inputs !== undefined ) {
 
 			const inputs = this.inputs;
 
@@ -1092,7 +1213,7 @@ class Element extends Serializer {
 
 				}
 
-			}, 'connecting' );
+			}, { className: 'connecting' } );
 
 		};
 
@@ -1105,7 +1226,7 @@ class Element extends Serializer {
 
 }
 
-Element.prototype.isElement = true;
+Element.icons = { unlink: '' };
 
 class Input extends Serializer {
 
@@ -1120,6 +1241,8 @@ class Input extends Serializer {
 		this.extra = null;
 
 		this.tagColor = null;
+
+		this.property = null;
 
 		this.events = {
 			'change': [],
@@ -1151,6 +1274,20 @@ class Input extends Serializer {
 	getExtra() {
 
 		return this.extra;
+
+	}
+
+	setProperty( name ) {
+
+		this.property = name;
+
+		return this;
+
+	}
+
+	getProperty() {
+
+		return this.property;
 
 	}
 
@@ -1199,7 +1336,7 @@ class Input extends Serializer {
 
 	setReadOnly( value ) {
 
-		this.dom.readOnly = value;
+		this.getInput().readOnly = value;
 
 		return this;
 
@@ -1207,13 +1344,13 @@ class Input extends Serializer {
 
 	getReadOnly() {
 
-		return this.dom.readOnly;
+		return this.getInput().readOnly;
 
 	}
 
 	setValue( value, dispatch = true ) {
 
-		this.dom.value = value;
+		this.getInput().value = value;
 
 		if ( dispatch ) this.dispatchEvent( new Event( 'change' ) );
 
@@ -1223,7 +1360,13 @@ class Input extends Serializer {
 
 	getValue() {
 
-		return this.dom.value;
+		return this.getInput().value;
+
+	}
+
+	getInput() {
+
+		return this.dom;
 
 	}
 
@@ -1303,6 +1446,7 @@ class Node extends Serializer {
 		this.style = '';
 
 		this.canvas = null;
+		this.resizable = false;
 
 		this.elements = [];
 
@@ -1312,6 +1456,32 @@ class Node extends Serializer {
 		};
 
 		this.setWidth( 300 ).setPosition( 0, 0 );
+
+	}
+
+	get baseElement() {
+
+		return this.elements[ 0 ];
+
+	}
+
+	setResizable( val ) {
+
+		this.resizable = val === true;
+
+		if ( this.resizable ) {
+
+			this.dom.classList.add( 'resizable' );
+
+		} else {
+
+			this.dom.classList.remove( 'resizable' );
+
+		}
+
+		this.updateSize();
+
+		return this;
 
 	}
 
@@ -1349,8 +1519,8 @@ class Node extends Serializer {
 
 		const dom = this.dom;
 
-		dom.style.left = toPX( x );
-		dom.style.top = toPX( y );
+		dom.style.left = numberToPX( x );
+		dom.style.top = numberToPX( y );
 
 		return this;
 
@@ -1369,7 +1539,9 @@ class Node extends Serializer {
 
 	setWidth( val ) {
 
-		this.dom.style.width = toPX( val );
+		this.dom.style.width = numberToPX( val );
+
+		this.updateSize();
 
 		return this;
 
@@ -1378,6 +1550,21 @@ class Node extends Serializer {
 	getWidth() {
 
 		return parseInt( this.dom.style.width );
+
+	}
+
+	getHeight() {
+
+		return this.dom.offsetHeight;
+
+	}
+
+	getBound() {
+
+		const { x, y } = this.getPosition();
+		const { width, height } = this.dom.getBoundingClientRect();
+
+		return { x, y, width, height };
 
 	}
 
@@ -1390,6 +1577,8 @@ class Node extends Serializer {
 		element.addEventListener( 'connectChildren', this._onConnectChildren );
 
 		this.dom.append( element.dom );
+
+		this.updateSize();
 
 		return this;
 
@@ -1404,6 +1593,8 @@ class Node extends Serializer {
 		element.removeEventListener( 'connectChildren', this._onConnectChildren );
 
 		this.dom.removeChild( element.dom );
+
+		this.updateSize();
 
 		return this;
 
@@ -1459,6 +1650,32 @@ class Node extends Serializer {
 
 	}
 
+	getColor() {
+
+		return this.elements.length > 0 ? this.elements[ 0 ].getColor() : null;
+
+	}
+
+	updateSize() {
+
+		if ( this.resizable !== true ) return;
+
+		for ( const element of this.elements ) {
+
+			element.dom.style.width = '';
+
+		}
+
+		const element = this.elements[ this.elements.length - 1 ];
+
+		if ( element !== undefined ) {
+
+			element.dom.style.width = this.dom.style.width;
+
+		}
+
+	}
+
 	serialize( data ) {
 
 		const { x, y } = this.getPosition();
@@ -1475,6 +1692,7 @@ class Node extends Serializer {
 		data.y = y;
 		data.width = this.getWidth();
 		data.elements = elements;
+		data.autoResize = this.resizable;
 
 		if ( this.style !== '' ) {
 
@@ -1488,6 +1706,7 @@ class Node extends Serializer {
 
 		this.setPosition( data.x, data.y );
 		this.setWidth( data.width );
+		this.setResizable( data.autoResize );
 
 		if ( data.style !== undefined ) {
 
@@ -1537,7 +1756,7 @@ class DraggableElement extends Element {
 
 			if ( this.draggable === true ) {
 
-				draggableDOM( this.node.dom );
+				draggableDOM( this.node.dom, null, { className: 'dragging node' } );
 
 			}
 
@@ -1560,10 +1779,18 @@ class TitleElement extends DraggableElement {
 
 		const { dom } = this;
 
-		dom.className = 'title';
+		dom.classList.add( 'title' );
 
-		const spanDOM = document.createElement( 'span' );
-		spanDOM.innerText = title;
+		const dbClick = () => {
+
+			this.node.canvas.focusSelected = ! this.node.canvas.focusSelected;
+
+		};
+
+		dom.addEventListener( 'dblclick', dbClick );
+
+		const titleDOM = document.createElement( 'f-title' );
+		titleDOM.innerText = title;
 
 		const iconDOM = document.createElement( 'i' );
 
@@ -1571,11 +1798,11 @@ class TitleElement extends DraggableElement {
 
 		this.buttons = [];
 
-		this.spanDOM = spanDOM;
+		this.titleDOM = titleDOM;
 		this.iconDOM = iconDOM;
 		this.toolbarDOM = toolbarDOM;
 
-		dom.append( spanDOM );
+		dom.append( titleDOM );
 		dom.append( iconDOM );
 		dom.append( toolbarDOM );
 
@@ -1597,7 +1824,7 @@ class TitleElement extends DraggableElement {
 
 	setTitle( value ) {
 
-		this.spanDOM.innerText = value;
+		this.titleDOM.innerText = value;
 
 		return this;
 
@@ -1605,7 +1832,7 @@ class TitleElement extends DraggableElement {
 
 	getTitle() {
 
-		return this.spanDOM.innerText;
+		return this.titleDOM.innerText;
 
 	}
 
@@ -1708,9 +1935,11 @@ class Canvas extends Serializer {
 
 		const canvas = document.createElement( 'canvas' );
 		const frontCanvas = document.createElement( 'canvas' );
+		const mapCanvas = document.createElement( 'canvas' );
 
 		const context = canvas.getContext( '2d' );
 		const frontContext = frontCanvas.getContext( '2d' );
+		const mapContext = mapCanvas.getContext( '2d' );
 
 		this.dom = dom;
 
@@ -1720,20 +1949,17 @@ class Canvas extends Serializer {
 
 		this.canvas = canvas;
 		this.frontCanvas = frontCanvas;
+		this.mapCanvas = mapCanvas;
 
 		this.context = context;
 		this.frontContext = frontContext;
-
-		this.width = 10000;
-		this.height = 10000;
+		this.mapContext = mapContext;
 
 		this.clientX = 0;
 		this.clientY = 0;
 
 		this.relativeClientX = 0;
 		this.relativeClientY = 0;
-
-		this.zoom = 1;
 
 		this.nodes = [];
 
@@ -1747,13 +1973,20 @@ class Canvas extends Serializer {
 			'drop': []
 		};
 
-		frontCanvas.className = 'front';
+		this._scrollLeft = 0;
+		this._scrollTop = 0;
+		this._zoom = 1;
+		this._width = 0;
+		this._height = 0;
+		this._focusSelected = false;
+		this._mapInfo = {
+			scale: 1,
+			screen: {}
+		};
 
-		contentDOM.style.left = toPX( this.centerX );
-		contentDOM.style.top = toPX( this.centerY );
-
-		areaDOM.style.width = `calc( 100% + ${ this.width }px )`;
-		areaDOM.style.height = `calc( 100% + ${ this.height }px )`;
+		canvas.className = 'background';
+		frontCanvas.className = 'frontground';
+		mapCanvas.className = 'map';
 
 		dropDOM.innerHTML = '<span>drop your file</span>';
 
@@ -1762,77 +1995,126 @@ class Canvas extends Serializer {
 		dom.append( frontCanvas );
 		dom.append( contentDOM );
 		dom.append( areaDOM );
-		/*
-		let zoomTouchData = null;
+		dom.append( mapCanvas );
 
-		const onZoomStart = () => {
+		const zoomTo = ( zoom, clientX = this.clientX, clientY = this.clientY ) => {
 
-			zoomTouchData = null;
+			zoom = Math.min( Math.max( zoom, .2 ), 1 );
+
+			this.scrollLeft -= ( clientX / this.zoom ) - ( clientX / zoom );
+			this.scrollTop -= ( clientY / this.zoom ) - ( clientY / zoom );
+			this.zoom = zoom;
 
 		};
-*/
-		const onZoom = ( e ) => {
 
-			if ( e.touches ) {
+		let touchData = null;
 
-				if ( e.touches.length === 2 ) {
+		const onTouchStart = () => {
 
-					e.preventDefault();
+			touchData = null;
 
-					e.stopImmediatePropagation();
-					/*
-					const clientX = ( e.touches[ 0 ].clientX + e.touches[ 1 ].clientX ) / 2;
-					const clientY = ( e.touches[ 0 ].clientY + e.touches[ 1 ].clientY ) / 2;
+		};
 
-					const distance = Math.hypot(
-						e.touches[ 0 ].clientX - e.touches[ 1 ].clientX,
-						e.touches[ 0 ].clientY - e.touches[ 1 ].clientY
-					);
+		const classInElements = ( element, className ) => {
 
-					if ( zoomTouchData === null ) {
+			do {
 
-						zoomTouchData = {
-							distance
-						};
+				if ( element.classList ? element.classList.contains( className ) : false ) {
 
-					}
-
-					const delta = ( zoomTouchData.distance - distance );
-					zoomTouchData.distance = distance;
-
-					let zoom = Math.min( Math.max( this.zoom - delta * .01, .5 ), 1.2 );
-
-					if ( zoom < .52 ) zoom = .5;
-					else if ( zoom > .98 ) zoom = 1;
-
-					contentDOM.style.left = toPX( this.centerX / zoom );
-					contentDOM.style.top = toPX( this.centerY / zoom );
-					contentDOM.style.zoom = this.zoom = zoom;
-*/
+					return true;
 
 				}
 
-			} else {
+			} while ( ( element = element.parentElement ) && element !== dom );
+
+			return false;
+
+		};
+
+		const onMouseZoom = ( e ) => {
+
+			if ( classInElements( e.srcElement, 'f-scroll' ) ) return;
+
+			e.preventDefault();
+
+			e.stopImmediatePropagation();
+
+			const delta = e.deltaY * .003;
+
+			zoomTo( this.zoom - delta );
+
+		};
+
+		const onTouchZoom = ( e ) => {
+
+			if ( e.touches && e.touches.length === 2 ) {
 
 				e.preventDefault();
 
 				e.stopImmediatePropagation();
-				/*
-				const delta = e.deltaY / 100;
-				const zoom = Math.min( Math.max( this.zoom - delta * .1, .5 ), 1 );
 
-				contentDOM.style.left = toPX( this.centerX / zoom );
-				contentDOM.style.top = toPX( this.centerY / zoom );
-				contentDOM.style.zoom = this.zoom = zoom;
-*/
+				const clientX = ( e.touches[ 0 ].clientX + e.touches[ 1 ].clientX ) / 2;
+				const clientY = ( e.touches[ 0 ].clientY + e.touches[ 1 ].clientY ) / 2;
+
+				const distance = Math.hypot(
+					e.touches[ 0 ].clientX - e.touches[ 1 ].clientX,
+					e.touches[ 0 ].clientY - e.touches[ 1 ].clientY
+				);
+
+				if ( touchData === null ) {
+
+					touchData = {
+						distance
+					};
+
+				}
+
+				const delta = ( touchData.distance - distance ) * .003;
+				touchData.distance = distance;
+
+				zoomTo( this.zoom - delta, clientX, clientY );
 
 			}
 
 		};
 
-		dom.addEventListener( 'wheel', onZoom );
-		dom.addEventListener( 'touchmove', onZoom );
-		//dom.addEventListener( 'touchstart', onZoomStart );
+		const onTouchMove = ( e ) => {
+
+			if ( e.touches && e.touches.length === 1 ) {
+
+				e.preventDefault();
+
+				e.stopImmediatePropagation();
+
+				const clientX = e.touches[ 0 ].clientX;
+				const clientY = e.touches[ 0 ].clientY;
+
+				if ( touchData === null ) {
+
+					const { scrollLeft, scrollTop } = this;
+
+					touchData = {
+						scrollLeft,
+						scrollTop,
+						clientX,
+						clientY
+					};
+
+				}
+
+				const zoom = this.zoom;
+
+				this.scrollLeft = touchData.scrollLeft + ( ( clientX - touchData.clientX ) / zoom );
+				this.scrollTop = touchData.scrollTop + ( ( clientY - touchData.clientY ) / zoom );
+
+			}
+
+		};
+
+		dom.addEventListener( 'wheel', onMouseZoom );
+		dom.addEventListener( 'touchmove', onTouchZoom );
+		dom.addEventListener( 'touchstart', onTouchStart );
+		canvas.addEventListener( 'touchmove', onTouchMove );
 
 		let dropEnterCount = 0;
 
@@ -1904,13 +2186,15 @@ class Canvas extends Serializer {
 
 				if ( data.scrollTop === undefined ) {
 
-					data.scrollLeft = dom.scrollLeft;
-					data.scrollTop = dom.scrollTop;
+					data.scrollLeft = this.scrollLeft;
+					data.scrollTop = this.scrollTop;
 
 				}
 
-				dom.scrollLeft = data.scrollLeft - delta.x;
-				dom.scrollTop = data.scrollTop - delta.y;
+				const zoom = this.zoom;
+
+				this.scrollLeft = data.scrollLeft + ( delta.x / zoom );
+				this.scrollTop = data.scrollTop + ( delta.y / zoom );
 
 			}
 
@@ -1924,7 +2208,48 @@ class Canvas extends Serializer {
 
 			}
 
-		}, 'dragging-canvas' );
+		}, { className: 'dragging-canvas' } );
+
+
+		draggableDOM( mapCanvas, ( data ) => {
+
+			const { scale, screen } = this._mapInfo;
+
+			if ( data.scrollLeft === undefined ) {
+
+				const rect = this.mapCanvas.getBoundingClientRect();
+
+				const clientMapX = data.client.x - rect.left;
+				const clientMapY = data.client.y - rect.top;
+
+				const overMapScreen =
+					clientMapX > screen.x && clientMapY > screen.y &&
+					clientMapX < screen.x + screen.width && clientMapY < screen.y + screen.height;
+
+				if ( overMapScreen === false ) {
+
+					const scaleX = this._mapInfo.width / this.mapCanvas.width;
+
+					let scrollLeft = - this._mapInfo.left - ( clientMapX * scaleX );
+					let scrollTop = - this._mapInfo.top - ( clientMapY * ( this._mapInfo.height / this.mapCanvas.height ) );
+
+					scrollLeft += ( screen.width / 2 ) / scale;
+					scrollTop += ( screen.height / 2 ) / scale;
+
+					this.scrollLeft = scrollLeft;
+					this.scrollTop = scrollTop;
+
+				}
+
+				data.scrollLeft = this.scrollLeft;
+				data.scrollTop = this.scrollTop;
+
+			}
+
+			this.scrollLeft = data.scrollLeft - ( data.delta.x / scale );
+			this.scrollTop = data.scrollTop - ( data.delta.y / scale );
+
+		}, { click: true } );
 
 		this._onMoveEvent = ( e ) => {
 
@@ -1934,14 +2259,11 @@ class Canvas extends Serializer {
 			this.clientX = event.clientX;
 			this.clientY = event.clientY;
 
-			this.relativeClientX = ( ( ( dom.scrollLeft - this.centerX ) + event.clientX ) - rect.left ) / zoom;
-			this.relativeClientY = ( ( ( dom.scrollTop - this.centerY ) + event.clientY ) - rect.top ) / zoom;
+			const rectClientX = ( this.clientX - rect.left ) / zoom;
+			const rectClientY = ( this.clientY - rect.top ) / zoom;
 
-		};
-
-		this._onContentLoaded = () => {
-
-			this.centralize();
+			this.relativeClientX = rectClientX - this.scrollLeft;
+			this.relativeClientY = rectClientY - this.scrollTop;
 
 		};
 
@@ -1955,33 +2277,131 @@ class Canvas extends Serializer {
 
 	}
 
+	getBounds() {
+
+		const bounds = { x: Infinity, y: Infinity, width: - Infinity, height: - Infinity };
+
+		for ( const node of this.nodes ) {
+
+			const { x, y, width, height } = node.getBound();
+
+			bounds.x = Math.min( bounds.x, x );
+			bounds.y = Math.min( bounds.y, y );
+			bounds.width = Math.max( bounds.width, x + width );
+			bounds.height = Math.max( bounds.height, y + height );
+
+		}
+
+		bounds.x = Math.round( bounds.x );
+		bounds.y = Math.round( bounds.y );
+		bounds.width = Math.round( bounds.width );
+		bounds.height = Math.round( bounds.height );
+
+		return bounds;
+
+	}
+
+	get width() {
+
+		return this._width;
+
+	}
+
+	get height() {
+
+		return this._height;
+
+	}
+
 	get rect() {
 
 		return this.dom.getBoundingClientRect();
 
 	}
 
-	get relativeX() {
+	get zoom() {
 
-		return this.dom.scrollLeft - this.centerX;
-
-	}
-
-	get relativeY() {
-
-		return this.dom.scrollTop - this.centerY;
+		return this._zoom;
 
 	}
 
-	get centerX() {
+	set zoom( val ) {
 
-		return this.width / 2;
+		this._zoom = val;
+		this.contentDOM.style.zoom = val;
+
+		this.updateMozTransform();
 
 	}
 
-	get centerY() {
+	set scrollLeft( val ) {
 
-		return this.height / 2;
+		this._scrollLeft = val;
+		this.contentDOM.style.left = numberToPX( val );
+
+		this.updateMozTransform();
+
+	}
+
+	get scrollLeft() {
+
+		return this._scrollLeft;
+
+	}
+
+	set scrollTop( val ) {
+
+		this._scrollTop = val;
+		this.contentDOM.style.top = numberToPX( val );
+
+		this.updateMozTransform();
+
+	}
+
+	get scrollTop() {
+
+		return this._scrollTop;
+
+	}
+
+	set focusSelected( value ) {
+
+		if ( this._focusSelected === value ) return;
+
+		const classList = this.dom.classList;
+
+		this._focusSelected = value;
+
+		if ( value ) {
+
+			classList.add( 'focusing' );
+
+		} else {
+
+			classList.remove( 'focusing' );
+
+		}
+
+	}
+
+	get focusSelected() {
+
+		return this._focusSelected;
+
+	}
+
+	get useTransform() {
+
+		return navigator.userAgent.match( /firefox/i ) !== null;
+
+	}
+
+	updateMozTransform() {
+
+		if ( this.useTransform === false ) return;
+
+		this.contentDOM.style[ '-moz-transform' ] = 'scale(' + this.zoom + ')';
+		this.contentDOM.style[ '-moz-transform-origin' ] = '-' + this.contentDOM.style.left + ' -' + this.contentDOM.style.top;
 
 	}
 
@@ -2007,8 +2427,6 @@ class Canvas extends Serializer {
 
 		document.addEventListener( 'dragover', this._onMoveEvent, true );
 
-		document.addEventListener( 'DOMContentLoaded', this._onContentLoaded );
-
 		requestAnimationFrame( this._onUpdate );
 
 	}
@@ -2026,8 +2444,6 @@ class Canvas extends Serializer {
 		document.removeEventListener( 'touchmove', this._onMoveEvent, true );
 
 		document.removeEventListener( 'dragover', this._onMoveEvent, true );
-
-		document.removeEventListener( 'DOMContentLoaded', this._onContentLoaded );
 
 	}
 
@@ -2123,7 +2539,21 @@ class Canvas extends Serializer {
 
 	centralize() {
 
-		this.dom.scroll( this.centerX, this.centerY );
+		const bounds = this.getBounds();
+
+		this.scrollLeft = ( this.canvas.width / 2 ) - ( ( - bounds.x + bounds.width ) / 2 );
+		this.scrollTop = ( this.canvas.height / 2 ) - ( ( - bounds.y + bounds.height ) / 2 );
+
+		return this;
+
+	}
+
+	setSize( width, height ) {
+
+		this._width = width;
+		this._height = height;
+
+		this.update();
 
 		return this;
 
@@ -2136,6 +2566,8 @@ class Canvas extends Serializer {
 		const previousNode = this.selected;
 
 		if ( previousNode !== null ) {
+
+			this.focusSelected = false;
 
 			previousNode.dom.classList.remove( 'selected' );
 
@@ -2157,31 +2589,116 @@ class Canvas extends Serializer {
 
 	}
 
-	update() {
+	updateMap() {
 
-		if ( this.updating === false ) return;
+		const { nodes, mapCanvas, mapContext, scrollLeft, scrollTop, canvas, zoom, _mapInfo } = this;
 
-		requestAnimationFrame( this._onUpdate );
+		const bounds = this.getBounds();
 
-		const { dom, zoom, canvas, frontCanvas, frontContext, context } = this;
+		mapCanvas.width = 300;
+		mapCanvas.height = 200;
 
-		const width = window.innerWidth;
-		const height = window.innerHeight;
+		mapContext.clearRect( 0, 0, mapCanvas.width, mapCanvas.height );
 
-		const domRect = this.rect;
+		mapContext.fillStyle = 'rgba( 0, 0, 0, 0 )';
+		mapContext.fillRect( 0, 0, mapCanvas.width, mapCanvas.height );
 
-		if ( canvas.width !== width || canvas.height !== height ) {
+		const boundsWidth = - bounds.x + bounds.width;
+		const boundsHeight = - bounds.y + bounds.height;
 
-			canvas.width = width;
-			canvas.height = height;
+		const mapScale = Math.min( mapCanvas.width / boundsWidth, mapCanvas.height / boundsHeight ) * .5;
 
-			frontCanvas.width = width;
-			frontCanvas.height = height;
+		const boundsMapWidth = boundsWidth * mapScale;
+		const boundsMapHeight = boundsHeight * mapScale;
+
+		const boundsOffsetX = ( mapCanvas.width / 2 ) - ( boundsMapWidth / 2 );
+		const boundsOffsetY = ( mapCanvas.height / 2 ) - ( boundsMapHeight / 2 );
+
+		let selectedNode = null;
+
+		for ( const node of nodes ) {
+
+			const nodeBound = node.getBound();
+			const nodeColor = node.getColor();
+
+			nodeBound.x += - bounds.x;
+			nodeBound.y += - bounds.y;
+
+			nodeBound.x *= mapScale;
+			nodeBound.y *= mapScale;
+			nodeBound.width *= mapScale;
+			nodeBound.height *= mapScale;
+
+			nodeBound.x += boundsOffsetX;
+			nodeBound.y += boundsOffsetY;
+
+			if ( node !== this.selected ) {
+
+				mapContext.fillStyle = nodeColor;
+				mapContext.fillRect( nodeBound.x, nodeBound.y, nodeBound.width, nodeBound.height );
+
+			} else {
+
+				selectedNode = {
+					nodeBound,
+					nodeColor
+				};
+
+			}
 
 		}
 
-		context.clearRect( 0, 0, width, height );
-		frontContext.clearRect( 0, 0, width, height );
+		if ( selectedNode !== null ) {
+
+			const { nodeBound, nodeColor } = selectedNode;
+
+			mapContext.fillStyle = nodeColor;
+			mapContext.fillRect( nodeBound.x, nodeBound.y, nodeBound.width, nodeBound.height );
+
+		}
+
+		const screenMapX = ( - ( scrollLeft + bounds.x ) * mapScale ) + boundsOffsetX;
+		const screenMapY = ( - ( scrollTop + bounds.y ) * mapScale ) + boundsOffsetY;
+		const screenMapWidth = ( canvas.width * mapScale ) / zoom;
+		const screenMapHeight = ( canvas.height * mapScale ) / zoom;
+
+		mapContext.fillStyle = 'rgba( 200, 200, 200, 0.1 )';
+		mapContext.fillRect( screenMapX, screenMapY, screenMapWidth, screenMapHeight );
+
+		//
+
+		_mapInfo.scale = mapScale;
+		_mapInfo.left = ( - boundsOffsetX / mapScale ) + bounds.x;
+		_mapInfo.top = ( - boundsOffsetY / mapScale ) + bounds.y;
+		_mapInfo.width = mapCanvas.width / mapScale;
+		_mapInfo.height = mapCanvas.height / mapScale;
+		_mapInfo.screen.x = screenMapX;
+		_mapInfo.screen.y = screenMapY;
+		_mapInfo.screen.width = screenMapWidth;
+		_mapInfo.screen.height = screenMapHeight;
+
+	}
+
+	updateLines() {
+
+		const { dom, zoom, canvas, frontCanvas, frontContext, context, _width, _height, useTransform } = this;
+
+		const domRect = this.rect;
+
+		if ( canvas.width !== _width || canvas.height !== _height ) {
+
+			canvas.width = _width;
+			canvas.height = _height;
+
+			frontCanvas.width = _width;
+			frontCanvas.height = _height;
+
+		}
+
+		context.clearRect( 0, 0, _width, _height );
+		frontContext.clearRect( 0, 0, _width, _height );
+
+		//
 
 		context.globalCompositeOperation = 'lighter';
 		frontContext.globalCompositeOperation = 'source-over';
@@ -2211,6 +2728,13 @@ class Canvas extends Serializer {
 				aPos.x = rect.x + rect.width;
 				aPos.y = rect.y + ( rect.height / 2 );
 
+				if ( useTransform ) {
+
+					aPos.x /= zoom;
+					aPos.y /= zoom;
+
+				}
+
 			} else {
 
 				aPos.x = this.clientX;
@@ -2228,6 +2752,13 @@ class Canvas extends Serializer {
 
 				bPos.x = rect.x;
 				bPos.y = rect.y + ( rect.height / 2 );
+
+				if ( useTransform ) {
+
+					bPos.x /= zoom;
+					bPos.y /= zoom;
+
+				}
 
 			} else {
 
@@ -2330,6 +2861,17 @@ class Canvas extends Serializer {
 
 	}
 
+	update() {
+
+		if ( this.updating === false ) return;
+
+		requestAnimationFrame( this._onUpdate );
+
+		this.updateLines();
+		this.updateMap();
+
+	}
+
 	serialize( data ) {
 
 		const nodes = [];
@@ -2356,805 +2898,6 @@ class Canvas extends Serializer {
 
 }
 
-class ButtonInput extends Input {
-
-	constructor( innterText = '' ) {
-
-		const dom = document.createElement( 'button' );
-
-		const spanDOM = document.createElement( 'span' );
-		dom.append( spanDOM );
-
-		const iconDOM = document.createElement( 'i' );
-		dom.append( iconDOM );
-
-		super( dom );
-
-		this.spanDOM = spanDOM;
-		this.iconDOM = iconDOM;
-
-		spanDOM.innerText = innterText;
-
-		dom.onmouseover = () => {
-
-			this.dispatchEvent( new Event( 'mouseover' ) );
-
-		};
-
-		dom.onclick = dom.ontouchstart = ( e ) => {
-
-			e.preventDefault();
-
-			e.stopPropagation();
-
-			this.dispatchEvent( new Event( 'click' ) );
-
-		};
-
-	}
-
-	setIcon( className ) {
-
-		this.iconDOM.className = className;
-
-		return this;
-
-	}
-
-	setValue( val ) {
-
-		this.spanDOM.innerText = val;
-
-		return this;
-
-	}
-
-	getValue() {
-
-		return this.spanDOM.innerText;
-
-	}
-
-}
-
-class ObjectNode extends Node {
-
-	constructor( name, inputLength, callback = null, width = 300 ) {
-
-		super();
-
-		this.setWidth( width );
-
-		const title = new TitleElement( name )
-			.setObjectCallback( callback )
-			.setSerializable( false )
-			.setOutput( inputLength );
-
-		const closeButton = new ButtonInput( Styles.icons.close || '✕' ).onClick( () => {
-
-			this.dispose();
-
-		} ).setIcon( Styles.icons.close );
-
-		title.addButton( closeButton );
-
-		this.add( title );
-
-		this.title = title;
-		this.closeButton = closeButton;
-
-	}
-
-	setName( value ) {
-
-		this.title.setTitle( value );
-
-		return this;
-
-	}
-
-	getName() {
-
-		return this.title.getTitle();
-
-	}
-
-	setObjectCallback( callback ) {
-
-		this.title.setObjectCallback( callback );
-
-		return this;
-
-	}
-
-	getObject( callback ) {
-
-		return this.title.getObject( callback );
-
-	}
-
-	setColor( color ) {
-
-		return this.title.setColor( color );
-
-	}
-
-	setOutputColor( color ) {
-
-		return this.title.setOutputColor( color );
-
-	}
-
-	invalidate() {
-
-		this.title.dispatchEvent( new Event( 'connect' ) );
-
-	}
-
-}
-
-const ENTER_KEY$2 = 13;
-
-class StringInput extends Input {
-
-	constructor( value = '' ) {
-
-		const dom = document.createElement( 'input' );
-		super( dom );
-
-		dom.type = 'text';
-		dom.value = value;
-		dom.spellcheck = false;
-		dom.autocomplete = 'off';
-
-		dom.onblur = () => {
-
-			this.dispatchEvent( new Event( 'blur' ) );
-
-		};
-
-		dom.onchange = () => {
-
-			this.dispatchEvent( new Event( 'change' ) );
-
-		};
-
-		dom.onkeyup = ( e ) => {
-
-			if ( e.keyCode === ENTER_KEY$2 ) {
-
-				e.target.blur();
-
-			}
-
-			e.stopPropagation();
-
-			this.dispatchEvent( new Event( 'change' ) );
-
-		};
-
-	}
-
-}
-
-const ENTER_KEY$1 = 13;
-
-class NumberInput extends Input {
-
-	constructor( value = 0, min = - Infinity, max = Infinity, step = .01 ) {
-
-		const dom = document.createElement( 'input' );
-		super( dom );
-
-		this.min = min;
-		this.max = max;
-		this.step = step;
-
-		this.integer = false;
-
-		dom.type = 'text';
-		dom.className = 'number';
-		dom.value = this._getString( value );
-		dom.spellcheck = false;
-		dom.autocomplete = 'off';
-
-		dom.ondragstart = dom.oncontextmenu = ( e ) => {
-
-			e.preventDefault();
-
-			e.stopPropagation();
-
-		};
-
-		dom.onfocus = dom.onclick = () => {
-
-			dom.select();
-
-		};
-
-		dom.onblur = () => {
-
-			this.dom.value = this._getString( this.dom.value );
-
-			this.dispatchEvent( new Event( 'blur' ) );
-
-		};
-
-		dom.onchange = () => {
-
-			this.dispatchEvent( new Event( 'change' ) );
-
-		};
-
-		dom.onkeydown = ( e ) => {
-
-			if ( e.key.length === 1 && /\d|\./.test( e.key ) !== true ) {
-
-				return false;
-
-			}
-
-			if ( e.keyCode === ENTER_KEY$1 ) {
-
-				e.target.blur();
-
-			}
-
-			e.stopPropagation();
-
-		};
-
-		draggableDOM( dom, ( data ) => {
-
-			const { delta } = data;
-
-			if ( dom.readOnly === true ) return;
-
-			if ( data.value === undefined ) {
-
-				data.value = this.getValue();
-
-			}
-
-			const diff = delta.x - delta.y;
-
-			const value = data.value + ( diff * this.step );
-
-			dom.value = this._getString( value.toFixed( this.precision ) );
-
-			this.dispatchEvent( new Event( 'change' ) );
-
-		} );
-
-	}
-
-	setStep( step ) {
-
-		this.step = step;
-
-		return this;
-
-	}
-
-	setRange( min, max, step ) {
-
-		this.min = min;
-		this.max = max;
-		this.step = step;
-
-		this.dispatchEvent( new Event( 'range' ) );
-
-		return this.setValue( this.getValue() );
-
-	}
-
-	get precision() {
-
-		if ( this.integer === true ) return 0;
-
-		const fract = this.step % 1;
-
-		return fract !== 0 ? fract.toString().split( '.' )[ 1 ].length : 1;
-
-	}
-
-	setValue( val, dispatch = true ) {
-
-		return super.setValue( this._getString( val ), dispatch );
-
-	}
-
-	getValue() {
-
-		return Number( this.dom.value );
-
-	}
-
-	serialize( data ) {
-
-		const { min, max } = this;
-
-		if ( min !== - Infinity && max !== Infinity ) {
-
-			data.min = this.min;
-			data.max = this.max;
-			data.step = this.step;
-
-		}
-
-		super.serialize( data );
-
-	}
-
-	deserialize( data ) {
-
-		if ( data.min !== undefined ) {
-
-			const { min, max, step } = this;
-
-			this.setRange( min, max, step );
-
-		}
-
-		super.deserialize( data );
-
-	}
-
-	_getString( value ) {
-
-		const num = Math.min( Math.max( Number( value ), this.min ), this.max );
-
-		if ( this.integer === true ) {
-
-			return Math.floor( num );
-
-		} else {
-
-			return num + ( num % 1 ? '' : '.0' );
-
-		}
-
-	}
-
-}
-
-const getStep = ( min, max ) => {
-
-	const sensibility = .001;
-
-	return ( max - min ) * sensibility;
-
-};
-
-class SliderInput extends Input {
-
-	constructor( value = 0, min = 0, max = 100 ) {
-
-		const dom = document.createElement( 'f-subinputs' );
-		super( dom );
-
-		value = Math.min( Math.max( value, min ), max );
-
-		const step = getStep( min, max );
-
-		const rangeDOM = document.createElement( 'input' );
-		rangeDOM.type = 'range';
-		rangeDOM.min = min;
-		rangeDOM.max = max;
-		rangeDOM.step = step;
-		rangeDOM.value = value;
-
-		const field = new NumberInput( value, min, max, step );
-		field.dom.className = 'range-value';
-		field.onChange( () => {
-
-			rangeDOM.value = field.getValue();
-
-		} );
-
-		field.addEventListener( 'range', () => {
-
-			rangeDOM.min = field.min;
-			rangeDOM.max = field.max;
-			rangeDOM.step = field.step;
-			rangeDOM.value = field.getValue();
-
-		} );
-
-		dom.append( rangeDOM );
-		dom.append( field.dom );
-
-		this.rangeDOM = rangeDOM;
-		this.field = field;
-
-		const updateRangeValue = () => {
-
-			let value = Number( rangeDOM.value );
-
-			if ( value !== this.max && value + this.step >= this.max ) {
-
-				// fix not end range fraction
-
-				rangeDOM.value = value = this.max;
-
-			}
-
-			this.field.setValue( value );
-
-		};
-
-		draggableDOM( rangeDOM, () => {
-
-			updateRangeValue();
-
-			this.dispatchEvent( new Event( 'change' ) );
-
-		}, '' );
-
-	}
-
-	get min() {
-
-		return this.field.min;
-
-	}
-
-	get max() {
-
-		return this.field.max;
-
-	}
-
-	get step() {
-
-		return this.field.step;
-
-	}
-
-	setRange( min, max ) {
-
-		this.field.setRange( min, max, getStep( min, max ) );
-
-		this.dispatchEvent( new Event( 'range' ) );
-		this.dispatchEvent( new Event( 'change' ) );
-
-		return this;
-
-	}
-
-	setValue( val, dispatch = true ) {
-
-		this.field.setValue( val );
-		this.rangeDOM.value = val;
-
-		if ( dispatch ) this.dispatchEvent( new Event( 'change' ) );
-
-		return this;
-
-	}
-
-	getValue() {
-
-		return this.field.getValue();
-
-	}
-
-	serialize( data ) {
-
-		data.min = this.min;
-		data.max = this.max;
-
-		super.serialize( data );
-
-	}
-
-	deserialize( data ) {
-
-		const { min, max } = data;
-
-		this.setRange( min, max );
-
-		super.deserialize( data );
-
-	}
-
-}
-
-class ColorInput extends Input {
-
-	constructor( value = 0x0099ff ) {
-
-		const dom = document.createElement( 'input' );
-		super( dom );
-
-		dom.type = 'color';
-		dom.value = toHex( value );
-
-		dom.oninput = () => {
-
-			this.dispatchEvent( new Event( 'change' ) );
-
-		};
-
-	}
-
-	setValue( value, dispatch = true ) {
-
-		return super.setValue( toHex( value ), dispatch );
-
-	}
-
-	getValue() {
-
-		return parseInt( super.getValue().substr( 1 ), 16 );
-
-	}
-
-}
-
-const ENTER_KEY = 13;
-
-class TextInput extends Input {
-
-	constructor( innerText = '' ) {
-
-		const dom = document.createElement( 'textarea' );
-		super( dom );
-
-		dom.innerText = innerText;
-
-		dom.onblur = () => {
-
-			this.dispatchEvent( new Event( 'blur' ) );
-
-		};
-
-		dom.onchange = () => {
-
-			this.dispatchEvent( new Event( 'change' ) );
-
-		};
-
-		dom.onkeyup = ( e ) => {
-
-			if ( e.keyCode === ENTER_KEY ) {
-
-				e.target.blur();
-
-			}
-
-			e.stopPropagation();
-
-			this.dispatchEvent( new Event( 'change' ) );
-
-		};
-
-	}
-
-}
-
-class LabelElement extends Element {
-
-	constructor( label = '', align = '' ) {
-
-		super();
-
-		this.labelDOM = document.createElement( 'f-label' );
-		this.inputsDOM = document.createElement( 'f-inputs' );
-
-		const spanDOM = document.createElement( 'span' );
-		const iconDOM = document.createElement( 'i' );
-
-		this.spanDOM = spanDOM;
-		this.iconDOM = iconDOM;
-
-		this.labelDOM.append( this.spanDOM );
-		this.labelDOM.append( this.iconDOM );
-
-		this.dom.append( this.labelDOM );
-		this.dom.append( this.inputsDOM );
-
-		this.serializeLabel = false;
-
-		this.setLabel( label );
-		this.setAlign( align );
-
-	}
-
-	setIcon( value ) {
-
-		this.iconDOM.className = value;
-
-		return this;
-
-	}
-
-	getIcon() {
-
-		return this.iconDOM.className;
-
-	}
-
-	setAlign( align ) {
-
-		this.labelDOM.className = align;
-
-	}
-
-	setLabel( val ) {
-
-		this.spanDOM.innerText = val;
-
-	}
-
-	getLabel() {
-
-		return this.spanDOM.innerText;
-
-	}
-
-	serialize( data ) {
-
-		super.serialize( data );
-
-		if ( this.serializeLabel ) {
-
-			const label = this.getLabel();
-			const icon = this.getIcon();
-
-			data.label = label;
-
-			if ( icon !== '' ) {
-
-				data.icon = icon;
-
-			}
-
-		}
-
-	}
-
-	deserialize( data ) {
-
-		super.deserialize( data );
-
-		if ( this.serializeLabel ) {
-
-			this.setLabel( data.label );
-
-			if ( data.icon !== undefined ) {
-
-				this.setIcon( data.icon );
-
-			}
-
-		}
-
-	}
-
-}
-
-class PanelNode extends Node {
-
-	constructor( title = 'Panel', align = 'top-right' ) {
-
-		super();
-
-		const titleElement = new TitleElement( title );
-		this.add( titleElement );
-
-		const collapseButton = new ButtonInput( '🗕' );
-		collapseButton.onClick( () => {
-
-			this.setCollapse( ! this.collapsed );
-
-		} );
-
-		titleElement.addButton( collapseButton );
-
-		this.collapseButton = collapseButton;
-		this.titleElement = titleElement;
-		this.align = align;
-		this.collapsed = false;
-
-		this.setAlign( align );
-		this.setStyle( 'rouded' );
-
-	}
-
-	setCollapse( value ) {
-
-		const cssClass = 'closed';
-
-		this.dom.classList.remove( cssClass );
-
-		this.collapsed = value;
-
-		this.collapseButton.value = value ? '🗖' : '🗕';
-
-		if ( value === true ) {
-
-			this.dom.classList.add( cssClass );
-
-		}
-
-		return this;
-
-	}
-
-	setAlign( align ) {
-
-		if ( this.align ) this.dom.classList.remove( this.align );
-		this.dom.classList.add( align );
-
-		this.align = align;
-
-		return this;
-
-	}
-
-	addInput( inputClass, object, property, ...params ) {
-
-		const value = object[ property ];
-
-		const input = new inputClass( value, ...params );
-		input.onChange( () => {
-
-			object[ property ] = input.value;
-
-		} );
-
-		this.add( new LabelElement( property ).add( input ) );
-
-		return input;
-
-	}
-
-	addSlider( object, property, min, max ) {
-
-		return this.addInput( SliderInput, object, property, min, max );
-
-	}
-
-	addNumber( object, property ) {
-
-		return this.addInput( NumberInput, object, property );
-
-	}
-
-	addColor( object, property ) {
-
-		return this.addInput( ColorInput, object, property );
-
-	}
-
-	addString( object, property ) {
-
-		return this.addInput( StringInput, object, property );
-
-	}
-
-	addText( object, property ) {
-
-		const input = this.addInput( TextInput, object, property );
-		input.element.setHeight( 70 );
-
-		return input;
-
-	}
-
-	addButton( name ) {
-
-		const input = new ButtonInput( name );
-
-		this.add( new Element().setHeight( 34 ).add( input ) );
-
-		return input;
-
-	}
-
-}
-
 class Menu extends EventTarget {
 
 	constructor( className ) {
@@ -3162,7 +2905,7 @@ class Menu extends EventTarget {
 		super();
 
 		const dom = document.createElement( 'f-menu' );
-		dom.className = className + ' hidden';
+		dom.className = className + ' bottom left hidden';
 
 		const listDOM = document.createElement( 'f-list' );
 
@@ -3172,6 +2915,8 @@ class Menu extends EventTarget {
 		this.listDOM = listDOM;
 
 		this.visible = false;
+
+		this.align = 'bottom left';
 
 		this.subMenus = new WeakMap();
 		this.domButtons = new WeakMap();
@@ -3187,6 +2932,25 @@ class Menu extends EventTarget {
 		this.events.context.push( callback );
 
 		return this;
+
+	}
+
+	setAlign( align ) {
+
+		const dom = this.dom;
+
+		removeDOMClass( dom, this.align );
+		addDOMClass( dom, align );
+
+		this.align = align;
+
+		return this;
+
+	}
+
+	getAlign() {
+
+		return this.align;
 
 	}
 
@@ -3357,12 +3121,20 @@ class ContextMenu extends Menu {
 
 	}
 
+	setWidth( width ) {
+
+		this.dom.style.width = numberToPX( width );
+
+		return this;
+
+	}
+
 	setPosition( x, y ) {
 
 		const dom = this.dom;
 
-		dom.style.left = toPX( x );
-		dom.style.top = toPX( y );
+		dom.style.left = numberToPX( x );
+		dom.style.top = numberToPX( y );
 
 		return this;
 
@@ -3508,7 +3280,7 @@ class Tips extends EventTarget {
 
 		setTimeout( () => {
 
-			this.time -= this.duration;
+			this.time = Math.max( this.time - this.duration, 0 );
 
 			dom.style.opacity = 0;
 
@@ -3537,6 +3309,8 @@ class Search extends Menu {
 		this.events.submit = [];
 		this.events.filter = [];
 
+		this.tags = new WeakMap();
+
 		const inputDOM = document.createElement( 'input' );
 		inputDOM.placeholder = 'Type here';
 
@@ -3553,9 +3327,9 @@ class Search extends Menu {
 
 		inputDOM.onkeydown = ( e ) => {
 
-			const keyCode = e.keyCode;
+			const key = e.key;
 
-			if ( keyCode === 38 ) {
+			if ( key === 'ArrowUp' ) {
 
 				const index = this.filteredIndex;
 
@@ -3573,7 +3347,7 @@ class Search extends Menu {
 
 				filter = false;
 
-			} else if ( keyCode === 40 ) {
+			} else if ( key === 'ArrowDown' ) {
 
 				const index = this.filteredIndex;
 
@@ -3593,7 +3367,7 @@ class Search extends Menu {
 
 				filter = false;
 
-			} else if ( keyCode === 13 ) {
+			} else if ( key === 'Enter' ) {
 
 				this.value = this.currentFiltered ? this.currentFiltered.button.getValue() : inputDOM.value;
 
@@ -3768,10 +3542,17 @@ class Search extends Menu {
 
 	}
 
+	setTag( button, tags ) {
+
+		this.tags.set( button, tags );
+
+	}
+
 	filter( text ) {
 
 		text = filterString( text );
 
+		const tags = this.tags;
 		const filtered = [];
 
 		for ( const button of this.buttons ) {
@@ -3780,7 +3561,9 @@ class Search extends Menu {
 
 			buttonDOM.remove();
 
-			const label = filterString( button.getValue() );
+			const buttonTags = tags.has( button ) ? ' ' + tags.get( button ) : '';
+
+			const label = filterString( button.getValue() + buttonTags );
 
 			if ( text && label.includes( text ) === true ) {
 
@@ -3818,6 +3601,388 @@ class Search extends Menu {
 				this.listDOM.append( buttonDOM );
 
 			}
+
+		}
+
+	}
+
+}
+
+class LabelElement extends Element {
+
+	constructor( label = '', align = '' ) {
+
+		super();
+
+		this.labelDOM = document.createElement( 'f-label' );
+		this.inputsDOM = document.createElement( 'f-inputs' );
+
+		const spanDOM = document.createElement( 'span' );
+
+		this.spanDOM = spanDOM;
+		this.iconDOM = null;
+
+		this.labelDOM.append( spanDOM );
+
+		this.dom.append( this.labelDOM );
+		this.dom.append( this.inputsDOM );
+
+		this.serializeLabel = false;
+
+		this.setLabel( label );
+		this.setAlign( align );
+
+	}
+
+	setIcon( value ) {
+
+		this.iconDOM = this.iconDOM || document.createElement( 'i' );
+		this.iconDOM.className = value;
+
+		if ( value ) this.labelDOM.prepend( this.iconDOM );
+		else this.iconDOM.remove();
+
+		return this;
+
+	}
+
+	getIcon() {
+
+		return this.iconDOM ? this.iconDOM.className : null;
+
+	}
+
+	setAlign( align ) {
+
+		this.labelDOM.className = align;
+
+	}
+
+	setLabel( val ) {
+
+		this.spanDOM.innerText = val;
+
+	}
+
+	getLabel() {
+
+		return this.spanDOM.innerText;
+
+	}
+
+	serialize( data ) {
+
+		super.serialize( data );
+
+		if ( this.serializeLabel ) {
+
+			const label = this.getLabel();
+			const icon = this.getIcon();
+
+			data.label = label;
+
+			if ( icon !== '' ) {
+
+				data.icon = icon;
+
+			}
+
+		}
+
+	}
+
+	deserialize( data ) {
+
+		super.deserialize( data );
+
+		if ( this.serializeLabel ) {
+
+			this.setLabel( data.label );
+
+			if ( data.icon !== undefined ) {
+
+				this.setIcon( data.icon );
+
+			}
+
+		}
+
+	}
+
+}
+
+class ButtonInput extends Input {
+
+	constructor( innterText = '' ) {
+
+		const dom = document.createElement( 'button' );
+
+		const spanDOM = document.createElement( 'span' );
+		dom.append( spanDOM );
+
+		const iconDOM = document.createElement( 'i' );
+		dom.append( iconDOM );
+
+		super( dom );
+
+		this.spanDOM = spanDOM;
+		this.iconDOM = iconDOM;
+
+		spanDOM.innerText = innterText;
+
+		dom.onmouseover = () => {
+
+			this.dispatchEvent( new Event( 'mouseover' ) );
+
+		};
+
+		dom.onclick = dom.ontouchstart =
+		iconDOM.onclick = iconDOM.ontouchstart = ( e ) => {
+
+			e.preventDefault();
+
+			e.stopPropagation();
+
+			this.dispatchEvent( new Event( 'click' ) );
+
+		};
+
+	}
+
+	setIcon( className ) {
+
+		this.iconDOM.className = className;
+
+		return this;
+
+	}
+
+	getIcon() {
+
+		return this.iconDOM.className;
+
+	}
+
+	setValue( val ) {
+
+		this.spanDOM.innerText = val;
+
+		return this;
+
+	}
+
+	getValue() {
+
+		return this.spanDOM.innerText;
+
+	}
+
+}
+
+class ColorInput extends Input {
+
+	constructor( value = 0x0099ff ) {
+
+		const dom = document.createElement( 'input' );
+		super( dom );
+
+		dom.type = 'color';
+		dom.value = numberToHex( value );
+
+		dom.oninput = () => {
+
+			this.dispatchEvent( new Event( 'change' ) );
+
+		};
+
+	}
+
+	setValue( value, dispatch = true ) {
+
+		return super.setValue( numberToHex( value ), dispatch );
+
+	}
+
+	getValue() {
+
+		return parseInt( super.getValue().substr( 1 ), 16 );
+
+	}
+
+}
+
+class NumberInput extends Input {
+
+	constructor( value = 0, min = - Infinity, max = Infinity, step = .01 ) {
+
+		const dom = document.createElement( 'input' );
+		super( dom );
+
+		this.min = min;
+		this.max = max;
+		this.step = step;
+
+		this.integer = false;
+
+		dom.type = 'text';
+		dom.className = 'number';
+		dom.value = this._getString( value );
+		dom.spellcheck = false;
+		dom.autocomplete = 'off';
+
+		dom.ondragstart = dom.oncontextmenu = ( e ) => {
+
+			e.preventDefault();
+
+			e.stopPropagation();
+
+		};
+
+		dom.onfocus = dom.onclick = () => {
+
+			dom.select();
+
+		};
+
+		dom.onblur = () => {
+
+			this.dom.value = this._getString( this.dom.value );
+
+			this.dispatchEvent( new Event( 'blur' ) );
+
+		};
+
+		dom.onchange = () => {
+
+			this.dispatchEvent( new Event( 'change' ) );
+
+		};
+
+		dom.onkeydown = ( e ) => {
+
+			if ( e.key.length === 1 && /\d|\./.test( e.key ) !== true ) {
+
+				return false;
+
+			}
+
+			if ( e.key === 'Enter' ) {
+
+				e.target.blur();
+
+			}
+
+			e.stopPropagation();
+
+		};
+
+		draggableDOM( dom, ( data ) => {
+
+			const { delta } = data;
+
+			if ( dom.readOnly === true ) return;
+
+			if ( data.value === undefined ) {
+
+				data.value = this.getValue();
+
+			}
+
+			const diff = delta.x - delta.y;
+
+			const value = data.value + ( diff * this.step );
+
+			dom.value = this._getString( value.toFixed( this.precision ) );
+
+			this.dispatchEvent( new Event( 'change' ) );
+
+		} );
+
+	}
+
+	setStep( step ) {
+
+		this.step = step;
+
+		return this;
+
+	}
+
+	setRange( min, max, step ) {
+
+		this.min = min;
+		this.max = max;
+		this.step = step;
+
+		this.dispatchEvent( new Event( 'range' ) );
+
+		return this.setValue( this.getValue() );
+
+	}
+
+	get precision() {
+
+		if ( this.integer === true ) return 0;
+
+		const fract = this.step % 1;
+
+		return fract !== 0 ? fract.toString().split( '.' )[ 1 ].length : 1;
+
+	}
+
+	setValue( val, dispatch = true ) {
+
+		return super.setValue( this._getString( val ), dispatch );
+
+	}
+
+	getValue() {
+
+		return Number( this.dom.value );
+
+	}
+
+	serialize( data ) {
+
+		const { min, max } = this;
+
+		if ( min !== - Infinity && max !== Infinity ) {
+
+			data.min = this.min;
+			data.max = this.max;
+			data.step = this.step;
+
+		}
+
+		super.serialize( data );
+
+	}
+
+	deserialize( data ) {
+
+		if ( data.min !== undefined ) {
+
+			const { min, max, step } = this;
+
+			this.setRange( min, max, step );
+
+		}
+
+		super.deserialize( data );
+
+	}
+
+	_getString( value ) {
+
+		const num = Math.min( Math.max( Number( value ), this.min ), this.max );
+
+		if ( this.integer === true ) {
+
+			return Math.floor( num );
+
+		} else {
+
+			return num + ( num % 1 ? '' : '.0' );
 
 		}
 
@@ -3918,6 +4083,363 @@ class SelectInput extends Input {
 
 }
 
+const getStep = ( min, max ) => {
+
+	const sensibility = .001;
+
+	return ( max - min ) * sensibility;
+
+};
+
+class SliderInput extends Input {
+
+	constructor( value = 0, min = 0, max = 100 ) {
+
+		const dom = document.createElement( 'f-subinputs' );
+		super( dom );
+
+		value = Math.min( Math.max( value, min ), max );
+
+		const step = getStep( min, max );
+
+		const rangeDOM = document.createElement( 'input' );
+		rangeDOM.type = 'range';
+		rangeDOM.min = min;
+		rangeDOM.max = max;
+		rangeDOM.step = step;
+		rangeDOM.value = value;
+
+		const field = new NumberInput( value, min, max, step );
+		field.dom.className = 'range-value';
+		field.onChange( () => {
+
+			rangeDOM.value = field.getValue();
+
+			this.dispatchEvent( new Event( 'change' ) );
+
+		} );
+
+		field.addEventListener( 'range', () => {
+
+			rangeDOM.min = field.min;
+			rangeDOM.max = field.max;
+			rangeDOM.step = field.step;
+			rangeDOM.value = field.getValue();
+
+		} );
+
+		dom.append( rangeDOM );
+		dom.append( field.dom );
+
+		this.rangeDOM = rangeDOM;
+		this.field = field;
+
+		const updateRangeValue = () => {
+
+			let value = Number( rangeDOM.value );
+
+			if ( value !== this.max && value + this.step >= this.max ) {
+
+				// fix not end range fraction
+
+				rangeDOM.value = value = this.max;
+
+			}
+
+			this.field.setValue( value );
+
+		};
+
+		draggableDOM( rangeDOM, () => {
+
+			updateRangeValue();
+
+			this.dispatchEvent( new Event( 'change' ) );
+
+		}, { className: '' } );
+
+	}
+
+	get min() {
+
+		return this.field.min;
+
+	}
+
+	get max() {
+
+		return this.field.max;
+
+	}
+
+	get step() {
+
+		return this.field.step;
+
+	}
+
+	setRange( min, max ) {
+
+		this.field.setRange( min, max, getStep( min, max ) );
+
+		this.dispatchEvent( new Event( 'range' ) );
+		this.dispatchEvent( new Event( 'change' ) );
+
+		return this;
+
+	}
+
+	setValue( val, dispatch = true ) {
+
+		this.field.setValue( val );
+		this.rangeDOM.value = val;
+
+		if ( dispatch ) this.dispatchEvent( new Event( 'change' ) );
+
+		return this;
+
+	}
+
+	getValue() {
+
+		return this.field.getValue();
+
+	}
+
+	serialize( data ) {
+
+		data.min = this.min;
+		data.max = this.max;
+
+		super.serialize( data );
+
+	}
+
+	deserialize( data ) {
+
+		const { min, max } = data;
+
+		this.setRange( min, max );
+
+		super.deserialize( data );
+
+	}
+
+}
+
+class StringInput extends Input {
+
+	constructor( value = '' ) {
+
+		const dom = document.createElement( 'f-string' );
+		super( dom );
+
+		const inputDOM = document.createElement( 'input' );
+
+		dom.append( inputDOM );
+
+		inputDOM.type = 'text';
+		inputDOM.value = value;
+		inputDOM.spellcheck = false;
+		inputDOM.autocomplete = 'off';
+
+		this._buttonsDOM = null;
+		this._datalistDOM = null;
+
+		this.iconDOM = null;
+		this.inputDOM = inputDOM;
+
+		this.buttons = [];
+
+		inputDOM.onblur = () => {
+
+			this.dispatchEvent( new Event( 'blur' ) );
+
+		};
+
+		inputDOM.onchange = () => {
+
+			this.dispatchEvent( new Event( 'change' ) );
+
+		};
+
+		let keyDownStr = '';
+
+		inputDOM.onkeydown = () => keyDownStr = inputDOM.value;
+
+		inputDOM.onkeyup = ( e ) => {
+
+			if ( e.key === 'Enter' ) {
+
+				e.target.blur();
+
+			}
+
+			e.stopPropagation();
+
+			if ( keyDownStr !== inputDOM.value ) {
+
+				this.dispatchEvent( new Event( 'change' ) );
+
+			}
+
+		};
+
+	}
+
+	setPlaceHolder( text ) {
+
+		this.inputDOM.placeholder = text;
+
+		return this;
+
+	}
+
+	setIcon( value ) {
+
+		this.iconDOM = this.iconDOM || document.createElement( 'i' );
+		this.iconDOM.setAttribute( 'type', 'icon' );
+		this.iconDOM.className = value;
+
+		if ( value ) this.dom.prepend( this.iconDOM );
+		else this.iconDOM.remove();
+
+		return this;
+
+	}
+
+	getIcon() {
+
+		return this.iconInput ? this.iconInput.getIcon() : '';
+
+	}
+
+	addButton( button ) {
+
+		this.buttonsDOM.prepend( button.iconDOM );
+
+		this.buttons.push( button );
+
+		return this;
+
+	}
+
+	addOption( value ) {
+
+		const option = document.createElement( 'option' );
+		option.value = value;
+
+		this.datalistDOM.append( option );
+
+		return this;
+
+	}
+
+	clearOptions() {
+
+		this.datalistDOM.remove();
+
+	}
+
+	get datalistDOM() {
+
+		let dom = this._datalistDOM;
+
+		if ( dom === null ) {
+
+			const datalistId = 'input-dt-' + this.id;
+
+			dom = document.createElement( 'datalist' );
+			dom.id = datalistId;
+
+			this._datalistDOM = dom;
+
+			this.inputDOM.autocomplete = 'on';
+			this.inputDOM.setAttribute( 'list', datalistId );
+
+			this.dom.prepend( dom );
+
+		}
+
+		return dom;
+
+	}
+
+	get buttonsDOM() {
+
+		let dom = this._buttonsDOM;
+
+		if ( dom === null ) {
+
+			dom = document.createElement( 'f-buttons' );
+
+			this._buttonsDOM = dom;
+
+			this.dom.prepend( dom );
+
+		}
+
+		return dom;
+
+	}
+
+	setValue( val ) {
+
+		this.inputDOM.value = val;
+
+		return this;
+
+	}
+
+	getValue() {
+
+		return this.inputDOM.value;
+
+	}
+
+}
+
+class TextInput extends Input {
+
+	constructor( innerText = '' ) {
+
+		const dom = document.createElement( 'textarea' );
+		super( dom );
+
+		dom.innerText = innerText;
+
+		dom.classList.add( 'f-scroll' );
+
+		dom.onblur = () => {
+
+			this.dispatchEvent( new Event( 'blur' ) );
+
+		};
+
+		dom.onchange = () => {
+
+			this.dispatchEvent( new Event( 'change' ) );
+
+		};
+
+		dom.onkeyup = ( e ) => {
+
+			if ( e.key === 'Enter' ) {
+
+				e.target.blur();
+
+			}
+
+			e.stopPropagation();
+
+			this.dispatchEvent( new Event( 'change' ) );
+
+		};
+
+	}
+
+}
+
 class ToggleInput extends Input {
 
 	constructor( value = false ) {
@@ -3952,6 +4474,204 @@ class ToggleInput extends Input {
 
 }
 
+class TreeViewNode {
+
+	constructor( name = '' ) {
+
+		const dom = document.createElement( 'f-treeview-node' );
+		const labelDOM = document.createElement( 'f-treeview-label' );
+		const inputDOM = document.createElement( 'input' );
+
+		const labelSpam = document.createElement( 'spam' );
+		labelDOM.append( labelSpam );
+
+		labelSpam.innerText = name;
+
+		inputDOM.type = 'checkbox';
+
+		dom.append( inputDOM );
+		dom.append( labelDOM );
+
+		this.dom = dom;
+		this.childrenDOM = null;
+		this.labelSpam = labelSpam;
+		this.labelDOM = labelDOM;
+		this.inputDOM = inputDOM;
+		this.iconDOM = null;
+
+		this.parent = null;
+		this.children = [];
+
+		this.selected = false;
+
+		this.events = {
+			'change': [],
+			'click': []
+		};
+
+		dom.addEventListener( 'click', ( ) => {
+
+			dispatchEventList( this.events.click, this );
+
+		} );
+
+	}
+
+	setLabel( value ) {
+
+		this.labelSpam.innerText = value;
+
+		return this;
+
+	}
+
+	getLabel() {
+
+		return this.labelSpam.innerText;
+
+	}
+
+	add( node ) {
+
+		let childrenDOM = this.childrenDOM;
+
+		if ( this.childrenDOM === null ) {
+
+			const dom = this.dom;
+
+			const arrowDOM = document.createElement( 'f-arrow' );
+			childrenDOM = document.createElement( 'f-treeview-children' );
+
+			dom.append( arrowDOM );
+			dom.append( childrenDOM );
+
+			this.childrenDOM = childrenDOM;
+
+		}
+
+		this.children.push( node );
+		childrenDOM.append( node.dom );
+
+		node.parent = this;
+
+		return this;
+
+	}
+
+	setOpened( value ) {
+
+		this.inputDOM.checked = value;
+
+		return this;
+
+	}
+
+	getOpened() {
+
+		return this.inputDOM.checkbox;
+
+	}
+
+	setIcon( value ) {
+
+		this.iconDOM = this.iconDOM || document.createElement( 'i' );
+		this.iconDOM.className = value;
+
+		if ( value ) this.labelDOM.prepend( this.iconDOM );
+		else this.iconDOM.remove();
+
+		return this;
+
+	}
+
+	getIcon() {
+
+		return this.iconDOM ? this.iconDOM.className : null;
+
+	}
+
+	setVisible( value ) {
+
+		this.dom.style.display = value ? '' : 'none';
+
+		return this;
+
+	}
+
+	setSelected( value ) {
+
+		if ( this.selected === value ) return this;
+
+		if ( value ) this.dom.classList.add( 'selected' );
+		else this.dom.classList.remove( 'selected' );
+
+		this.selected = value;
+
+		return this;
+
+	}
+
+	onClick( callback ) {
+
+		this.events.click.push( callback );
+
+		return this;
+
+	}
+
+}
+
+class TreeViewInput extends Input {
+
+	constructor( options = [] ) {
+
+		const dom = document.createElement( 'f-treeview' );
+		super( dom );
+
+		const childrenDOM = document.createElement( 'f-treeview-children' );
+		dom.append( childrenDOM );
+
+		dom.setAttribute( 'type', 'tree' );
+
+		this.childrenDOM = childrenDOM;
+
+		this.children = [];
+
+	}
+
+	add( node ) {
+
+		this.children.push( node );
+		this.childrenDOM.append( node.dom );
+
+		return this;
+
+	}
+
+	serialize( data ) {
+
+		//data.options = [ ...this.options ];
+
+		super.serialize( data );
+
+	}
+
+	deserialize( data ) {
+
+		/*const currentOptions = this.options;
+
+		if ( currentOptions.length === 0 ) {
+
+			this.setOptions( data.options );
+
+		}*/
+
+		super.deserialize( data );
+
+	}
+
+}
+
 var Flow = /*#__PURE__*/Object.freeze({
 	__proto__: null,
 	Element: Element,
@@ -3959,9 +4679,6 @@ var Flow = /*#__PURE__*/Object.freeze({
 	Node: Node,
 	Canvas: Canvas,
 	Serializer: Serializer,
-	Styles: Styles,
-	ObjectNode: ObjectNode,
-	PanelNode: PanelNode,
 	Menu: Menu,
 	ContextMenu: ContextMenu,
 	CircleMenu: CircleMenu,
@@ -3977,7 +4694,9 @@ var Flow = /*#__PURE__*/Object.freeze({
 	SliderInput: SliderInput,
 	StringInput: StringInput,
 	TextInput: TextInput,
-	ToggleInput: ToggleInput
+	ToggleInput: ToggleInput,
+	TreeViewInput: TreeViewInput,
+	TreeViewNode: TreeViewNode
 });
 
 class Loader extends EventTarget {
@@ -4126,4 +4845,4 @@ class Loader extends EventTarget {
 Loader.DEFAULT = 'default';
 Loader.OBJECTS = 'objects';
 
-export { ButtonInput, Canvas, CircleMenu, ColorInput, ContextMenu, DraggableElement, Element, Input, LabelElement, Loader, Menu, Node, NumberInput, ObjectNode, PanelNode, REVISION, Search, SelectInput, Serializer, SliderInput, StringInput, Styles, TextInput, Tips, TitleElement, ToggleInput, Utils };
+export { ButtonInput, Canvas, CircleMenu, ColorInput, ContextMenu, DraggableElement, Element, Input, LabelElement, Loader, Menu, Node, NumberInput, REVISION, Search, SelectInput, Serializer, SliderInput, StringInput, TextInput, Tips, TitleElement, ToggleInput, TreeViewInput, TreeViewNode, Utils };

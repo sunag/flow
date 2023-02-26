@@ -109,13 +109,13 @@ export class Canvas extends Serializer {
 
 			do {
 
-				if ( element.classList?.contains( className ) ) {
+				if ( element.classList ? element.classList.contains( className ) : false ) {
 
 					return true;
 
 				}
 
-			} while( ( element = element.parentElement ) && element !== dom );
+			} while ( ( element = element.parentElement ) && element !== dom );
 
 			return false;
 

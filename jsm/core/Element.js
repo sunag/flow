@@ -1,4 +1,3 @@
-import { Styles } from './Styles.js';
 import { Serializer } from './Serializer.js';
 import { numberToPX, numberToHex, draggableDOM, dispatchEventList } from './Utils.js';
 import { Link } from './Link.js';
@@ -10,6 +9,8 @@ export class Element extends Serializer {
 	constructor( draggable = false ) {
 
 		super();
+
+		this.isElement = true;
 
 		const dom = document.createElement( 'f-element' );
 		dom.element = this;
@@ -449,7 +450,7 @@ export class Element extends Serializer {
 			if ( this.disconnectDOM === null ) {
 
 				this.disconnectDOM = document.createElement( 'f-disconnect' );
-				this.disconnectDOM.innerHTML = Styles.icons.unlink ? `<i class='${ Styles.icons.unlink }'></i>` : '✖';
+				this.disconnectDOM.innerHTML = Element.icons.unlink ? `<i class='${ Element.icons.unlink }'></i>` : '✖';
 
 				this.dom.append( this.disconnectDOM );
 
@@ -791,4 +792,4 @@ export class Element extends Serializer {
 
 }
 
-Element.prototype.isElement = true;
+Element.icons = { unlink: '' };
