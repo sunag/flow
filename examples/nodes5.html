@@ -60,7 +60,36 @@ flow {
 
             require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@latest/min/vs' }});
 
-			require(['vs/editor/editor.main'], function() {
+			require(['vs/editor/editor.main'], async () => {
+
+				const response = await fetch('./lib/typescriptlang.org.d.ts');
+				//const response = await fetch('https://raw.githubusercontent.com/kontan/three.d.ts/master/three.d.ts');
+  				const threejsLib = await response.text();
+/*
+				monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
+					noSemanticValidation: false,
+					noSyntaxValidation: false,
+				});
+*/
+				monaco.languages.typescript.javascriptDefaults.addExtraLib(
+					'const test = "test";'
+				);
+
+				monaco.languages.typescript.javascriptDefaults.addExtraLib([
+					'declare class SomeEventType {',
+					'    /**',
+					'     * Heres the doco for someProperty',
+					'     */',
+					'    someProperty: string',
+					'}',
+					].join('\n')
+				);
+
+				let lib = 'module THREE {' + threejsLib + '}';
+				monaco.languages.typescript.javascriptDefaults.addExtraLib(
+					lib
+				);
+
 				const editor = monaco.editor.create(editorDOM, {
 					value: [
 						'function x() {',
