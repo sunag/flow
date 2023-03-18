@@ -273,19 +273,21 @@ export class Node extends Serializer {
 
 	updateSize() {
 
-		if ( this.resizable !== true ) return;
-
 		for ( const element of this.elements ) {
 
 			element.dom.style.width = '';
 
 		}
 
-		const element = this.elements[ this.elements.length - 1 ];
+		if ( this.resizable === true ) {
 
-		if ( element !== undefined ) {
+			const element = this.elements[ this.elements.length - 1 ];
 
-			element.dom.style.width = this.dom.style.width;
+			if ( element !== undefined ) {
+
+				element.dom.style.width = this.dom.style.width;
+
+			}
 
 		}
 
