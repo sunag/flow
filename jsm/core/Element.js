@@ -419,7 +419,7 @@ export class Element extends Serializer {
 
 	getHeight() {
 
-		return this.dom.style.height;
+		return parseInt( this.dom.style.height );
 
 	}
 
