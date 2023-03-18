@@ -776,7 +776,7 @@ f-element.invalid::after {
 	background: #bd0b0b77;
 	vertical-align: middle;
 	color: #fff;
-	content: 'Not Compatible';
+	content: 'Incompatible!';
 	opacity: .95;
 	backdrop-filter: grayscale(100%);
 	white-space: nowrap;
