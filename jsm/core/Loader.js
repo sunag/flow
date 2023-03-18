@@ -1,6 +1,8 @@
 import * as Flow from '../FlowObjects.js';
 import { dispatchEventList } from './Utils.js';
 
+export const LoaderLib = {};
+
 export class Loader extends EventTarget {
 
 	constructor( parseType = Loader.DEFAULT ) {
@@ -37,7 +39,7 @@ export class Loader extends EventTarget {
 
 	}
 
-	async load( url, lib = null ) {
+	async load( url, lib = {} ) {
 
 		return await fetch( url )
 			.then( response => response.json() )
@@ -58,7 +60,7 @@ export class Loader extends EventTarget {
 
 	}
 
-	parse( json, lib = null ) {
+	parse( json, lib = {} ) {
 
 		json = this._parseObjects( json, lib );
 
@@ -66,7 +68,10 @@ export class Loader extends EventTarget {
 
 		if ( parseType === Loader.DEFAULT ) {
 
-			const flowObj = new Flow[ json.type ]();
+			const type = json.type;
+
+			const flowClass =  lib[ type ] ? lib[ type ] : ( LoaderLib[ type ] || Flow[ type ] );
+			const flowObj = new flowClass();
 
 			if ( flowObj.getSerializable() ) {
 
@@ -84,31 +89,32 @@ export class Loader extends EventTarget {
 
 	}
 
-	_parseObjects( json, lib = null ) {
+	_parseObjects( json, lib = {} ) {
 
 		json = { ...json };
 
 		const objects = {};
-		const list = [];
 
 		for ( const id in json.objects ) {
 
 			const obj = json.objects[ id ];
 			obj.objects = objects;
 
-			const Class = lib && lib[ obj.type ] ? lib[ obj.type ] : Flow[ obj.type ];
+			const type = obj.type;
+			const flowClass = lib[ type ] ? lib[ type ] : ( LoaderLib[ type ] || Flow[ type ] );
 
-			if ( ! Class ) {
+			if ( ! flowClass ) {
 
-				console.error( `Class "${ obj.type }" not found!` );
+				console.error( `Class "${ type }" not found!` );
 
 			}
 
-			objects[ id ] = new Class();
+			objects[ id ] = new flowClass();
+			objects[ id ].deserializeLib( json.objects[ id ], lib );
 
 		}
 
-		const ref = new WeakMap();
+		const ref = new Map();
 
 		const deserializePass = ( prop = null ) => {
 

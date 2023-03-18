@@ -44,6 +44,12 @@ export class Serializer extends EventTarget {
 
 	}
 
+	deserializeLib( /*data, lib*/ ) {
+
+		// Abstract function.
+
+	}
+
 	get className() {
 
 		return this.constructor.name;

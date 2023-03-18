@@ -62,6 +62,7 @@ export class Node extends Serializer {
 
 		this.canvas = null;
 		this.resizable = false;
+		this.serializePriority = 0;
 
 		this.elements = [];
 

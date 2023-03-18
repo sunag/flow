@@ -965,8 +965,9 @@ export class Canvas extends Serializer {
 	serialize( data ) {
 
 		const nodes = [];
+		const serializeNodes = this.nodes.sort( ( a, b ) => a.serializePriority > b.serializePriority ? -1 : 1 );
 
-		for ( const node of this.nodes ) {
+		for ( const node of serializeNodes ) {
 
 			nodes.push( node.toJSON( data ).id );
 
