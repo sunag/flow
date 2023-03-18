@@ -649,14 +649,13 @@ f-element.title.left {
 f-element.title f-title {
 	text-align: center;
 	font-size: 15px;
-	padding-top: 2px;
 	position: absolute;
 	top: 50%;
 	transform: translateY( -50% );
 	width: calc( 100% - 14px );
 }
 
-f-element.title i {
+f-element.title > i {
 	font-size: 24px;
 	position: absolute;
 	right: 8px;
@@ -1298,10 +1297,10 @@ f-menu.circle f-item {
 }
 
 f-menu.circle f-item button {
-	width: 47px;
-	height: 47px;
+	width: 46px;
+	height: 46px;
 	font-size: 28px;
-	padding-left: 6px;
+	padding-left: 7px;
 	background: #17171794;
 	border-radius: 50%;
 	backdrop-filter: blur(6px);
