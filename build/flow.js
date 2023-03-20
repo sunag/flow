@@ -24,7 +24,7 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Flow = {}));
 })(this, (function (exports) { 'use strict';
 
-	const REVISION = '2';
+	const REVISION = '3';
 
 	let _id = 0;
 	class Serializer extends EventTarget {
