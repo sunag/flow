@@ -1,8 +1,8 @@
 f-element .ti {
 	vertical-align: middle;
-    font-size: 22px;
-    display: inline-block;
-    margin-top: -3px;
+	font-size: 17px;
+	display: inline-block;
+	margin-right: 5px;
 }
 
 f-element f-disconnect .ti {
@@ -656,17 +656,16 @@ f-element.title f-title {
 }
 
 f-element.title > i {
-	font-size: 24px;
+	font-size: 21px;
 	position: absolute;
 	right: 8px;
 	top: 50%;
 	transform: translateY( -50% );
-	margin-top: -2px;
 	opacity: .7;
 }
 
 f-element.title f-toolbar i {
-	font-size: 24px;
+	font-size: 22px;
 	display: contents;
 	right: unset;
 	left: unset;
@@ -887,6 +886,7 @@ f-treeview f-treeview-label spam {
 f-treeview f-treeview-label i {
 	color: #ccc;	
 	transition: color 0.1s ease;
+	margin-top: 1px;
 }
 
 f-treeview f-treeview-node {
@@ -938,25 +938,24 @@ f-string f-buttons {
 }
 
 f-string f-buttons i {
-	font-size: 18px !important;
-	margin-top: -2px !important;
 	color: #999;
 	padding-left: 4px;
-	padding-right: 0px;
-	padding-bottom: 2px;
+	padding-right: 4px;
+	padding-bottom: 1px;
 	margin-right: 1px;
 	cursor: pointer;
 	background: #252526eb;
 	height: 100%;
+	padding-top: 1px;
+	margin-right: 1px !important;
 }
 
 f-string i[type=icon] {
-    font-size: 22px;
-    color: #999;
-    position: absolute;
-    right: 8px;
-    top: calc( 50% - 7px );
-	margin-top: -5px;
+	color: #999;
+	position: absolute;
+	right: 8px;
+	top: calc( 50% - 8px );
+	margin-right: 5px;
 }
 
 f-inputs f-string i[type=icon] {
@@ -1141,8 +1140,9 @@ f-menu.search f-item button {
 f-menu.context f-item button i,
 f-menu.search f-item button i {
 	float: left;
-	font-size: 21px;
-    margin-top: -3px;
+	font-size: 20px;
+	margin-top: -1px;
+	margin-right: 3px;
 }
 
 f-menu.context f-item button span,
@@ -1299,8 +1299,7 @@ f-menu.circle f-item {
 f-menu.circle f-item button {
 	width: 46px;
 	height: 46px;
-	font-size: 28px;
-	padding-left: 7px;
+	font-size: 22px;
 	background: #17171794;
 	border-radius: 50%;
 	backdrop-filter: blur(6px);
