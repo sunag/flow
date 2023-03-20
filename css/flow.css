@@ -1145,6 +1145,11 @@ f-menu.search f-item button i {
 	margin-right: 3px;
 }
 
+f-menu.context f-item button i {
+	height: 18px;
+	margin-top: -2px;
+}
+
 f-menu.context f-item button span,
 f-menu.search f-item button span {
 	margin-left: 4px;
