@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>flow - javascript ui</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<link rel="icon" href="../favicon.ico" />
+	<link rel="stylesheet" href="css/page.css" type="text/css"/>
+	<link rel="stylesheet" href="../css/flow.css" type="text/css"/>
+	
+	<link rel="stylesheet" href="../fonts/open-sans/open-sans.css" type="text/css"/>
+	<link rel="stylesheet" href="../fonts/tabler-icons/tabler-icons.css" type="text/css"/>
+	<!-- -->
+</head>
+<style>
+/*
+flow {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 50%;
+	height: 50%;
+}
+*/
+
+.myInlineDecoration {
+	color: red !important;
+	cursor: pointer;
+	text-decoration: underline;
+	font-weight: bold;
+	font-style: oblique;
+}
+
+.myLineDecoration {
+	background: lightblue;
+	width: 5px !important;
+	margin-left: 3px;
+}
+
+.myGlyphMarginClass {
+	background: red;
+}
+.myContentClass {
+	background: lightblue;
+}
+
+
+</style>
+<body>
+	<script src="https://cdn.jsdelivr.net/npm/monaco-editor@latest/min/vs/loader.min.js"></script>
+	<flow></flow>
+	<script type="module">
+
+		const templateCode = `// Added a TSL (Three.js Shading Language) node code.
+// Email can help to recover the node in the future if needed.
+
+layout = {
+	name: "Awesome Node",
+	email: 'some_email@gmail.com',
+	author: 'github_user',
+	public: true,
+};
+
+function main() {
+
+	// ...
+
+}
+`;
+
+		import * as Flow from '../jsm/Flow.js';
+
+		const dom = document.querySelector( 'flow' );
+
+		const node = new Flow.Node().setAlign( {
+			top: '110px',
+			left: 'calc( 50% - 350px )'
+		} );
+		node.setWidth( 700 );
+
+		node.add( new Flow.TitleElement( 'REGISTER NODE' ).setIcon( 'ti ti-world-share' ).setColor( '#003493' ) );
+		node.add( new Flow.LabelElement( 'UUID' ).add( new Flow.StringInput( crypto.randomUUID().toUpperCase().replaceAll( '-', '' ) ).setReadOnly( true ) ).setHeight( 30 ).setColor( '#CC0000' ) );
+		node.add( new Flow.LabelElement( 'PASSWORD' ).add( new Flow.StringInput( '' ) ).setHeight( 30 ) );
+		node.add( new Flow.LabelElement( 'VERSION' ).add( new Flow.StringInput( '1' ).setReadOnly( true ) ).setHeight( 30 ) );
+
+		node.add( new Flow.Element().setHeight( 30 )
+					.add( new Flow.ButtonInput( 'Submit' ) ) );
+
+		let element;
+		node.add( element = new Flow.Element() );		
+
+		element.setHeight( 500 );
+
+		const editorDOM = document.createElement( 'div' );
+		editorDOM.style.width = '100%';
+		editorDOM.style.height = '100%';
+
+		element.dom.appendChild( editorDOM );
+		
+		node.add( new Flow.Element().add( new Flow.StringInput( 'Abc asdasd' ).setReadOnly( true ) ).setHeight( 30 ) );
+
+
+		require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@latest/min/vs' }});
+
+		require(['vs/editor/editor.main'], async () => {
+
+			const editor = monaco.editor.create(editorDOM, {
+				value: templateCode,
+				language: 'javascript',
+				theme: 'vs-dark',
+			});
+
+			var decorations = editor.createDecorationsCollection([
+	{
+		range: new monaco.Range(4, 1, 5, 1),
+		options: {
+			isWholeLine: true,
+			className: "myContentClass",
+			linesDecorationsClassName: "myGlyphMarginClass",
+			afterContentClassName: "myGlyphMarginClass",
+			beforeContentClassName: "myGlyphMarginClass",
+			blockClassName: "myGlyphMarginClass",
+			hoverMessage: { value: "TEST" }
+		},
+	},
+]);
+
+/*
+			var decorations = editor.createDecorationsCollection([
+				{
+					range: new monaco.Range(0, 1, 5, 1),
+					options: {
+						isWholeLine: true,
+						linesDecorationsClassName: "myLineDecoration",
+					},
+				},
+				{
+					range: new monaco.Range(1, 1, 8, 24),
+					options: { inlineClassName: "myInlineDecoration" },
+				},
+			]);
+*/
+			//console.log( decorations.clear() );
+
+
+		} );
+
+		dom.appendChild( node.dom );
+
+	</script>
+</body>
+</html>
