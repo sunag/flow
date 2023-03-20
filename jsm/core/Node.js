@@ -81,6 +81,33 @@ export class Node extends Serializer {
 
 	}
 
+	setAlign( align ) {
+
+		const dom = this.dom;
+		const style = dom.style;
+
+		style.left = '';
+		style.top = '';
+		style.animation = 'none';
+
+		if ( typeof align === 'string' ) {
+
+			dom.classList.add( align );
+
+		} else if ( align ) {
+
+			for ( const name in align ) {
+
+				style[ name ] = align[ name ];
+
+			}
+
+		}
+
+		return this;
+
+	}
+
 	setResizable( val ) {
 
 		this.resizable = val === true;

@@ -70,7 +70,7 @@ export class Loader extends EventTarget {
 
 			const type = json.type;
 
-			const flowClass =  lib[ type ] ? lib[ type ] : ( LoaderLib[ type ] || Flow[ type ] );
+			const flowClass = lib[ type ] ? lib[ type ] : ( LoaderLib[ type ] || Flow[ type ] );
 			const flowObj = new flowClass();
 
 			if ( flowObj.getSerializable() ) {
