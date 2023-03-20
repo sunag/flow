@@ -6,8 +6,9 @@ f-element .ti {
 }
 
 f-element f-disconnect .ti {
-	font-size: 25px;
-	margin-top: -9px;
+	font-size: 20px;
+	margin-top: -6px;
+	margin-left: 2px;
 }
 
 @keyframes f-animation-open {
