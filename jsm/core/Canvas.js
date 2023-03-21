@@ -420,6 +420,8 @@ export class Canvas extends Serializer {
 		this._zoom = val;
 		this.contentDOM.style.zoom = val;
 
+		val === 1 ? this.dom.classList.remove( 'zoom' ) : this.dom.classList.add( 'zoom' );
+
 		this.updateMozTransform();
 
 	}
