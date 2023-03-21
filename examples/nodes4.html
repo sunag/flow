@@ -49,6 +49,7 @@ flow {
 		editorDOM.style.width = '100%';
 		editorDOM.style.height = '100%';
 
+		element.dom.classList.add( 'no-zoom' );
 		element.dom.appendChild( editorDOM );
 		
 		const canvas = new Flow.Canvas();

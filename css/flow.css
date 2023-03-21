@@ -763,7 +763,8 @@ f-element.invalid > f-io {
 	zoom: 1 !important;
 }
 
-f-element.invalid::after {
+f-element.invalid::after,
+.zoom f-element.no-zoom::after {
 	font-size: 14px !important;
 	display: flex;
 	justify-content: center;
@@ -783,6 +784,11 @@ f-element.invalid::after {
 	left: 0;
 	top: 0;
 	text-transform: initial;
+}
+
+.zoom f-element.no-zoom::after {
+	background: #0b3fbd77;
+	content: 'Incompatible with zoom!';
 }
 
 /* treeview */
