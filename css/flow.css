@@ -1319,6 +1319,7 @@ f-menu.circle f-item button {
 	line-height: 100%;
 	cursor: pointer;
 	box-shadow: 3px 3px 6px rgba(0,0,0,.2);
+	margin-bottom: 20px;
 }
 
 f-menu.circle f-item f-tooltip {
