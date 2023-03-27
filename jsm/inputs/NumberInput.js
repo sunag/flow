@@ -50,7 +50,7 @@ export class NumberInput extends Input {
 
 		dom.onkeydown = ( e ) => {
 
-			if ( e.key.length === 1 && /\d|\./.test( e.key ) !== true ) {
+			if ( e.key.length === 1 && /\d|\.|\-/.test( e.key ) !== true ) {
 
 				return false;
 
