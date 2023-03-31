@@ -21,7 +21,7 @@ export class ContextMenu extends Menu {
 
 	constructor( target = null ) {
 
-		super( 'context', target );
+		super( 'context' );
 
 		this.events.context = [];
 

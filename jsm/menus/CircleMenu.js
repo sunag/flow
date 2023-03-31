@@ -2,9 +2,9 @@ import { Menu } from './Menu.js';
 
 export class CircleMenu extends Menu {
 
-	constructor( target = null ) {
+	constructor() {
 
-		super( 'circle', target );
+		super( 'circle' );
 
 	}
 
