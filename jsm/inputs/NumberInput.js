@@ -110,6 +110,15 @@ export class NumberInput extends Input {
 
 	}
 
+	setInterger( bool ) {
+
+		this.integer = bool;
+		this.step = .1;
+
+		return this.setValue( this.getValue() );
+
+	}
+
 	get precision() {
 
 		if ( this.integer === true ) return 0;
