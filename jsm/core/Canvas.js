@@ -484,7 +484,10 @@ export class Canvas extends Serializer {
 
 	get useTransform() {
 
-		return navigator.userAgent.match( /firefox/i ) !== null;
+		const userAgent = navigator.userAgent;
+		const isSafari = /Safari/.test( userAgent ) && ! /Chrome/.test( userAgent );
+
+		return ! isSafari;
 
 	}
 
