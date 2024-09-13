@@ -28,6 +28,10 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 
 	let _id = 0;
 	class Serializer extends EventTarget {
+	  static get type() {
+	    return 'Serializer';
+	  }
+
 	  constructor() {
 	    super();
 	    this._id = _id++;
@@ -59,7 +63,7 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 	  }
 
 	  get className() {
-	    return this.constructor.name;
+	    return this.constructor.type || this.constructor.name;
 	  }
 
 	  toJSON(data = null) {
@@ -320,6 +324,10 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 
 	let selected = null;
 	class Element extends Serializer {
+	  static get type() {
+	    return 'Element';
+	  }
+
 	  constructor(draggable = false) {
 	    super();
 	    this.isElement = true;
@@ -830,6 +838,10 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 	};
 
 	class Input extends Serializer {
+	  static get type() {
+	    return 'Input';
+	  }
+
 	  constructor(dom) {
 	    super();
 	    this.dom = dom;
@@ -929,6 +941,10 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 	Input.prototype.isInput = true;
 
 	class Node extends Serializer {
+	  static get type() {
+	    return 'Node';
+	  }
+
 	  constructor() {
 	    super();
 	    const dom = document.createElement('f-node');
@@ -1202,6 +1218,10 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 	Node.prototype.isNode = true;
 
 	class DraggableElement extends Element {
+	  static get type() {
+	    return 'DraggableElement';
+	  }
+
 	  constructor(draggable = true) {
 	    super(true);
 	    this.draggable = draggable;
@@ -1226,6 +1246,10 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 	}
 
 	class TitleElement extends DraggableElement {
+	  static get type() {
+	    return 'TitleElement';
+	  }
+
 	  constructor(title, draggable = true) {
 	    super(draggable);
 	    const {
@@ -1321,6 +1345,10 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 	const colors = ['#ff4444', '#44ff44', '#4444ff'];
 	const dropNode = new Node().add(new TitleElement('File')).setWidth(250);
 	class Canvas extends Serializer {
+	  static get type() {
+	    return 'Canvas';
+	  }
+
 	  constructor() {
 	    super();
 	    const dom = document.createElement('f-canvas');
@@ -2470,6 +2498,10 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 	}
 
 	class LabelElement extends Element {
+	  static get type() {
+	    return 'LabelElement';
+	  }
+
 	  constructor(label = '', align = '') {
 	    super();
 	    this.labelDOM = document.createElement('f-label');
@@ -2537,6 +2569,10 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 	}
 
 	class ButtonInput extends Input {
+	  static get type() {
+	    return 'ButtonInput';
+	  }
+
 	  constructor(innterText = '') {
 	    const dom = document.createElement('button');
 	    const spanDOM = document.createElement('span');
@@ -2580,6 +2616,10 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 	}
 
 	class ColorInput extends Input {
+	  static get type() {
+	    return 'ColorInput';
+	  }
+
 	  constructor(value = 0x0099ff) {
 	    const dom = document.createElement('input');
 	    super(dom);
@@ -2602,6 +2642,10 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 	}
 
 	class NumberInput extends Input {
+	  static get type() {
+	    return 'NumberInput';
+	  }
+
 	  constructor(value = 0, min = -Infinity, max = Infinity, step = .01) {
 	    const dom = document.createElement('input');
 	    super(dom);
@@ -2736,6 +2780,10 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 	}
 
 	class SelectInput extends Input {
+	  static get type() {
+	    return 'SelectInput';
+	  }
+
 	  constructor(options = [], value = null) {
 	    const dom = document.createElement('select');
 	    super(dom);
@@ -2810,6 +2858,10 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 	};
 
 	class SliderInput extends Input {
+	  static get type() {
+	    return 'SliderInput';
+	  }
+
 	  constructor(value = 0, min = 0, max = 100) {
 	    const dom = document.createElement('f-subinputs');
 	    super(dom);
@@ -2905,6 +2957,10 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 	}
 
 	class StringInput extends Input {
+	  static get type() {
+	    return 'StringInput';
+	  }
+
 	  constructor(value = '') {
 	    const dom = document.createElement('f-string');
 	    super(dom);
@@ -3014,6 +3070,10 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 	}
 
 	class TextInput extends Input {
+	  static get type() {
+	    return 'TextInput';
+	  }
+
 	  constructor(innerText = '') {
 	    const dom = document.createElement('textarea');
 	    super(dom);
@@ -3041,6 +3101,10 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 	}
 
 	class ToggleInput extends Input {
+	  static get type() {
+	    return 'ToggleInput';
+	  }
+
 	  constructor(value = false) {
 	    const dom = document.createElement('input');
 	    super(dom);
@@ -3160,6 +3224,10 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 
 	}
 	class TreeViewInput extends Input {
+	  static get type() {
+	    return 'TreeViewInput';
+	  }
+
 	  constructor(options = []) {
 	    const dom = document.createElement('f-treeview');
 	    super(dom);
@@ -3183,9 +3251,9 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 
 	  deserialize(data) {
 	    /*const currentOptions = this.options;
-	    	if ( currentOptions.length === 0 ) {
-	    		this.setOptions( data.options );
-	    	}*/
+	    		if ( currentOptions.length === 0 ) {
+	    			this.setOptions( data.options );
+	    		}*/
 	    super.deserialize(data);
 	  }
 
@@ -3220,6 +3288,10 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 
 	const LoaderLib = {};
 	class Loader extends EventTarget {
+	  static get type() {
+	    return 'Loader';
+	  }
+
 	  constructor(parseType = Loader.DEFAULT) {
 	    super();
 	    this.parseType = parseType;
