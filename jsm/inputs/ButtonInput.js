@@ -2,6 +2,12 @@ import { Input } from '../core/Input.js';
 
 export class ButtonInput extends Input {
 
+	static get type() {
+
+		return 'ButtonInput';
+
+	}
+
 	constructor( innterText = '' ) {
 
 		const dom = document.createElement( 'button' );

@@ -3,6 +3,12 @@ import { numberToPX } from './Utils.js';
 
 export class Node extends Serializer {
 
+	static get type() {
+
+		return 'Node';
+
+	}
+
 	constructor() {
 
 		super();

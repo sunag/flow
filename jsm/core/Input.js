@@ -3,6 +3,12 @@ import { dispatchEventList } from './Utils.js';
 
 export class Input extends Serializer {
 
+	static get type() {
+
+		return 'Input';
+
+	}
+
 	constructor( dom ) {
 
 		super();

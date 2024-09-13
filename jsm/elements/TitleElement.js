@@ -2,6 +2,12 @@ import { DraggableElement } from './DraggableElement.js';
 
 export class TitleElement extends DraggableElement {
 
+	static get type() {
+
+		return 'TitleElement';
+
+	}
+
 	constructor( title, draggable = true ) {
 
 		super( draggable );

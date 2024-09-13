@@ -5,6 +5,12 @@ export const LoaderLib = {};
 
 export class Loader extends EventTarget {
 
+	static get type() {
+
+		return 'Loader';
+
+	}
+
 	constructor( parseType = Loader.DEFAULT ) {
 
 		super();

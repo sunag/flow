@@ -3,6 +3,12 @@ import { draggableDOM } from '../core/Utils.js';
 
 export class NumberInput extends Input {
 
+	static get type() {
+
+		return 'NumberInput';
+
+	}
+
 	constructor( value = 0, min = - Infinity, max = Infinity, step = .01 ) {
 
 		const dom = document.createElement( 'input' );

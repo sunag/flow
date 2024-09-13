@@ -2,6 +2,12 @@ import { Input } from '../core/Input.js';
 
 export class ToggleInput extends Input {
 
+	static get type() {
+
+		return 'ToggleInput';
+
+	}
+
 	constructor( value = false ) {
 
 		const dom = document.createElement( 'input' );

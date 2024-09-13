@@ -2,6 +2,12 @@ let _id = 0;
 
 export class Serializer extends EventTarget {
 
+	static get type() {
+
+		return 'Serializer';
+
+	}
+
 	constructor() {
 
 		super();
@@ -52,7 +58,7 @@ export class Serializer extends EventTarget {
 
 	get className() {
 
-		return this.constructor.name;
+		return this.constructor.type || this.constructor.name;
 
 	}
 

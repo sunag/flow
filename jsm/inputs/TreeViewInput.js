@@ -150,6 +150,12 @@ export class TreeViewNode {
 
 export class TreeViewInput extends Input {
 
+	static get type() {
+
+		return 'TreeViewInput';
+
+	}
+
 	constructor( options = [] ) {
 
 		const dom = document.createElement( 'f-treeview' );

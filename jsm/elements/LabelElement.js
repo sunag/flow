@@ -2,6 +2,12 @@ import { Element } from '../core/Element.js';
 
 export class LabelElement extends Element {
 
+	static get type() {
+
+		return 'LabelElement';
+
+	}
+
 	constructor( label = '', align = '' ) {
 
 		super();

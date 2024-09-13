@@ -2,6 +2,12 @@ import { Input } from '../core/Input.js';
 
 export class TextInput extends Input {
 
+	static get type() {
+
+		return 'TextInput';
+
+	}
+
 	constructor( innerText = '' ) {
 
 		const dom = document.createElement( 'textarea' );

@@ -6,6 +6,12 @@ let selected = null;
 
 export class Element extends Serializer {
 
+	static get type() {
+
+		return 'Element';
+
+	}
+
 	constructor( draggable = false ) {
 
 		super();

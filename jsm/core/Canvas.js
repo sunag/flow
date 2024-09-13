@@ -14,6 +14,12 @@ const dropNode = new Node().add( new TitleElement( 'File' ) ).setWidth( 250 );
 
 export class Canvas extends Serializer {
 
+	static get type() {
+
+		return 'Canvas';
+
+	}
+
 	constructor() {
 
 		super();

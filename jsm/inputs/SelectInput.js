@@ -2,6 +2,12 @@ import { Input } from '../core/Input.js';
 
 export class SelectInput extends Input {
 
+	static get type() {
+
+		return 'SelectInput';
+
+	}
+
 	constructor( options = [], value = null ) {
 
 		const dom = document.createElement( 'select' );

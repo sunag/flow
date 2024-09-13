@@ -3,6 +3,12 @@ import { draggableDOM } from '../core/Utils.js';
 
 export class DraggableElement extends Element {
 
+	static get type() {
+
+		return 'DraggableElement';
+
+	}
+
 	constructor( draggable = true ) {
 
 		super( true );

@@ -2,6 +2,12 @@ import { Input } from '../core/Input.js';
 
 export class StringInput extends Input {
 
+	static get type() {
+
+		return 'StringInput';
+
+	}
+
 	constructor( value = '' ) {
 
 		const dom = document.createElement( 'f-string' );

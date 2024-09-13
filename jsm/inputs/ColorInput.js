@@ -3,6 +3,12 @@ import { numberToHex } from '../core/Utils.js';
 
 export class ColorInput extends Input {
 
+	static get type() {
+
+		return 'ColorInput';
+
+	}
+
 	constructor( value = 0x0099ff ) {
 
 		const dom = document.createElement( 'input' );

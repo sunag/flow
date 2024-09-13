@@ -12,6 +12,12 @@ const getStep = ( min, max ) => {
 
 export class SliderInput extends Input {
 
+	static get type() {
+
+		return 'SliderInput';
+
+	}
+
 	constructor( value = 0, min = 0, max = 100 ) {
 
 		const dom = document.createElement( 'f-subinputs' );
