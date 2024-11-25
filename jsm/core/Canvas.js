@@ -874,6 +874,22 @@ export class Canvas extends Serializer {
 
 			const drawContext = draggingLink ? frontContext : context;
 
+			if ( link.disconnectDOM ) {
+
+				if ( link.inputElement.multiConnections || link.inputElement.links.length > 1 ) {
+
+					link.disconnectDOM.style.left = ( - ( bPos.x - aPos.x ) / 2 ) + 'px';
+					link.disconnectDOM.style.top = ( - ( bPos.y - aPos.y ) / 2 ) + 'px';
+
+				} else if ( link.disconnectDOM.style.left !== '' ) {
+
+					link.disconnectDOM.style.left = '';
+					link.disconnectDOM.style.top = '';
+
+				}
+
+			}
+
 			if ( draggingLink || length === 1 ) {
 
 				let colorA = null,

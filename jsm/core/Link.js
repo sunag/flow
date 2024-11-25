@@ -1,9 +1,11 @@
 export class Link {
 
-	constructor( inputElement = null, outputElement = null ) {
+	constructor( inputElement = null, outputElement = null, disconnectDOM = null ) {
 
 		this.inputElement = inputElement;
 		this.outputElement = outputElement;
+
+		this.disconnectDOM = disconnectDOM;
 
 	}
 

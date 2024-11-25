@@ -4,6 +4,8 @@ import { Link } from './Link.js';
 
 let selected = null;
 
+const getBaseElement = ( nodeElement ) => nodeElement.baseElement || nodeElement;
+
 export class Element extends Serializer {
 
 	static get type() {
@@ -96,11 +98,13 @@ export class Element extends Serializer {
 
 		this.enabledInputs = true;
 
+		this.multiConnections = false;
+
 		this.visible = true;
 
 		this.inputsDOM = dom;
 
-		this.disconnectDOM = null;
+		this.connections = null;
 
 		this.lioDOM = this._createIO( 'lio' );
 		this.rioDOM = this._createIO( 'rio' );
@@ -244,6 +248,20 @@ export class Element extends Serializer {
 		this.color = null;
 
 		return this;
+
+	}
+
+	setMultiConnections( value ) {
+
+		this.multiConnections = value;
+
+		return this;
+
+	}
+
+	getMultiConnections() {
+
+		return this.multiConnections;
 
 	}
 
@@ -429,89 +447,136 @@ export class Element extends Serializer {
 
 	}
 
+	getConnections() {
+
+		return this.connections || ( this.connections = new Map() );
+
+	}
+
+	clear() {
+
+		for ( const element of this.getConnections().keys() ) {
+
+			this.disconnect( element );
+
+		}
+
+		return this;
+
+	}
+
+	disconnect( element ) {
+
+		const connections = this.getConnections();
+
+		element = getBaseElement( element );
+
+		if ( ! connections.has( element ) ) return this;
+
+		const { disconnectDOM } = connections.get( element );
+
+		// remove the current input
+
+		disconnectDOM.dispatchEvent( new Event( 'disconnect' ) );
+
+		// re-update the connections
+
+		this.dispatchEvent( new Event( 'connect' ) );
+
+	}
+
 	connect( element = null ) {
 
-		if ( this.disconnectDOM !== null ) {
+		if ( element === null ) return this.clear();
 
-			// remove the current input
+		element = getBaseElement( element );
 
-			this.disconnectDOM.dispatchEvent( new Event( 'disconnect' ) );
+		const connections = this.getConnections();
+
+		if( this.multiConnections === false && connections.size > 0 ) this.clear();
+
+		if ( connections.has( element ) ) {
+
+			return this;
+
+		}
+
+		//
+
+		if ( dispatchEventList( this.events.valid, this, element, 'connect' ) === false ) {
+
+			return false;
 
 		}
 
-		if ( element !== null ) {
+		//
 
-			element = element.baseElement || element;
+		const disconnectDOM = document.createElement( 'f-disconnect' );
+		disconnectDOM.innerHTML = Element.icons.unlink ? `<i class='${ Element.icons.unlink }'></i>` : '✖';
 
-			if ( dispatchEventList( this.events.valid, this, element, 'connect' ) === false ) {
+		this.dom.append( disconnectDOM );
 
-				return false;
+		//
 
-			}
+		const link = new Link( this, element, disconnectDOM );
 
-			const link = new Link( this, element );
+		this.links.push( link );
 
-			this.links.push( link );
+		//
 
-			if ( this.disconnectDOM === null ) {
+		connections.set( element, { disconnectDOM } );
 
-				this.disconnectDOM = document.createElement( 'f-disconnect' );
-				this.disconnectDOM.innerHTML = Element.icons.unlink ? `<i class='${ Element.icons.unlink }'></i>` : '✖';
+		//
 
-				this.dom.append( this.disconnectDOM );
+		const onDisconnect = () => {
 
-				const onDisconnect = () => {
+			connections.delete( element );
 
-					this.links = [];
-					this.dom.removeChild( this.disconnectDOM );
+			this.links.splice( this.links.indexOf( link ), 1 );
 
-					this.disconnectDOM.removeEventListener( 'mousedown', onClick, true );
-					this.disconnectDOM.removeEventListener( 'touchstart', onClick, true );
-					this.disconnectDOM.removeEventListener( 'disconnect', onDisconnect, true );
+			this.dom.removeChild( disconnectDOM );
 
-					element.removeEventListener( 'connect', onConnect );
-					element.removeEventListener( 'connectChildren', onConnect );
-					element.removeEventListener( 'nodeConnect', onConnect );
-					element.removeEventListener( 'nodeConnectChildren', onConnect );
-					element.removeEventListener( 'dispose', onDispose );
+			disconnectDOM.removeEventListener( 'mousedown', onClick, true );
+			disconnectDOM.removeEventListener( 'touchstart', onClick, true );
+			disconnectDOM.removeEventListener( 'disconnect', onDisconnect, true );
 
-					this.disconnectDOM = null;
+			element.removeEventListener( 'connect', onConnect );
+			element.removeEventListener( 'connectChildren', onConnect );
+			element.removeEventListener( 'nodeConnect', onConnect );
+			element.removeEventListener( 'nodeConnectChildren', onConnect );
+			element.removeEventListener( 'dispose', onDispose );
 
-				};
+		};
 
-				const onConnect = () => {
+		const onConnect = () => {
 
-					this.dispatchEvent( new Event( 'connectChildren' ) );
+			this.dispatchEvent( new Event( 'connectChildren' ) );
 
-				};
+		};
 
-				const onDispose = () => {
+		const onDispose = () => {
 
-					this.connect();
+			this.disconnect( element );
 
-				};
+		};
 
-				const onClick = ( e ) => {
+		const onClick = ( e ) => {
 
-					e.stopPropagation();
+			e.stopPropagation();
 
-					this.connect();
+			this.disconnect( element );
 
-				};
+		};
 
-				this.disconnectDOM.addEventListener( 'mousedown', onClick, true );
-				this.disconnectDOM.addEventListener( 'touchstart', onClick, true );
-				this.disconnectDOM.addEventListener( 'disconnect', onDisconnect, true );
+		disconnectDOM.addEventListener( 'mousedown', onClick, true );
+		disconnectDOM.addEventListener( 'touchstart', onClick, true );
+		disconnectDOM.addEventListener( 'disconnect', onDisconnect, true );
 
-				element.addEventListener( 'connect', onConnect );
-				element.addEventListener( 'connectChildren', onConnect );
-				element.addEventListener( 'nodeConnect', onConnect );
-				element.addEventListener( 'nodeConnectChildren', onConnect );
-				element.addEventListener( 'dispose', onDispose );
-
-			}
-
-		}
+		element.addEventListener( 'connect', onConnect );
+		element.addEventListener( 'connectChildren', onConnect );
+		element.addEventListener( 'nodeConnect', onConnect );
+		element.addEventListener( 'nodeConnectChildren', onConnect );
+		element.addEventListener( 'dispose', onDispose );
 
 		this.dispatchEvent( new Event( 'connect' ) );
 
@@ -655,6 +720,18 @@ export class Element extends Serializer {
 		const linkedElement = this.getLinkedElement();
 
 		return linkedElement ? linkedElement.getObject( output ) : null;
+
+	}
+
+	getLinkedObjects( output = null ) {
+
+		return this.getLinkedElements().map( ( element ) => element.getObject( output ) );
+
+	}
+
+	getLinkedElements() {
+
+		return [ ...this.getConnections().keys() ];
 
 	}
 
