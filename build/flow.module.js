@@ -4646,12 +4646,6 @@ class TextInput extends Input {
 
 		dom.onkeyup = ( e ) => {
 
-			if ( e.key === 'Enter' ) {
-
-				e.target.blur();
-
-			}
-
 			e.stopPropagation();
 
 			this.dispatchEvent( new Event( 'change' ) );

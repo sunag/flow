@@ -3149,10 +3149,6 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 	    };
 
 	    dom.onkeyup = e => {
-	      if (e.key === 'Enter') {
-	        e.target.blur();
-	      }
-
 	      e.stopPropagation();
 	      this.dispatchEvent(new Event('change'));
 	    };
