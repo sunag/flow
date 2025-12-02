@@ -77,6 +77,9 @@ export class Node extends Serializer {
 			'blur': []
 		};
 
+		this._cachedHeight = 0;
+		this._needsBoundsUpdate = true;
+
 		this.setWidth( 300 ).setPosition( 0, 0 );
 
 	}
@@ -204,7 +207,35 @@ export class Node extends Serializer {
 
 	getHeight() {
 
-		return this.dom.offsetHeight;
+		if ( this._needsBoundsUpdate ) {
+
+			const dom = this.dom;
+			const wasHidden = dom.style.display === 'none';
+
+			if ( wasHidden ) {
+
+				dom.style.display = '';
+
+			}
+
+			const height = dom.offsetHeight;
+
+			if ( wasHidden ) {
+
+				dom.style.display = 'none';
+
+			}
+
+			if ( height > 0 ) {
+
+				this._cachedHeight = height;
+				this._needsBoundsUpdate = false;
+
+			}
+
+		}
+
+		return this._cachedHeight;
 
 	}
 
@@ -227,6 +258,7 @@ export class Node extends Serializer {
 
 		this.dom.append( element.dom );
 
+		this._needsBoundsUpdate = true;
 		this.updateSize();
 
 		return this;
@@ -243,6 +275,7 @@ export class Node extends Serializer {
 
 		this.dom.removeChild( element.dom );
 
+		this._needsBoundsUpdate = true;
 		this.updateSize();
 
 		return this;
