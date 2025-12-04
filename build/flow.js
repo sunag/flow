@@ -1044,6 +1044,8 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 	      'focus': [],
 	      'blur': []
 	    };
+	    this._cachedHeight = 0;
+	    this._needsBoundsUpdate = true;
 	    this.setWidth(300).setPosition(0, 0);
 	  }
 
@@ -1126,7 +1128,27 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 	  }
 
 	  getHeight() {
-	    return this.dom.offsetHeight;
+	    if (this._needsBoundsUpdate) {
+	      const dom = this.dom;
+	      const wasHidden = dom.style.display === 'none';
+
+	      if (wasHidden) {
+	        dom.style.display = '';
+	      }
+
+	      const height = dom.offsetHeight;
+
+	      if (wasHidden) {
+	        dom.style.display = 'none';
+	      }
+
+	      if (height > 0) {
+	        this._cachedHeight = height;
+	        this._needsBoundsUpdate = false;
+	      }
+	    }
+
+	    return this._cachedHeight;
 	  }
 
 	  getBound() {
@@ -1152,6 +1174,7 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 	    element.addEventListener('connect', this._onConnect);
 	    element.addEventListener('connectChildren', this._onConnectChildren);
 	    this.dom.append(element.dom);
+	    this._needsBoundsUpdate = true;
 	    this.updateSize();
 	    return this;
 	  }
@@ -1162,6 +1185,7 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 	    element.removeEventListener('connect', this._onConnect);
 	    element.removeEventListener('connectChildren', this._onConnectChildren);
 	    this.dom.removeChild(element.dom);
+	    this._needsBoundsUpdate = true;
 	    this.updateSize();
 	    return this;
 	  }
@@ -1861,6 +1885,74 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 	    }
 	  }
 
+	  isNodeVisible(node) {
+	    const {
+	      scrollLeft,
+	      scrollTop,
+	      zoom,
+	      _width,
+	      _height
+	    } = this;
+	    const position = node.getPosition();
+	    const width = node.getWidth();
+	    const height = node.getHeight(); // Calculate visible area in world coordinates
+
+	    const viewLeft = -scrollLeft;
+	    const viewTop = -scrollTop;
+	    const viewRight = viewLeft + _width / zoom;
+	    const viewBottom = viewTop + _height / zoom; // Node boundaries in world coordinates
+
+	    const nodeLeft = position.x;
+	    const nodeRight = position.x + width;
+	    const nodeTop = position.y;
+	    const nodeBottom = position.y + height; // Check if node intersects with visible area (any part visible)
+
+	    const isVisible = !(nodeRight < viewLeft || nodeLeft > viewRight || nodeBottom < viewTop || nodeTop > viewBottom);
+	    return isVisible;
+	  }
+
+	  updateNodesVisibility() {
+	    const visibleNodes = new Set(); // First pass: identify directly visible nodes
+
+	    for (const node of this.nodes) {
+	      if (this.isNodeVisible(node)) {
+	        visibleNodes.add(node);
+	      }
+	    } // Second pass: add nodes connected to visible nodes (for proper line rendering)
+
+
+	    const links = this.getLinks();
+
+	    for (const link of links) {
+	      if (link.inputElement && link.outputElement) {
+	        const inputNode = link.inputElement.node;
+	        const outputNode = link.outputElement.node; // If one node is visible, make sure the connected node is also visible
+
+	        if (visibleNodes.has(inputNode) || visibleNodes.has(outputNode)) {
+	          visibleNodes.add(inputNode);
+	          visibleNodes.add(outputNode);
+	        }
+	      }
+	    } // Third pass: update DOM visibility
+
+
+	    for (const node of this.nodes) {
+	      const shouldBeVisible = visibleNodes.has(node);
+
+	      if (shouldBeVisible) {
+	        if (node.dom.style.display === 'none') {
+	          node.dom.style.animation = 'none';
+	          node.dom.style.display = '';
+	        }
+	      } else {
+	        if (node.dom.style.display !== 'none') {
+	          node.dom.style.animation = 'none';
+	          node.dom.style.display = 'none';
+	        }
+	      }
+	    }
+	  }
+
 	  updateMap() {
 	    const {
 	      nodes,
@@ -1888,7 +1980,15 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 	    let selectedNode = null;
 
 	    for (const node of nodes) {
-	      const nodeBound = node.getBound();
+	      const position = node.getPosition();
+	      const width = node.getWidth();
+	      const height = node.getHeight();
+	      const nodeBound = {
+	        x: position.x,
+	        y: position.y,
+	        width: width,
+	        height: height
+	      };
 	      const nodeColor = node.getColor();
 	      nodeBound.x += -bounds.x;
 	      nodeBound.y += -bounds.y;
@@ -2083,6 +2183,7 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 	  update() {
 	    if (this.updating === false) return;
 	    requestAnimationFrame(this._onUpdate);
+	    this.updateNodesVisibility();
 	    this.updateLines();
 	    this.updateMap();
 	  }
