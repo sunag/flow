@@ -793,16 +793,7 @@ export class Canvas extends Serializer {
 
 		for ( const node of nodes ) {
 
-			const position = node.getPosition();
-			const width = node.getWidth();
-			const height = node.getHeight();
-
-			const nodeBound = {
-				x: position.x,
-				y: position.y,
-				width: width,
-				height: height
-			};
+			const nodeBound = node.getBounding();
 
 			const nodeColor = node.getColor();
 
