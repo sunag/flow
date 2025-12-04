@@ -73,7 +73,10 @@ export class Element extends Serializer {
 		dom.addEventListener( 'touchmove', onSelect );
 		dom.addEventListener( 'touchend', onSelect );
 
-		this._height = 24;
+		this._bounds = {
+			x: 0, y: 0, width: 0, height: 0,
+			_x: 0, _y: 0, _width: 0, _height: 0 // cached values
+		};
 
 		this.inputs = [];
 
@@ -124,6 +127,8 @@ export class Element extends Serializer {
 			dispatchEventList( this.events.connectChildren, this );
 
 		} );
+
+		this.setHeight( 24 );
 
 	}
 
@@ -439,7 +444,9 @@ export class Element extends Serializer {
 
 		this.dom.style.height = numberToPX( val );
 
-		this._height = val;
+		this._bounds._height = val;
+
+		this.dispatchEvent( new Event( 'resize' ) );
 
 		return this;
 
@@ -447,7 +454,28 @@ export class Element extends Serializer {
 
 	getHeight() {
 
-		return this._height;
+		return this._bounds._height;
+
+	}
+
+	getBounds() {
+
+		const bounds = this._bounds;
+		bounds.x = this._bounds._x;
+		bounds.y = this._bounds._y;
+		bounds.width = this._bounds._width;
+		bounds.height = this._bounds._height;
+
+		if ( this.node !== null ) {
+
+			const nodeBounds = this.node.getBounds();
+			bounds.x += nodeBounds.x;
+			bounds.y += nodeBounds.y;
+			bounds.width = nodeBounds.width;
+
+		}
+
+		return bounds;
 
 	}
 

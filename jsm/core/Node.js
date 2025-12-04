@@ -62,6 +62,12 @@ export class Node extends Serializer {
 
 		};
 
+		this._onResize = () => {
+
+			this.updateSize();
+
+		};
+
 		this.dom = dom;
 
 		this.style = '';
@@ -78,7 +84,7 @@ export class Node extends Serializer {
 		};
 
 		this._bounds = {
-			x: 0, y: 0, width: 0, height: 0, elements: [],
+			x: 0, y: 0, width: 0, height: 0,
 			_x: 0, _y: 0, _width: 0, _height: 0 // cached values
 		};
 
@@ -218,66 +224,9 @@ export class Node extends Serializer {
 
 	}
 
-	getElementBound( element ) {
-
-		const bounds = this.getBounds();
-		const index = this.elements.indexOf( element );
-
-		const elementBound = bounds.elements[ index ];
-
-		return elementBound;
-
-	}
-
 	getBounds() {
 
 		const bounds = this._bounds;
-
-		//
-
-		if ( bounds.elements.length !== this.elements.length ) {
-
-			bounds.elements = [];
-
-			for ( let i = 0; i < this.elements.length; i ++ ) {
-
-				bounds.elements.push( {
-					x: 0,
-					y: 0,
-					width: 0,
-					height: 0
-				} );
-
-			}
-
-		}
-
-		//
-
-		const bottomBorder = 6;
-
-		let y = 0;
-
-		for ( let i = 0; i < this.elements.length; i ++ ) {
-
-			const element = this.elements[ i ];
-			const elementBound = bounds.elements[ i ];
-
-			const height = element.getHeight() + bottomBorder;
-
-			elementBound.x = bounds._x;
-			elementBound.y = bounds._y + y;
-			elementBound.height = height;
-			elementBound.width = bounds._width;
-
-			y += height;
-
-		}
-
-		bounds._height = y;
-
-		//
-
 		bounds.x = bounds._x;
 		bounds.y = bounds._y;
 		bounds.width = bounds._width;
@@ -294,6 +243,7 @@ export class Node extends Serializer {
 		element.node = this;
 		element.addEventListener( 'connect', this._onConnect );
 		element.addEventListener( 'connectChildren', this._onConnectChildren );
+		element.addEventListener( 'resize', this._onResize );
 
 		this.dom.append( element.dom );
 
@@ -310,6 +260,7 @@ export class Node extends Serializer {
 		element.node = null;
 		element.removeEventListener( 'connect', this._onConnect );
 		element.removeEventListener( 'connectChildren', this._onConnectChildren );
+		element.removeEventListener( 'resize', this._onResize );
 
 		this.dom.removeChild( element.dom );
 
@@ -377,11 +328,22 @@ export class Node extends Serializer {
 
 	updateSize() {
 
+		const bottomBorder = 6;
+
+		let offsetY = 0;
+
 		for ( const element of this.elements ) {
 
 			element.dom.style.width = '';
+			element._bounds._y = offsetY;
+
+			offsetY += element.getHeight() + bottomBorder;
 
 		}
+
+		this._bounds._height = offsetY;
+
+		//
 
 		if ( this.resizable === true ) {
 

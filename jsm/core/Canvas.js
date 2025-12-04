@@ -928,7 +928,7 @@ export class Canvas extends Serializer {
 
 			if ( lioElement !== null ) {
 
-				const rect = lioElement.node.getElementBound( lioElement );
+				const rect = lioElement.getBounds();
 
 				length = Math.max( length, lioElement.rioLength );
 
@@ -946,7 +946,7 @@ export class Canvas extends Serializer {
 
 			if ( rioElement !== null ) {
 
-				const rect = rioElement.node.getElementBound( rioElement );
+				const rect = rioElement.getBounds();
 
 				length = Math.max( length, rioElement.lioLength );
 
