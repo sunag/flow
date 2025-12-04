@@ -232,6 +232,15 @@ export class Node extends Serializer {
 		bounds.width = bounds._width;
 		bounds.height = bounds._height;
 
+		if ( this.canvas !== null ) {
+
+			const { scrollLeft, scrollTop } = this.canvas;
+
+			bounds.x += scrollLeft;
+			bounds.y += scrollTop;
+
+		}
+
 		return bounds;
 
 	}
@@ -326,9 +335,13 @@ export class Node extends Serializer {
 
 	}
 
-	updateSize() {
+	getOuterSize() {
 
-		const bottomBorder = 6;
+		return 6;
+
+	}
+
+	updateSize() {
 
 		let offsetY = 0;
 
@@ -337,7 +350,7 @@ export class Node extends Serializer {
 			element.dom.style.width = '';
 			element._bounds._y = offsetY;
 
-			offsetY += element.getHeight() + bottomBorder;
+			offsetY += element.getHeight() + Node.BORDER;
 
 		}
 
@@ -424,3 +437,4 @@ export class Node extends Serializer {
 }
 
 Node.prototype.isNode = true;
+Node.BORDER = 6;

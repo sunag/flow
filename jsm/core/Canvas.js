@@ -373,30 +373,13 @@ export class Canvas extends Serializer {
 
 	}
 
-	getBounding( node ) {
-
-		let bounds;
-
-		if ( node.isNode ) {
-
-			bounds = node.getBounds();
-
-		}
-
-		bounds.x += this.scrollLeft;
-		bounds.y += this.scrollTop;
-
-		return bounds;
-
-	}
-
 	getBounds() {
 
 		const bounds = { x: Infinity, y: Infinity, width: - Infinity, height: - Infinity };
 
 		for ( const node of this.nodes ) {
 
-			const { x, y, width, height } = this.getBounding( node );
+			const { x, y, width, height } = node.getBounding();
 
 			bounds.x = Math.min( bounds.x, x );
 			bounds.y = Math.min( bounds.y, y );
@@ -709,23 +692,21 @@ export class Canvas extends Serializer {
 
 	isNodeVisible( node ) {
 
-		const { scrollLeft, scrollTop, zoom, _width, _height } = this;
+		const { zoom, _width, _height } = this;
 
-		const position = node.getPosition();
-		const width = node.getWidth();
-		const height = node.getHeight();
+		const bounds = node.getBounds();
 
-		// Calculate visible area in world coordinates
-		const viewLeft = - scrollLeft;
-		const viewTop = - scrollTop;
-		const viewRight = viewLeft + ( _width / zoom );
-		const viewBottom = viewTop + ( _height / zoom );
+		// Calculate visible area in screen coordinates
+		const viewLeft = 0;
+		const viewTop = 0;
+		const viewRight = _width / zoom;
+		const viewBottom = _height / zoom;
 
-		// Node boundaries in world coordinates
-		const nodeLeft = position.x;
-		const nodeRight = position.x + width;
-		const nodeTop = position.y;
-		const nodeBottom = position.y + height;
+		// Node boundaries in screen coordinates (getBounds already includes scrollLeft/scrollTop)
+		const nodeLeft = bounds.x;
+		const nodeRight = bounds.x + bounds.width;
+		const nodeTop = bounds.y;
+		const nodeBottom = bounds.y + bounds.height;
 
 		// Check if node intersects with visible area (any part visible)
 		const isVisible = ! (
@@ -916,8 +897,7 @@ export class Canvas extends Serializer {
 
 		let dragging = '';
 
-		const scrollLeft = this.scrollLeft;
-		const scrollTop = this.scrollTop;
+		const borderTop = Node.BORDER / 2;
 
 		for ( const link of links ) {
 
@@ -932,8 +912,8 @@ export class Canvas extends Serializer {
 
 				length = Math.max( length, lioElement.rioLength );
 
-				aPos.x = scrollLeft + rect.x + rect.width;
-				aPos.y = scrollTop + rect.y + ( rect.height / 2 );
+				aPos.x = rect.x + rect.width;
+				aPos.y = rect.y + ( ( rect.height + borderTop ) / 2 );
 
 			} else {
 
@@ -950,8 +930,8 @@ export class Canvas extends Serializer {
 
 				length = Math.max( length, rioElement.lioLength );
 
-				bPos.x = scrollLeft + rect.x;
-				bPos.y = scrollTop + rect.y + ( rect.height / 2 );
+				bPos.x = rect.x;
+				bPos.y = rect.y + ( ( rect.height + borderTop ) / 2 );
 
 			} else {
 
@@ -1038,8 +1018,8 @@ export class Canvas extends Serializer {
 					const aIndex = Math.min( i, rioLength - 1 );
 					const bIndex = Math.min( i, lioLength - 1 );
 
-					const aPosY = ( aIndex * marginY ) - 1;
-					const bPosY = ( bIndex * marginY ) - 1;
+					const aPosY = ( aIndex * marginY );
+					const bPosY = ( bIndex * marginY );
 
 					drawLine(
 						aPos.x * zoom, ( ( aPos.y + aPosY ) - aCenterY ) * zoom,
