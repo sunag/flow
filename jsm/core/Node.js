@@ -412,9 +412,23 @@ export class Node extends Serializer {
 
 	deserialize( data ) {
 
-		this.setPosition( data.x, data.y );
-		this.setWidth( data.width );
-		this.setResizable( data.autoResize );
+		if ( data.x !== undefined && data.y !== undefined ) {
+
+			this.setPosition( data.x, data.y );
+
+		}
+
+		if ( data.width !== undefined ) {
+
+			this.setWidth( data.width );
+
+		}
+
+		if ( data.autoResize !== undefined ) {
+			
+			this.setResizable( data.autoResize );
+
+		}
 
 		if ( data.style !== undefined ) {
 

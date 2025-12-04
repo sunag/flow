@@ -120,7 +120,7 @@ f-node {
 	cursor: auto;
 	/*box-shadow: 0 0 8px 5px #00000061;*/
 	filter: drop-shadow(0 0 10px #00000061);
-	backdrop-filter: blur(4px);
+	/*backdrop-filter: blur(4px);*/
 }
 
 f-node.selected {
