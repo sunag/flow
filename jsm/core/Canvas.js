@@ -373,13 +373,30 @@ export class Canvas extends Serializer {
 
 	}
 
+	getBounding( node ) {
+
+		let bounds;
+
+		if ( node.isNode ) {
+
+			bounds = node.getBounds();
+
+		}
+
+		bounds.x += this.scrollLeft;
+		bounds.y += this.scrollTop;
+
+		return bounds;
+
+	}
+
 	getBounds() {
 
 		const bounds = { x: Infinity, y: Infinity, width: - Infinity, height: - Infinity };
 
 		for ( const node of this.nodes ) {
 
-			const { x, y, width, height } = node.getBound();
+			const { x, y, width, height } = this.getBounding( node );
 
 			bounds.x = Math.min( bounds.x, x );
 			bounds.y = Math.min( bounds.y, y );
@@ -737,29 +754,7 @@ export class Canvas extends Serializer {
 
 		}
 
-		// Second pass: add nodes connected to visible nodes (for proper line rendering)
-		const links = this.getLinks();
-
-		for ( const link of links ) {
-
-			if ( link.inputElement && link.outputElement ) {
-
-				const inputNode = link.inputElement.node;
-				const outputNode = link.outputElement.node;
-
-				// If one node is visible, make sure the connected node is also visible
-				if ( visibleNodes.has( inputNode ) || visibleNodes.has( outputNode ) ) {
-
-					visibleNodes.add( inputNode );
-					visibleNodes.add( outputNode );
-
-				}
-
-			}
-
-		}
-
-		// Third pass: update DOM visibility
+		// Second pass: update DOM visibility
 		for ( const node of this.nodes ) {
 
 			const shouldBeVisible = visibleNodes.has( node );
@@ -921,6 +916,9 @@ export class Canvas extends Serializer {
 
 		let dragging = '';
 
+		const scrollLeft = this.scrollLeft;
+		const scrollTop = this.scrollTop;
+
 		for ( const link of links ) {
 
 			const { lioElement, rioElement } = link;
@@ -930,19 +928,12 @@ export class Canvas extends Serializer {
 
 			if ( lioElement !== null ) {
 
-				const rect = lioElement.dom.getBoundingClientRect();
+				const rect = lioElement.node.getElementBound( lioElement );
 
 				length = Math.max( length, lioElement.rioLength );
 
-				aPos.x = rect.x + rect.width;
-				aPos.y = rect.y + ( rect.height / 2 );
-
-				if ( useTransform ) {
-
-					aPos.x /= zoom;
-					aPos.y /= zoom;
-
-				}
+				aPos.x = scrollLeft + rect.x + rect.width;
+				aPos.y = scrollTop + rect.y + ( rect.height / 2 );
 
 			} else {
 
@@ -955,19 +946,12 @@ export class Canvas extends Serializer {
 
 			if ( rioElement !== null ) {
 
-				const rect = rioElement.dom.getBoundingClientRect();
+				const rect = rioElement.node.getElementBound( rioElement );
 
 				length = Math.max( length, rioElement.lioLength );
 
-				bPos.x = rect.x;
-				bPos.y = rect.y + ( rect.height / 2 );
-
-				if ( useTransform ) {
-
-					bPos.x /= zoom;
-					bPos.y /= zoom;
-
-				}
+				bPos.x = scrollLeft + rect.x;
+				bPos.y = scrollTop + rect.y + ( rect.height / 2 );
 
 			} else {
 

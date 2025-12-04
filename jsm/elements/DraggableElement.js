@@ -21,7 +21,11 @@ export class DraggableElement extends Element {
 
 			if ( this.draggable === true ) {
 
-				draggableDOM( this.node.dom, null, { className: 'dragging node' } );
+				draggableDOM( this.node.dom, ( data ) => {
+
+					this.node.setPosition( data.x, data.y );
+
+				}, { className: 'dragging node' } );
 
 			}
 

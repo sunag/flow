@@ -611,7 +611,6 @@ f-element f-label.center {
 }
 */
 f-element.title {
-	height: 29px;
 	background-color: #3a3a3ab0;
 	background-color: #3b3b43ed;
     /*background-color: linear-gradient( rgb(1 119 251), rgba(0, 80, 200, 0.73) );*/

@@ -41,6 +41,8 @@ export class TitleElement extends DraggableElement {
 		dom.append( iconDOM );
 		dom.append( toolbarDOM );
 
+		this.setHeight( 29 );
+
 	}
 
 	setIcon( value ) {

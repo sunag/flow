@@ -73,6 +73,8 @@ export class Element extends Serializer {
 		dom.addEventListener( 'touchmove', onSelect );
 		dom.addEventListener( 'touchend', onSelect );
 
+		this._height = 24;
+
 		this.inputs = [];
 
 		this.links = [];
@@ -437,13 +439,15 @@ export class Element extends Serializer {
 
 		this.dom.style.height = numberToPX( val );
 
+		this._height = val;
+
 		return this;
 
 	}
 
 	getHeight() {
 
-		return parseInt( this.dom.style.height );
+		return this._height;
 
 	}
 

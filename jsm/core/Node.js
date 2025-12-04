@@ -77,8 +77,10 @@ export class Node extends Serializer {
 			'blur': []
 		};
 
-		this._cachedHeight = 0;
-		this._needsBoundsUpdate = true;
+		this._bounds = {
+			x: 0, y: 0, width: 0, height: 0, elements: [],
+			_x: 0, _y: 0, _width: 0, _height: 0 // cached values
+		};
 
 		this.setWidth( 300 ).setPosition( 0, 0 );
 
@@ -174,24 +176,27 @@ export class Node extends Serializer {
 		dom.style.left = numberToPX( x );
 		dom.style.top = numberToPX( y );
 
+		this._bounds._x = x;
+		this._bounds._y = y;
+
 		return this;
 
 	}
 
 	getPosition() {
 
-		const dom = this.dom;
+		this._bounds.x = this._bounds._x;
+		this._bounds.y = this._bounds._y;
 
-		return {
-			x: parseInt( dom.style.left ),
-			y: parseInt( dom.style.top )
-		};
+		return this._bounds;
 
 	}
 
 	setWidth( val ) {
 
 		this.dom.style.width = numberToPX( val );
+
+		this._bounds._width = val;
 
 		this.updateSize();
 
@@ -201,50 +206,84 @@ export class Node extends Serializer {
 
 	getWidth() {
 
-		return parseInt( this.dom.style.width );
+		this._bounds.width = this._bounds._width;
+
+		return this._bounds.width;
 
 	}
 
 	getHeight() {
 
-		if ( this._needsBoundsUpdate ) {
+		return this.getBounds().height;
 
-			const dom = this.dom;
-			const wasHidden = dom.style.display === 'none';
+	}
 
-			if ( wasHidden ) {
+	getElementBound( element ) {
 
-				dom.style.display = '';
+		const bounds = this.getBounds();
+		const index = this.elements.indexOf( element );
 
-			}
+		const elementBound = bounds.elements[ index ];
 
-			const height = dom.offsetHeight;
+		return elementBound;
 
-			if ( wasHidden ) {
+	}
 
-				dom.style.display = 'none';
+	getBounds() {
 
-			}
+		const bounds = this._bounds;
 
-			if ( height > 0 ) {
+		//
 
-				this._cachedHeight = height;
-				this._needsBoundsUpdate = false;
+		if ( bounds.elements.length !== this.elements.length ) {
+
+			bounds.elements = [];
+
+			for ( let i = 0; i < this.elements.length; i ++ ) {
+
+				bounds.elements.push( {
+					x: 0,
+					y: 0,
+					width: 0,
+					height: 0
+				} );
 
 			}
 
 		}
 
-		return this._cachedHeight;
+		//
 
-	}
+		const bottomBorder = 6;
 
-	getBound() {
+		let y = 0;
 
-		const { x, y } = this.getPosition();
-		const { width, height } = this.dom.getBoundingClientRect();
+		for ( let i = 0; i < this.elements.length; i ++ ) {
 
-		return { x, y, width, height };
+			const element = this.elements[ i ];
+			const elementBound = bounds.elements[ i ];
+
+			const height = element.getHeight() + bottomBorder;
+
+			elementBound.x = bounds._x;
+			elementBound.y = bounds._y + y;
+			elementBound.height = height;
+			elementBound.width = bounds._width;
+
+			y += height;
+
+		}
+
+		bounds._height = y;
+
+		//
+
+		bounds.x = bounds._x;
+		bounds.y = bounds._y;
+		bounds.width = bounds._width;
+		bounds.height = bounds._height;
+
+		return bounds;
 
 	}
 
@@ -258,7 +297,6 @@ export class Node extends Serializer {
 
 		this.dom.append( element.dom );
 
-		this._needsBoundsUpdate = true;
 		this.updateSize();
 
 		return this;
@@ -275,7 +313,6 @@ export class Node extends Serializer {
 
 		this.dom.removeChild( element.dom );
 
-		this._needsBoundsUpdate = true;
 		this.updateSize();
 
 		return this;
