@@ -1759,6 +1759,18 @@ class Node extends Serializer {
 
 	}
 
+	getBounding() {
+
+		const bounds = this._bounds;
+		bounds.x = bounds._x;
+		bounds.y = bounds._y;
+		bounds.width = bounds._width;
+		bounds.height = bounds._height;
+
+		return bounds;
+
+	}
+
 	add( element ) {
 
 		this.elements.push( element );
@@ -2932,16 +2944,7 @@ class Canvas extends Serializer {
 
 		for ( const node of nodes ) {
 
-			const position = node.getPosition();
-			const width = node.getWidth();
-			const height = node.getHeight();
-
-			const nodeBound = {
-				x: position.x,
-				y: position.y,
-				width: width,
-				height: height
-			};
+			const nodeBound = node.getBounding();
 
 			const nodeColor = node.getColor();
 

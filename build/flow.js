@@ -1196,6 +1196,15 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 	    return bounds;
 	  }
 
+	  getBounding() {
+	    const bounds = this._bounds;
+	    bounds.x = bounds._x;
+	    bounds.y = bounds._y;
+	    bounds.width = bounds._width;
+	    bounds.height = bounds._height;
+	    return bounds;
+	  }
+
 	  add(element) {
 	    this.elements.push(element);
 	    element.node = this;
@@ -2003,15 +2012,7 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 	    let selectedNode = null;
 
 	    for (const node of nodes) {
-	      const position = node.getPosition();
-	      const width = node.getWidth();
-	      const height = node.getHeight();
-	      const nodeBound = {
-	        x: position.x,
-	        y: position.y,
-	        width: width,
-	        height: height
-	      };
+	      const nodeBound = node.getBounding();
 	      const nodeColor = node.getColor();
 	      nodeBound.x += -bounds.x;
 	      nodeBound.y += -bounds.y;
