@@ -739,7 +739,7 @@ export class Element extends Serializer {
 
 		}
 
-		if ( data.height !== undefined ) {
+		if ( Number.isFinite( data.height ) ) {
 
 			this.setHeight( data.height );
 
