@@ -176,6 +176,9 @@ export const draggableDOM = ( dom, callback = null, settings = {} ) => {
 
 		}
 
+		if ( dragData.x === undefined ) dragData.x = dom.offsetLeft;
+		if ( dragData.y === undefined ) dragData.y = dom.offsetTop;
+
 		dragData.dragging = false;
 		dragData.isDown = false;
 
