@@ -231,7 +231,7 @@ export class Element extends Serializer {
 
 	getColor() {
 
-		if ( this.color === null ) {
+		if ( this.color === null && document.body.contains( this.dom ) ) {
 
 			const css = window.getComputedStyle( this.dom );
 
