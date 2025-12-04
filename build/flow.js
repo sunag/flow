@@ -3524,6 +3524,7 @@ __flow__addCSS( `f-element .ti { vertical-align: middle; font-size: 17px; displa
 	    const deserializePass = (prop = null) => {
 	      for (const id in json.objects) {
 	        const newObject = objects[id];
+	        if (!newObject) continue;
 
 	        if (ref.has(newObject) === false && (prop === null || newObject[prop] === true)) {
 	          ref.set(newObject, true);

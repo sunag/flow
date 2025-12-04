@@ -5196,6 +5196,8 @@ class Loader extends EventTarget {
 
 				const newObject = objects[ id ];
 
+				if ( ! newObject ) continue;
+
 				if ( ref.has( newObject ) === false && ( prop === null || newObject[ prop ] === true ) ) {
 
 					ref.set( newObject, true );
