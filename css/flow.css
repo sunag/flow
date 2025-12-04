@@ -710,7 +710,8 @@ f-element f-io.rio {
 f-element f-disconnect {
 	position: absolute;
 	left: -22px;
-	top: 0;
+	top: 50%;
+	transform: translateY(-50%);
 	font-size: 22px;
 	filter: drop-shadow(0 0 5px #000);
 	text-shadow: 0px 0px 5px black;
