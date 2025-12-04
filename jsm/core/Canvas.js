@@ -642,8 +642,8 @@ export class Canvas extends Serializer {
 
 		const bounds = this.getBounds();
 
-		this.scrollLeft = ( this.canvas.width / 2 ) - ( ( - bounds.x + bounds.width ) / 2 );
-		this.scrollTop = ( this.canvas.height / 2 ) - ( ( - bounds.y + bounds.height ) / 2 );
+		this.scrollLeft = ( this.canvas.width / 2 ) - ( ( bounds.x + bounds.width ) / 2 );
+		this.scrollTop = ( this.canvas.height / 2 ) - ( ( bounds.y + bounds.height ) / 2 );
 
 		return this;
 
