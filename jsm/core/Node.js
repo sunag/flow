@@ -1,5 +1,6 @@
 import { Serializer } from './Serializer.js';
 import { numberToPX } from './Utils.js';
+import { Element } from './Element.js';
 
 export class Node extends Serializer {
 
@@ -362,7 +363,7 @@ export class Node extends Serializer {
 			element.dom.style.width = '';
 			element._bounds._y = offsetY;
 
-			offsetY += element.getHeight() + Node.BORDER;
+			offsetY += element.getHeight() + Element.PADDING_SIZE;
 
 		}
 
@@ -463,4 +464,3 @@ export class Node extends Serializer {
 }
 
 Node.prototype.isNode = true;
-Node.BORDER = 6;

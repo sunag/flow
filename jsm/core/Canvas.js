@@ -1,5 +1,6 @@
 import { Serializer } from './Serializer.js';
 import { Node } from './Node.js';
+import { Element } from './Element.js';
 import { TitleElement } from '../elements/TitleElement.js';
 import { draggableDOM, dispatchEventList, numberToPX } from './Utils.js';
 import { drawLine } from './CanvasUtils.js';
@@ -888,7 +889,7 @@ export class Canvas extends Serializer {
 
 		let dragging = '';
 
-		const borderTop = Node.BORDER / 2;
+		const padding = Element.PADDING_SIZE;
 
 		for ( const link of links ) {
 
@@ -904,7 +905,7 @@ export class Canvas extends Serializer {
 				length = Math.max( length, lioElement.rioLength );
 
 				aPos.x = rect.x + rect.width;
-				aPos.y = rect.y + ( ( rect.height + borderTop ) / 2 );
+				aPos.y = rect.y + ( ( rect.height + padding ) / 2 );
 
 			} else {
 
@@ -922,7 +923,7 @@ export class Canvas extends Serializer {
 				length = Math.max( length, rioElement.lioLength );
 
 				bPos.x = rect.x;
-				bPos.y = rect.y + ( ( rect.height + borderTop ) / 2 );
+				bPos.y = rect.y + ( ( rect.height + padding ) / 2 );
 
 			} else {
 

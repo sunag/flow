@@ -244,7 +244,8 @@ f-element {
 	width: calc( 100% - 14px );
 	background: rgba(45, 45, 48, 0.95);
 	pointer-events: auto;
-	border-bottom: 2px solid #232323;
+	/*border-bottom: 2px solid #232323;*/
+	box-shadow: inset 0px 0px 0 1px #232323;
 	display: flex;
 	padding-left: 7px;
 	padding-right: 7px;
@@ -617,6 +618,7 @@ f-element.title {
 	cursor: all-scroll;
 	border-top-left-radius: 6px;
     border-top-right-radius: 6px;
+	box-shadow: inset 0px -1px 0 0px #232323;
 }
 
 f-element:last-child {

@@ -901,4 +901,6 @@ export class Element extends Serializer {
 
 }
 
+Element.PADDING_SIZE = 4;
+
 Element.icons = { unlink: '' };
